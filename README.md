@@ -64,10 +64,10 @@ These are my Key Mappings,of course you can change them.
 
 | Normal Key | origin Key   |
 |------------|--------------|
-| C-n        | :bp CR       |
-| C-m        | :bn CR       |
-| C-r        | :w CR        |
-| C-e        | :q CR        |
+| cl         | :bp CR       |
+| cn         | :bn CR       |
+| cw         | :w CR        |
+| cq         | :q CR        |
 | wq         | :qa CR       |
 | eq         | :q! CR       |
 | bf         | :buffers CR  |

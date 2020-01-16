@@ -22,8 +22,6 @@
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
 	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-	silent !mv ~/.config/nvim/Ultisnips/ ~/.config/nvim/plugged/ultisnips/
 endif
 
 
@@ -59,7 +57,8 @@ set guicursor=i:ver1
 set relativenumber
 set autoindent
 set splitright
-set splitbelow
+set nosplitbelow
+hi Normal ctermfg=252 ctermbg=none
 let g:mapleader = ""
 
 
@@ -84,45 +83,64 @@ inoremap ?O <ESC>O
 inoremap ?o <ESC>o
 inoremap ?I <ESC>I
 inoremap ?h <ESC>i
-inoremap ,x <ESC>xa
-inoremap .x <ESC>lxa
-inoremap ,X <ESC>xi
-inoremap .X <ESC>lxi
-nmap <silent> <C-n> :bp<CR>
-nmap <silent> <C-m> :bn<CR>
-nmap <silent> <C-r> :w<CR>
-nmap <silent> <C-e> :q<CR>
+inoremap ?? ?
+inoremap ,x <ESC>xi
+inoremap .x <ESC>lxi
+nmap <silent> cl :bp<CR>
+nmap <silent> cn :bn<CR>
+nmap <silent> cw :w<CR>
+nmap <silent> cq :q<CR>
 nmap <silent> wq :qa<CR>
 nmap <silent> eq :q!<CR>
 nmap <silent> bf :buffers<CR>
 nmap et :edit<Space>
 nmap sp :split<Space>
+nnoremap vv v
 nmap vs :vsplit<Space>
+nmap va <C-w>+
+nmap vr <C-w>-
+nmap ve <C-w>=
+nmap vj <C-w>j
+nmap vk <C-w>k
+nmap vh <C-w>h
+nmap vl <C-w>l
 nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR>GA
 nmap <silent> bd :bd<CR>
 nmap <silent> die :nohlsearch<CR>
 nmap fl :r !figlet<Space>
 nmap sh :!
+nmap ch :checkhealth<CR>
+nmap cp :checkhealth provider<CR>
+nmap <leader><Return> gf
 vmap qq <ESC>
 
-"PlaceHolder
+" PlaceHolder
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
 inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
-inoremap <silent> ,P <ESC>/<++><CR>:nohlsearch<CR>c4l
-inoremap <silent> ?P <ESC>/<++><CR>N:nohlsearch<CR>c4l
-inoremap .P <++>
 
-"vim-mark
-source ~/.config/nvim/plugged/vim-marks/vim-marks.vim "Source the `vim-marks` plugin.
-
-"Markdown
+" Markdown
 autocmd filetype markdown inoremap ( (
 autocmd filetype markdown inoremap [ [
 autocmd filetype markdown inoremap { {
 autocmd filetype markdown inoremap < <
 autocmd filetype markdown inoremap " "
 autocmd filetype markdown inoremap ' '
+
+" vimScript
+auto filetype vim inoremap " "
+
+" Explain
+autocmd filetype html inoremap ?/ <!--<Space>--><ESC>hhi
+autocmd filetype css inoremap ?/ /*<Space>*/<ESC>hi
+autocmd filetype javascript inoremap ?/ /*<Space>*/<ESC>hi
+autocmd filetype php inoremap ?/ /*<Space>*/<ESC>hi
+autocmd filetype vim inoremap ?/ "<Space>
+autocmd filetype python inoremap ?/ #<Space>
+autocmd filetype c inoremap ?/ /*<Space>*/<ESC>hi
+autocmd filetype cpp inoremap ?/ /*<Space>*/<ESC>hi
+autocmd filetype sh inoremap ?/ #<Space>
+autocmd filetype java inoremap ?/ /*<Space>*/<ESC>hi
 
 
 " -- ------
@@ -139,23 +157,26 @@ set smartindent
 
 call plug#begin('~/.config/nvim/plugged')
 
-"TheBegining
+" TheBegining
 Plug 'mhinz/vim-startify'
 
-"TheAirline
+" TheAirline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-"TheNerdTree
+" Space-vim-theme
+Plug 'liuchengxu/space-vim-theme'
+
+" TheNerdTree
 Plug 'scrooloose/nerdtree'
 
-"AutoTag
+" AutoTag
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
-"VimTableMode
+" VimTableMode
 Plug 'dhruvasagar/vim-table-mode'
 
-"Ultisnips
+" Ultisnips
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
@@ -166,29 +187,31 @@ call plug#end()
 " -- ------ Plugins Settings
 " -- ------
 
-"AirLine
-let g:airline#extentions#tabline#enable = 1 "Show the Buffers' Line
+" AirLine
+let g:airline#extentions#tabline#enable = 1 " Show the Buffers' Line
 let g:airline_theme='ouo'
-colorscheme xcodedark
+let g:space_vim_transp_bg = 1
+set background=dark
+colorscheme space_vim_theme
 
-"NerdTree
+" NerdTree
 nnoremap <silent> tt :NERDTreeMirror<CR>
 nnoremap <silent> tt :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
 
-"Coc.nvim
+" Coc.nvim
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-"VimTableMode
+" VimTableMode
 nnoremap <leader>tm :TableModeToggle<CR>
 let g:table_mode_corner = '|'
 let g:table_mode_delimiter = ''
 let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
-"UltiSnips
+" UltiSnips
 let g:tex_flavor = "latex"
 let g:UltiSnipsExpandTrigger = "<C-d>"
 let g:UltiSnipsJumpForwardTrigger = "<C-d>"
@@ -209,8 +232,9 @@ endfunction
 function! RunCodes() " By the filetype to run the code.
 	exec "w"
 	if &filetype == 'html'
-		:call TermSet()
-		:terminal chromium --no-sandbox ./%
+		!chromium ./% &
+	elseif &filetype == 'php'
+		!php -S 127.0.0.1:8080 -t ./ &; chromium 127.0.0.1:8080
 	elseif &filetype == 'sh'
 		:call TermSet()
 		:terminal sh ./%
@@ -221,8 +245,7 @@ function! RunCodes() " By the filetype to run the code.
 		:call TermSet()
 		:terminal gcc % -o %<;./%<
 	elseif &filetype == 'markdown'
-		:call TermSet()
-		:terminal google-chrome --no-sandbox ./%
+		!chromium --no-sandbox ./%
 	endif
 endfunction
 
