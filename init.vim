@@ -29,7 +29,15 @@ endif
 " -- ------ The Python Path
 " -- ------
 
-let g:python3_host_prog = ''
+let g:python3_host_prog = '/bin/python3'
+
+
+" -- ------
+" -- ------ Important Settings
+" -- ------
+
+let &t_ul=''
+set autochdir
 
 
 " -- ------
@@ -49,6 +57,7 @@ set noswapfile
 set noexpandtab
 set showmatch
 set ruler
+set smartcase
 set history=800
 set scrolloff=5
 set cursorline
@@ -58,8 +67,11 @@ set relativenumber
 set autoindent
 set splitright
 set nosplitbelow
+set list
+set listchars=tab:\|\ ,trail:-
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 hi Normal ctermfg=252 ctermbg=none
-let g:mapleader = ""
+let g:mapleader = "\<Space>"
 
 
 " -- ------
@@ -72,7 +84,6 @@ inoremap { {}<ESC>i
 inoremap < <><ESC>i
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>i
-inoremap ,. <ESC>
 inoremap ;; <ESC>A;
 inoremap ,; ;
 inoremap ., <ESC>A
@@ -86,11 +97,14 @@ inoremap ?h <ESC>i
 inoremap ?? ?
 inoremap ,x <ESC>xi
 inoremap .x <ESC>lxi
+nmap J 5j
+nmap K 5k
 nmap <silent> cl :bp<CR>
 nmap <silent> cn :bn<CR>
 nmap <silent> cw :w<CR>
 nmap <silent> cq :q<CR>
-nmap <silent> wq :qa<CR>
+nmap <silent> wq :wq<CR>
+nmap <silent> wa :qa<CR>
 nmap <silent> eq :q!<CR>
 nmap <silent> bf :buffers<CR>
 nmap et :edit<Space>
@@ -106,13 +120,14 @@ nmap vh <C-w>h
 nmap vl <C-w>l
 nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR>GA
 nmap <silent> bd :bd<CR>
-nmap <silent> die :nohlsearch<CR>
-nmap fl :r !figlet<Space>
+nmap <silent> cd :nohlsearch<CR>
+nmap sr :r<Space>
 nmap sh :!
 nmap ch :checkhealth<CR>
 nmap cp :checkhealth provider<CR>
 nmap <leader><Return> gf
-vmap qq <ESC>
+nmap vw :source $MYVIMRC<CR>
+nmap <leader>nvr :edit ~/.config/nvim/init.vim<CR>
 
 " PlaceHolder
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
@@ -180,6 +195,15 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+" MarkDown Preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for' :[ 'markdown', 'vim-plug' ] }
+
+" Undotree
+Plug 'mbbill/undotree'
+
+" Fuzzy Finder
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
 call plug#end()
 
 
@@ -220,34 +244,116 @@ let g:UltiSnipsSnippetDirectories = ['Ultisnips']
 let g:UltiSnipsEditSplit = "vertical"
 nmap <silent> <leader>use :vsplit<CR><C-w>l:edit ~/.config/nvim/plugged/ultisnips/Ultisnips/<CR>
 
+" MarkdownPreview
+nnoremap <leader>mdp <Plug>MarkdownPreview
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_open_to_the_world = 0
+let g:mkdp_open_ip = ''
+let g:mkdp_browser = 'google-chrome-stable'
+let g:mkdp_echo_preview_url = 0
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {}
+    \ }
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+let g:mkdp_page_title = '「${name}」'
+
+" Undotree
+nnoremap <leader>ut :UndotreeToggle<CR>
+if has("persistent_undo")
+    set undodir="/home/spring/.undodir"
+    set undofile
+endif
+
+" coc.nvim
+set hidden
+set nobackup
+set nowritebackup
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+nmap <leader>cw <Plug>(coc-rename)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Fuzzy Finder
+nmap <leader>F :FZF<CR>
+nmap <leader>ff :FZF<Space>
+
 
 " -- ------
 " -- ------ Programming Settings
 " -- ------
 
 function! TermSet() " The function was written for set the split position.
-	:vs
+	:set splitbelow
+	:split
+	:set nosplitbelow
 endfunction
 
-function! RunCodes() " By the filetype to run the code.
+function! RunCodes(runType) " By the filetype to run the code.
 	exec "w"
 	if &filetype == 'html'
-		!chromium ./% &
+		!google-chrome-stable ./% &
 	elseif &filetype == 'php'
-		!php -S 127.0.0.1:8080 -t ./ &; chromium 127.0.0.1:8080
+		exec "!php -S 127.0.0.1:8080 -t ./ &"
+		exec "!google-chrome-stable 127.0.0.1:8080"
 	elseif &filetype == 'sh'
-		:call TermSet()
-		:terminal sh ./%
+		if a:runType == 'interactive'
+			:call TermSet()
+			:terminal sh ./%
+		elseif a:runType == 'normal'
+			exec "!chmod +x ./%"
+			exec "!./%"
+		endif
 	elseif &filetype == 'python'
-		:call TermSet()
-		:terminal python3 ./%
+		if a:runType == 'interactive'
+			:call TermSet()
+			:terminal python3 ./%
+		elseif a:runType == 'normal'
+			!python3 ./%
+		endif
 	elseif &filetype == 'c'
-		:call TermSet()
-		:terminal gcc % -o %<;./%<
+		if a:runType == 'interactive'
+			:call TermSet()
+			:terminal gcc % -o %<.o; ./%<.o
+		elseif a:runType == 'normal'
+			exec "!gcc % -o %<.o"
+			exec "!./%<.o"
+		endif
 	elseif &filetype == 'markdown'
-		!chromium --no-sandbox ./%
+		!google-chrome-stable ./%
+	elseif &filetype == 'go'
+		if a:runType == 'interactive'
+			:call TermSet()
+			:terminal go run ./%
+		elseif a:runType == 'normal'
+			!go run ./%
+		endif
 	endif
 endfunction
 
-nnoremap <silent> <leader>r :call RunCodes()<CR>
+function! DelCodesCache()
+	if &filetype == 'c'
+		!rm ./%<.o
+	elseif &filetype == 'cpp'
+		!rm ./%<.o
+	endif
+endfunction
+
+nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
+nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
+nnoremap <silent> <leader>d :call DelCodesCache()<CR>
 nnoremap <silent> <leader>c :only<CR>
