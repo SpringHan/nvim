@@ -29,7 +29,7 @@ endif
 " -- ------ The Python Path
 " -- ------
 
-let g:python3_host_prog = '/bin/python3'
+let g:python3_host_prog = ''
 
 
 " -- ------
@@ -71,7 +71,7 @@ set list
 set listchars=tab:\|\ ,trail:-
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 hi Normal ctermfg=252 ctermbg=none
-let g:mapleader = "\<Space>"
+let g:mapleader = ""
 
 
 " -- ------
