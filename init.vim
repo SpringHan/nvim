@@ -99,6 +99,7 @@ inoremap ,x <ESC>xi
 inoremap .x <ESC>lxi
 nmap J 5j
 nmap K 5k
+nmap ; :
 nmap <silent> cl :bp<CR>
 nmap <silent> cn :bn<CR>
 nmap <silent> cw :w<CR>
@@ -127,7 +128,6 @@ nmap ch :checkhealth<CR>
 nmap cp :checkhealth provider<CR>
 nmap <leader><Return> gf
 nmap vw :source $MYVIMRC<CR>
-nmap <leader>nvr :edit ~/.config/nvim/init.vim<CR>
 
 " PlaceHolder
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
@@ -196,13 +196,16 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " MarkDown Preview
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for' :[ 'markdown', 'vim-plug' ] }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for' :['markdown', 'vim-plug'] }
 
 " Undotree
 Plug 'mbbill/undotree'
 
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" IndentGuides
+Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
 
@@ -244,32 +247,6 @@ let g:UltiSnipsSnippetDirectories = ['Ultisnips']
 let g:UltiSnipsEditSplit = "vertical"
 nmap <silent> <leader>use :vsplit<CR><C-w>l:edit ~/.config/nvim/plugged/ultisnips/Ultisnips/<CR>
 
-" MarkdownPreview
-nnoremap <leader>mdp <Plug>MarkdownPreview
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-let g:mkdp_refresh_slow = 0
-let g:mkdp_command_for_global = 0
-let g:mkdp_open_to_the_world = 0
-let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'google-chrome-stable'
-let g:mkdp_echo_preview_url = 0
-let g:mkdp_browserfunc = ''
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {}
-    \ }
-let g:mkdp_markdown_css = ''
-let g:mkdp_highlight_css = ''
-let g:mkdp_port = ''
-let g:mkdp_page_title = '「${name}」'
-
 " Undotree
 nnoremap <leader>ut :UndotreeToggle<CR>
 if has("persistent_undo")
@@ -291,6 +268,40 @@ nmap <leader>f  <Plug>(coc-format-selected)
 " Fuzzy Finder
 nmap <leader>F :FZF<CR>
 nmap <leader>ff :FZF<Space>
+
+" Indent Guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_start_level = 1
+let g:indent_guides_guide_size = 1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=8
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=8
+
+" Markdown Preview
+nmap <leader>mdp <Plug>MarkdownPreview
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_open_to_the_world = 0
+let g:mkdp_open_ip = ''
+let g:mkdp_browser = 'google-chrome-stable'
+let g:mkdp_echo_preview_url = 1
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+	\ 'mkit': {},
+	\ 'katex': {},
+	\ 'uml': {},
+	\ 'maid': {},
+	\ 'disable_sync_scroll': 0,
+	\ 'sync_scroll_type': 'middle',
+	\ 'hide_yaml_meta': 1,
+	\ 'sequence_diagrams': {}
+	\ }
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+let g:mkdp_page_title = '「${name}」'
 
 
 " -- ------
@@ -332,6 +343,14 @@ function! RunCodes(runType) " By the filetype to run the code.
 		elseif a:runType == 'normal'
 			exec "!gcc % -o %<.o"
 			exec "!./%<.o"
+		elseif a:runType == 'build'
+			!gcc % -o %<
+			if empty(glob("~/C/bin/"))
+				exec "!mkdir ~/C/bin/"
+				exec "!mv %< ~/C/bin/"
+			else
+				!mv %< ~/C/bin/
+			endif
 		endif
 	elseif &filetype == 'markdown'
 		!google-chrome-stable ./%
@@ -341,6 +360,8 @@ function! RunCodes(runType) " By the filetype to run the code.
 			:terminal go run ./%
 		elseif a:runType == 'normal'
 			!go run ./%
+		elseif a:runType == 'build'
+			!go build %
 		endif
 	endif
 endfunction
@@ -355,5 +376,6 @@ endfunction
 
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
+nnoremap <silent> <leader>br :call RunCodes("build")<CR>
 nnoremap <silent> <leader>d :call DelCodesCache()<CR>
 nnoremap <silent> <leader>c :only<CR>
