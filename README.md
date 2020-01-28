@@ -16,11 +16,15 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
 - [vim-airline](https://github.com/vim-airline/vim-airline) - A status-line which is light like air
+- [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) - vim-airline official themes
 - [NERDTree](https://github.com/scrooloose/nerdtree) - A files tree in vim
 - [coc.vim](https://github.com/neoclide/coc.vim) - A completor in vim
 - [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - A Plugin which can help you format the tables.
 - [Ultisnips](https://github.com/SirVer/ultisnips) - A Plugin which can provide code snippets in vim
-- [vim-marks](https://github.com/SpringHan/MyNeovim) - This is my own Plugin,now it's only can use by `source`.(When I use `vim-signature`,I cannot delete my mark.So I writed a mark plugin by myself.Now it's not very good,but I use it very easy.)
+- [vim-space-theme](https://github.com/liuchengxu/space-vim-theme) - A pretty nice vim theme
+- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) - A markdown previewer
+- [Undotree](https://github.com/mbbill/undotree) - A plugin which can save the editing histroy
+- [fzf](https://github.com/junegunn/fzf) - A fuzzy finder in vim
 
 
 ## Plugins provider
@@ -49,7 +53,6 @@ These are my Key Mappings,of course you can change them.
 
 | Insert Key | origin Key |
 |------------|------------|
-| ,.         | ESC        |
 | ;;         | ESC A ;    |
 | .,         | ESC A      |
 | ?a         | ESC la     |
@@ -68,21 +71,24 @@ These are my Key Mappings,of course you can change them.
 | cn         | :bn CR       |
 | cw         | :w CR        |
 | cq         | :q CR        |
-| wq         | :qa CR       |
+| wq         | :wq CR       |
+| wa         | :qa CR       |
 | eq         | :q! CR       |
 | bf         | :buffers CR  |
 | et         | :edit        |
 | sp         | :split       |
 | vs         | :vsplit      |
+| va         | C-w +        |
+| vr         | C-w -        |
+| ve         | C-w =        |
+| vj         | C-w j        |
+| vk         | C-w k        |
+| vh         | C-w h        |
+| vl         | C-w l        |
 | tm         | :terminal CR |
 | bd         | :bd CR       |
 | die        | :noh CR      |
-| fl         | :r !figlet   |
 | leader-r   | RunCodes     |
-
-| Visual Key | origin Key |
-|------------|------------|
-| qq         | ESC        |
 
 
 ## The End

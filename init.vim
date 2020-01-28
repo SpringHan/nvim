@@ -62,13 +62,14 @@ set history=800
 set scrolloff=5
 set cursorline
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+set list
+set listchars=tab:\|\ ,trail:-
 set guicursor=i:ver1
 set relativenumber
 set autoindent
 set splitright
 set nosplitbelow
-set list
-set listchars=tab:\|\ ,trail:-
+set path=.,/usr/include,/usr/local/include/
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 hi Normal ctermfg=252 ctermbg=none
 let g:mapleader = ""
@@ -100,6 +101,9 @@ inoremap .x <ESC>lxi
 nmap J 5j
 nmap K 5k
 nmap ; :
+nmap > >>
+nmap < <<
+nmap H hi
 nmap <silent> cl :bp<CR>
 nmap <silent> cn :bn<CR>
 nmap <silent> cw :w<CR>
@@ -204,8 +208,8 @@ Plug 'mbbill/undotree'
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-" IndentGuides
-Plug 'nathanaelkane/vim-indent-guides'
+" IndentLine
+" Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
@@ -270,38 +274,45 @@ nmap <leader>F :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Indent Guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_start_level = 1
-let g:indent_guides_guide_size = 1
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=8
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=8
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_auto_colors = 0
+" let g:indent_guides_start_level = 1
+" let g:indent_guides_guide_size = 1
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=8
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=8
 
 " Markdown Preview
-nmap <leader>mdp <Plug>MarkdownPreview
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-let g:mkdp_refresh_slow = 0
-let g:mkdp_command_for_global = 0
-let g:mkdp_open_to_the_world = 0
-let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'google-chrome-stable'
-let g:mkdp_echo_preview_url = 1
-let g:mkdp_browserfunc = ''
-let g:mkdp_preview_options = {
-	\ 'mkit': {},
-	\ 'katex': {},
-	\ 'uml': {},
-	\ 'maid': {},
-	\ 'disable_sync_scroll': 0,
-	\ 'sync_scroll_type': 'middle',
-	\ 'hide_yaml_meta': 1,
-	\ 'sequence_diagrams': {}
-	\ }
-let g:mkdp_markdown_css = ''
-let g:mkdp_highlight_css = ''
-let g:mkdp_port = ''
-let g:mkdp_page_title = '「${name}」'
+ nmap <leader>mdp <Plug>MarkdownPreview
+ let g:mkdp_auto_start = 0
+ let g:mkdp_auto_close = 1
+ let g:mkdp_refresh_slow = 0
+ let g:mkdp_command_for_global = 0
+ let g:mkdp_open_to_the_world = 0
+ let g:mkdp_open_ip = ''
+ let g:mkdp_browser = 'google-chrome-stable'
+ let g:mkdp_echo_preview_url = 1
+ let g:mkdp_browserfunc = ''
+ let g:mkdp_preview_options = {
+ 	\ 'mkit': {},
+ 	\ 'katex': {},
+ 	\ 'uml': {},
+ 	\ 'maid': {},
+ 	\ 'disable_sync_scroll': 0,
+ 	\ 'sync_scroll_type': 'middle',
+ 	\ 'hide_yaml_meta': 1,
+ 	\ 'sequence_diagrams': {}
+ 	\ }
+ let g:mkdp_markdown_css = ''
+ let g:mkdp_highlight_css = ''
+ let g:mkdp_port = ''
+ let g:mkdp_page_title = '「${name}」'
+
+" IndentLine
+"let g:indentLine_enabled = 1
+"let g:indentLine_setColor = 0 
+"let g:indentLine_color_term = 238
+"let g:indentLine_color_gui = '#333333'
+"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 
 " -- ------
