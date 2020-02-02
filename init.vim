@@ -47,7 +47,7 @@ set autochdir
 set termencoding=utf-8
 set fileformats=unix
 set encoding=utf-8
-set nu
+set number
 set tabstop=4
 set shiftwidth=4
 set showcmd
@@ -104,15 +104,18 @@ nmap ; :
 nmap > >>
 nmap < <<
 nmap H hi
+nmap W Wi
+nmap B Bi
+nmap E Ea
 nmap <silent> cl :bp<CR>
 nmap <silent> cn :bn<CR>
-nmap <silent> cw :w<CR>
+nmap <silent> cww :w<CR>
 nmap <silent> cq :q<CR>
-nmap <silent> wq :wq<CR>
-nmap <silent> wa :qa<CR>
-nmap <silent> eq :q!<CR>
-nmap <silent> bf :buffers<CR>
-nmap et :edit<Space>
+nmap <silent> cwq :wq<CR>
+nmap <silent> ca :qa<CR>
+nmap <silent> ceq :q!<CR>
+nmap <silent> cf :buffers<CR>
+nmap ce :edit<Space>
 nmap sp :split<Space>
 nnoremap vv v
 nmap vs :vsplit<Space>
@@ -124,7 +127,7 @@ nmap vk <C-w>k
 nmap vh <C-w>h
 nmap vl <C-w>l
 nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR>GA
-nmap <silent> bd :bd<CR>
+nmap <silent> cb :bd<CR>
 nmap <silent> cd :nohlsearch<CR>
 nmap sr :r<Space>
 nmap sh :!
@@ -182,6 +185,7 @@ Plug 'mhinz/vim-startify'
 " TheAirline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Space-vim-theme
 Plug 'liuchengxu/space-vim-theme'
@@ -189,7 +193,7 @@ Plug 'liuchengxu/space-vim-theme'
 " TheNerdTree
 Plug 'scrooloose/nerdtree'
 
-" AutoTag
+" Coc.nvim
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
 " VimTableMode
@@ -208,8 +212,9 @@ Plug 'mbbill/undotree'
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-" IndentLine
-" Plug 'Yggdroot/indentLine'
+" JavaScript
+Plug 'pangloss/vim-javascript', { 'for' :['javascript', 'vim-plug'] }
+
 
 call plug#end()
 
@@ -220,7 +225,7 @@ call plug#end()
 
 " AirLine
 let g:airline#extentions#tabline#enable = 1 " Show the Buffers' Line
-let g:airline_theme='ouo'
+let g:airline_theme='dracula'
 let g:space_vim_transp_bg = 1
 set background=dark
 colorscheme space_vim_theme
@@ -231,7 +236,56 @@ nnoremap <silent> tt :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
 
-" Coc.nvim
+" coc.nvim
+set hidden
+set updatetime=300
+" Plugins
+let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite']
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> gk :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <leader>rn <Plug>(coc-rename)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+augroup mygroup
+autocmd!
+autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>qf  <Plug>(coc-fix-current)
+" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -249,7 +303,6 @@ let g:UltiSnipsJumpForwardTrigger = "<C-d>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-b>"
 let g:UltiSnipsSnippetDirectories = ['Ultisnips']
 let g:UltiSnipsEditSplit = "vertical"
-nmap <silent> <leader>use :vsplit<CR><C-w>l:edit ~/.config/nvim/plugged/ultisnips/Ultisnips/<CR>
 
 " Undotree
 nnoremap <leader>ut :UndotreeToggle<CR>
@@ -258,28 +311,9 @@ if has("persistent_undo")
     set undofile
 endif
 
-" coc.nvim
-set hidden
-set nobackup
-set nowritebackup
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
-nmap <leader>cw <Plug>(coc-rename)
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
 " Fuzzy Finder
 nmap <leader>F :FZF<CR>
 nmap <leader>ff :FZF<Space>
-
-" Indent Guides
-" let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_auto_colors = 0
-" let g:indent_guides_start_level = 1
-" let g:indent_guides_guide_size = 1
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=8
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=8
 
 " Markdown Preview
  nmap <leader>mdp <Plug>MarkdownPreview
@@ -307,12 +341,19 @@ nmap <leader>ff :FZF<Space>
  let g:mkdp_port = ''
  let g:mkdp_page_title = '「${name}」'
 
-" IndentLine
-"let g:indentLine_enabled = 1
-"let g:indentLine_setColor = 0 
-"let g:indentLine_color_term = 238
-"let g:indentLine_color_gui = '#333333'
-"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+" vim-javascript
+let g:javascript_conceal_function             = "ƒ"
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_this                 = "@"
+let g:javascript_conceal_return               = "⇚"
+let g:javascript_conceal_undefined            = "¿"
+let g:javascript_conceal_NaN                  = "ℕ"
+let g:javascript_conceal_prototype            = "¶"
+let g:javascript_conceal_static               = "•"
+let g:javascript_conceal_super                = "Ω"
+let g:javascript_conceal_arrow_function       = "⇒"
+let g:javascript_conceal_noarg_arrow_function = "🞅"
+let g:javascript_conceal_underscore_arrow_function = "🞅"
 
 
 " -- ------
@@ -354,14 +395,6 @@ function! RunCodes(runType) " By the filetype to run the code.
 		elseif a:runType == 'normal'
 			exec "!gcc % -o %<.o"
 			exec "!./%<.o"
-		elseif a:runType == 'build'
-			!gcc % -o %<
-			if empty(glob("~/C/bin/"))
-				exec "!mkdir ~/C/bin/"
-				exec "!mv %< ~/C/bin/"
-			else
-				!mv %< ~/C/bin/
-			endif
 		endif
 	elseif &filetype == 'markdown'
 		!google-chrome-stable ./%
@@ -371,8 +404,6 @@ function! RunCodes(runType) " By the filetype to run the code.
 			:terminal go run ./%
 		elseif a:runType == 'normal'
 			!go run ./%
-		elseif a:runType == 'build'
-			!go build %
 		endif
 	endif
 endfunction
@@ -387,6 +418,5 @@ endfunction
 
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
-nnoremap <silent> <leader>br :call RunCodes("build")<CR>
 nnoremap <silent> <leader>d :call DelCodesCache()<CR>
 nnoremap <silent> <leader>c :only<CR>
