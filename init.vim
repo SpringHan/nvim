@@ -117,7 +117,6 @@ nmap <silent> ceq :q!<CR>
 nmap <silent> cf :buffers<CR>
 nmap ce :edit<Space>
 nmap sp :split<Space>
-nnoremap vv v
 nmap vs :vsplit<Space>
 nmap va <C-w>+
 nmap vr <C-w>-
@@ -126,7 +125,7 @@ nmap vj <C-w>j
 nmap vk <C-w>k
 nmap vh <C-w>h
 nmap vl <C-w>l
-nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR>GA
+nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR>
 nmap <silent> cb :bd<CR>
 nmap <silent> cd :nohlsearch<CR>
 nmap sr :r<Space>
@@ -134,7 +133,13 @@ nmap sh :!
 nmap ch :checkhealth<CR>
 nmap cp :checkhealth provider<CR>
 nmap <leader><Return> gf
-nmap vw :source $MYVIMRC<CR>
+nmap <leader>rc :e ~/.config/nvim/init.vim<CR>
+nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:syntax on<CR>
+nnoremap css :set spell<CR>
+nnoremap csn :set spell!<CR>
+nnoremap sc z=
+nnoremap vv v
+xmap ; :
 
 " PlaceHolder
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
@@ -171,6 +176,10 @@ autocmd filetype java inoremap ?/ /*<Space>*/<ESC>hi
 
 filetype indent on
 set smartindent
+
+" Terminal
+autocmd TermOpen term://* startinsert
+tnoremap <silent> Q <C-\><C-n>:q<CR>
 
 
 " -- ------
@@ -214,6 +223,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " JavaScript
 Plug 'pangloss/vim-javascript', { 'for' :['javascript', 'vim-plug'] }
+
+" Tagbar
+Plug 'majutsushi/tagbar'
 
 
 call plug#end()
@@ -354,6 +366,10 @@ let g:javascript_conceal_super                = "Ω"
 let g:javascript_conceal_arrow_function       = "⇒"
 let g:javascript_conceal_noarg_arrow_function = "🞅"
 let g:javascript_conceal_underscore_arrow_function = "🞅"
+
+" Tagbar
+nmap <leader>T :TagbarToggle<CR>
+let g:tagbar_ctags_bin = '/usr/bin/ctags'
 
 
 " -- ------
