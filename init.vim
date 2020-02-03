@@ -62,13 +62,12 @@ set history=800
 set scrolloff=5
 set cursorline
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+set viewoptions=cursor,folds,slash,unix
 set list
 set listchars=tab:\|\ ,trail:-
-set guicursor=i:ver1
+set guicursor=n:block,i:ver1,v:block,r:block,c:block,ci:block,cr:block
 set relativenumber
 set autoindent
-set splitright
-set nosplitbelow
 set path=.,/usr/include,/usr/local/include/
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 hi Normal ctermfg=252 ctermbg=none
@@ -104,9 +103,6 @@ nmap ; :
 nmap > >>
 nmap < <<
 nmap H hi
-nmap W Wi
-nmap B Bi
-nmap E Ea
 nmap <silent> cl :bp<CR>
 nmap <silent> cn :bn<CR>
 nmap <silent> cww :w<CR>
@@ -116,8 +112,6 @@ nmap <silent> ca :qa<CR>
 nmap <silent> ceq :q!<CR>
 nmap <silent> cf :buffers<CR>
 nmap ce :edit<Space>
-nmap sp :split<Space>
-nmap vs :vsplit<Space>
 nmap va <C-w>+
 nmap vr <C-w>-
 nmap ve <C-w>=
@@ -139,6 +133,10 @@ nnoremap css :set spell<CR>
 nnoremap csn :set spell!<CR>
 nnoremap sc z=
 nnoremap vv v
+nnoremap spt :set nosplitbelow<CR>:split<Space>
+nnoremap spb :set splitbelow<CR>:split<Space>
+nnoremap vsr :set splitright<CR>:vsplit<Space>
+nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 xmap ; :
 
 " PlaceHolder
@@ -153,6 +151,7 @@ autocmd filetype markdown inoremap { {
 autocmd filetype markdown inoremap < <
 autocmd filetype markdown inoremap " "
 autocmd filetype markdown inoremap ' '
+autocmd filetype markdown inoremap ` ``
 
 " vimScript
 auto filetype vim inoremap " "
@@ -227,6 +226,9 @@ Plug 'pangloss/vim-javascript', { 'for' :['javascript', 'vim-plug'] }
 " Tagbar
 Plug 'majutsushi/tagbar'
 
+" Far
+Plug 'brooth/far.vim'
+
 
 call plug#end()
 
@@ -264,17 +266,20 @@ function! s:check_back_space() abort
 endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nnoremap <silent> gk :call <SID>show_documentation()<CR>
+noremap <silent> gk :call <SID>show_documentation()<CR>
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
 endfunction
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -289,18 +294,36 @@ augroup end
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>ac  <Plug>(coc-codeaction)
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>ac <Plug>(coc-codeaction)
+nmap <leader>qf <Plug>(coc-fix-current)
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
-" Use `:Format` to format current buffer
+
 command! -nargs=0 Format :call CocAction('format')
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Using CocList
+nnoremap <silent> <space>a :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>co :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p :<C-u>CocListResume<CR>
 
 " VimTableMode
 nnoremap <leader>tm :TableModeToggle<CR>
@@ -324,52 +347,55 @@ if has("persistent_undo")
 endif
 
 " Fuzzy Finder
-nmap <leader>F :FZF<CR>
+nmap <leader>FZ :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
- nmap <leader>mdp <Plug>MarkdownPreview
- let g:mkdp_auto_start = 0
- let g:mkdp_auto_close = 1
- let g:mkdp_refresh_slow = 0
- let g:mkdp_command_for_global = 0
- let g:mkdp_open_to_the_world = 0
- let g:mkdp_open_ip = ''
- let g:mkdp_browser = 'google-chrome-stable'
- let g:mkdp_echo_preview_url = 1
- let g:mkdp_browserfunc = ''
- let g:mkdp_preview_options = {
- 	\ 'mkit': {},
- 	\ 'katex': {},
- 	\ 'uml': {},
- 	\ 'maid': {},
- 	\ 'disable_sync_scroll': 0,
- 	\ 'sync_scroll_type': 'middle',
- 	\ 'hide_yaml_meta': 1,
- 	\ 'sequence_diagrams': {}
- 	\ }
- let g:mkdp_markdown_css = ''
- let g:mkdp_highlight_css = ''
- let g:mkdp_port = ''
- let g:mkdp_page_title = '「${name}」'
+nmap <leader>mdp <Plug>MarkdownPreview
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_open_to_the_world = 0
+let g:mkdp_open_ip = ''
+let g:mkdp_browser = 'google-chrome-stable'
+let g:mkdp_echo_preview_url = 1
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+\ 'mkit': {},
+\ 'katex': {},
+\ 'uml': {},
+\ 'maid': {},
+\ 'disable_sync_scroll': 0,
+\ 'sync_scroll_type': 'middle',
+\ 'hide_yaml_meta': 1,
+\ 'sequence_diagrams': {}
+\ }
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+let g:mkdp_page_title = '「${name}」'
 
 " vim-javascript
-let g:javascript_conceal_function             = "ƒ"
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_this                 = "@"
-let g:javascript_conceal_return               = "⇚"
-let g:javascript_conceal_undefined            = "¿"
-let g:javascript_conceal_NaN                  = "ℕ"
-let g:javascript_conceal_prototype            = "¶"
-let g:javascript_conceal_static               = "•"
-let g:javascript_conceal_super                = "Ω"
-let g:javascript_conceal_arrow_function       = "⇒"
-let g:javascript_conceal_noarg_arrow_function = "🞅"
+let g:javascript_conceal_function                  = "ƒ"
+let g:javascript_conceal_null                      = "ø"
+let g:javascript_conceal_this                      = "@"
+let g:javascript_conceal_return                    = "⇚"
+let g:javascript_conceal_undefined                 = "¿"
+let g:javascript_conceal_NaN                       = "ℕ"
+let g:javascript_conceal_prototype                 = "¶"
+let g:javascript_conceal_static                    = "•"
+let g:javascript_conceal_super                     = "Ω"
+let g:javascript_conceal_arrow_function            = "⇒"
+let g:javascript_conceal_noarg_arrow_function      = "🞅"
 let g:javascript_conceal_underscore_arrow_function = "🞅"
 
 " Tagbar
 nmap <leader>T :TagbarToggle<CR>
 let g:tagbar_ctags_bin = '/usr/bin/ctags'
+
+" Far.vim
+nmap <leader>FA :Far %<Left><Left><Space>
 
 
 " -- ------
@@ -435,4 +461,4 @@ endfunction
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
 nnoremap <silent> <leader>d :call DelCodesCache()<CR>
-nnoremap <silent> <leader>c :only<CR>
+nnoremap <silent> co :only<CR>
