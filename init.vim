@@ -29,7 +29,7 @@ endif
 " -- ------ The Python Path
 " -- ------
 
-let g:python3_host_prog = ''
+let g:python3_host_prog = '/usr/bin/python3'
 
 
 " -- ------
@@ -74,7 +74,7 @@ set foldmethod=marker
 set foldlevelstart=99
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 hi Normal ctermfg=252 ctermbg=none
-let g:mapleader = ""
+let g:mapleader = "\<Space>"
 
 
 " -- ------
@@ -132,7 +132,7 @@ nmap sh :!
 nmap ch :checkhealth<CR>
 nmap cp :checkhealth provider<CR>
 nmap <leader><Return> gf
-nmap <leader>rc :e ~/.config/nvim/init.vim<CR>
+nmap <leader>nrc :e ~/.config/nvim/init.vim<CR>
 nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:syntax on<CR>
 nnoremap css :set spell<CR>
 nnoremap csn :set spell!<CR>
@@ -291,7 +291,7 @@ function! s:show_documentation()
 endfunction
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>crn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
