@@ -68,7 +68,10 @@ set listchars=tab:\|\ ,trail:-
 set guicursor=n:block,i:ver1,v:block,r:block,c:block,ci:block,cr:block
 set relativenumber
 set autoindent
+set notimeout
 set path=.,/usr/include,/usr/local/include/
+set foldmethod=marker
+set foldlevelstart=99
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 hi Normal ctermfg=252 ctermbg=none
 let g:mapleader = ""
@@ -88,6 +91,8 @@ inoremap ;; <ESC>A;
 inoremap ,; ;
 inoremap ., <ESC>A
 inoremap .. .
+inoremap .fl {{{
+inoremap .fn }}}
 inoremap ,, ,
 inoremap ?a <ESC>la
 inoremap ?O <ESC>O
@@ -111,7 +116,7 @@ nmap <silent> cwq :wq<CR>
 nmap <silent> ca :qa<CR>
 nmap <silent> ceq :q!<CR>
 nmap <silent> cf :buffers<CR>
-nmap ce :edit<Space>
+nmap cet :edit<Space>
 nmap va <C-w>+
 nmap vr <C-w>-
 nmap ve <C-w>=
@@ -229,6 +234,9 @@ Plug 'majutsushi/tagbar'
 " Far
 Plug 'brooth/far.vim'
 
+" Bash-language-server
+Plug 'mads-hartmann/bash-language-server'
+
 
 call plug#end()
 
@@ -252,7 +260,7 @@ let g:NERDTreeDirArrowCollapsible = '-'
 
 " coc.nvim
 set hidden
-set updatetime=300
+set updatetime=100
 " Plugins
 let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite']
 inoremap <silent><expr> <TAB>
@@ -303,7 +311,6 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -351,7 +358,7 @@ nmap <leader>FZ :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
-nmap <leader>mdp <Plug>MarkdownPreview
+autocmd filetype markdown nmap <leader>md <Plug>MarkdownPreviewStop
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -433,13 +440,13 @@ function! RunCodes(runType) " By the filetype to run the code.
 	elseif &filetype == 'c'
 		if a:runType == 'interactive'
 			:call TermSet()
-			:terminal gcc % -o %<.o; ./%<.o
+			:terminal gcc % -o /tmp/%<.o; /tmp/%<.o
 		elseif a:runType == 'normal'
-			exec "!gcc % -o %<.o"
-			exec "!./%<.o"
+			exec "!gcc % -o /tmp/%<.o"
+			exec "!/tmp/%<.o"
 		endif
 	elseif &filetype == 'markdown'
-		!google-chrome-stable ./%
+		exec "MarkdownPreview"
 	elseif &filetype == 'go'
 		if a:runType == 'interactive'
 			:call TermSet()

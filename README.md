@@ -55,6 +55,8 @@ These are my Key Mappings,of course you can change them.
 |------------|------------|
 | ;;         | ESC A ;    |
 | .,         | ESC A      |
+| .fl        | {{{        |
+| .fn        | }}}        |
 | ?a         | ESC la     |
 | ?O         | ESC O      |
 | ?o         | ESC o      |

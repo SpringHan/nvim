@@ -9,6 +9,24 @@
 					"directory": "/tmp/ccls"
 				}
 			}
+		},
+		"golang": {
+			"command": "gopls",
+			"rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+			"filetypes": ["go"],
+			"initializationOptions": {
+				"usePlacehoders": true
+			}
+		},
+		"bash": {
+			"command": "bash-language-server",
+			"args": ["start"],
+			"filetypes": ["sh"],
+			"ignoredRootPaths": ["~"]
 		}
-	}
+	},
+	"suggest.enablePreview": true,
+	"coc.preferences.previewAutoClose": false,
+	"suggest.enablePreselect": true,
+	"coc.preferences.hoverTarget": "float"
 }
