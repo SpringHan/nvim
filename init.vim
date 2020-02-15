@@ -26,10 +26,11 @@ endif
 
 
 " -- ------
-" -- ------ The Python Path
+" -- ------ The Path
 " -- ------
 
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog = ''
+let g:python3_host_prog = ''
 
 
 " -- ------
@@ -48,8 +49,8 @@ set termencoding=utf-8
 set fileformats=unix
 set encoding=utf-8
 set number
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set showcmd
 set syntax=enable
 set syntax=on
@@ -58,17 +59,20 @@ set noexpandtab
 set showmatch
 set ruler
 set smartcase
+set notimeout
+set ttimeoutlen=0
+set lazyredraw
+set visualbell
 set history=800
 set scrolloff=5
 set cursorline
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-set viewoptions=cursor,folds,slash,unix
+" set viewoptions=cursor,folds,slash,unix
 set list
 set listchars=tab:\|\ ,trail:-
 set guicursor=n:block,i:ver1,v:block,r:block,c:block,ci:block,cr:block
 set relativenumber
 set autoindent
-set notimeout
 set path=.,/usr/include,/usr/local/include/
 set foldmethod=marker
 set foldlevelstart=99
@@ -81,12 +85,13 @@ let g:mapleader = "\<Space>"
 " -- ------ Key Mappings
 " -- ------
 
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i
-inoremap < <><ESC>i
-inoremap " ""<ESC>i
-inoremap ' ''<ESC>i
+" inoremap ( ()<ESC>i
+" inoremap [ []<ESC>i
+" inoremap { {}<ESC>i
+" inoremap < <><ESC>i
+" inoremap " ""<ESC>i
+" inoremap ' ''<ESC>i
+inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
 inoremap ,; ;
 inoremap ., <ESC>A
@@ -100,7 +105,8 @@ inoremap ?o <ESC>o
 inoremap ?I <ESC>I
 inoremap ?h <ESC>i
 inoremap ?? ?
-inoremap ,x <ESC>xi
+inoremap ,x <ESC>xa
+inoremap ,X <ESC>xi
 inoremap .x <ESC>lxi
 nmap J 5j
 nmap K 5k
@@ -150,13 +156,13 @@ inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
 
 " Markdown
-autocmd filetype markdown inoremap ( (
-autocmd filetype markdown inoremap [ [
-autocmd filetype markdown inoremap { {
-autocmd filetype markdown inoremap < <
-autocmd filetype markdown inoremap " "
-autocmd filetype markdown inoremap ' '
-autocmd filetype markdown inoremap ` ``
+" autocmd filetype markdown inoremap ( (
+" autocmd filetype markdown inoremap [ [
+" autocmd filetype markdown inoremap { {
+" autocmd filetype markdown inoremap < <
+" autocmd filetype markdown inoremap " "
+" autocmd filetype markdown inoremap ' '
+" autocmd filetype markdown inoremap ` ``
 
 " vimScript
 auto filetype vim inoremap " "
@@ -204,20 +210,20 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'liuchengxu/space-vim-theme'
 
 " TheNerdTree
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Coc.nvim
-Plug 'neoclide/coc.nvim' , {'branch': 'release'}
+Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
 
 " VimTableMode
-Plug 'dhruvasagar/vim-table-mode'
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
 " Ultisnips
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " MarkDown Preview
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for' :['markdown', 'vim-plug'] }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': 'markdown' }
 
 " Undotree
 Plug 'mbbill/undotree'
@@ -226,7 +232,7 @@ Plug 'mbbill/undotree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " JavaScript
-Plug 'pangloss/vim-javascript', { 'for' :['javascript', 'vim-plug'] }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " Tagbar
 Plug 'majutsushi/tagbar'
@@ -235,7 +241,13 @@ Plug 'majutsushi/tagbar'
 Plug 'brooth/far.vim'
 
 " Bash-language-server
-Plug 'mads-hartmann/bash-language-server'
+Plug 'mads-hartmann/bash-language-server', { 'for': 'sh' }
+
+" Auto-pairs
+Plug 'jiangmiao/auto-pairs'
+
+" vim-easy-align
+Plug 'junegunn/vim-easy-align'
 
 
 call plug#end()
@@ -244,6 +256,7 @@ call plug#end()
 " -- ------
 " -- ------ Plugins Settings
 " -- ------
+
 
 " AirLine
 let g:airline#extentions#tabline#enable = 1 " Show the Buffers' Line
@@ -260,7 +273,7 @@ let g:NERDTreeDirArrowCollapsible = '-'
 
 " coc.nvim
 set hidden
-set updatetime=100
+set updatetime=50
 " Plugins
 let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite']
 inoremap <silent><expr> <TAB>
@@ -366,7 +379,7 @@ let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 0
 let g:mkdp_open_ip = ''
 let g:mkdp_browser = 'google-chrome-stable'
-let g:mkdp_echo_preview_url = 1
+let g:mkdp_echo_preview_url = 0
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
 \ 'mkit': {},
@@ -403,6 +416,23 @@ let g:tagbar_ctags_bin = '/usr/bin/ctags'
 
 " Far.vim
 nmap <leader>FA :Far %<Left><Left><Space>
+
+" Auto-Pairs
+let g:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", '"':'"', '<':'>'}
+let b:AutoPairs = g:AutoPairs
+let g:AutoPairsShortcutToggle = '<M-p>'
+let g:AutoPairsShortcutFastWrap = '<M-e>'
+let g:AutoPairsShortcutJump = '<M-n>'
+let g:AutoPairsMapBS = 0
+let g:AutoPairsMapCh = 1
+let g:AutoPairsMapCR = 1
+let g:AutoPairsCenterLine = 1
+let g:AutoPairsMapSpace = 1
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = 'M-b'
+
+" Vim-easy-align
+xmap ga <Plug>(EasyAlign)
 
 
 " -- ------
@@ -457,15 +487,6 @@ function! RunCodes(runType) " By the filetype to run the code.
 	endif
 endfunction
 
-function! DelCodesCache()
-	if &filetype == 'c'
-		!rm ./%<.o
-	elseif &filetype == 'cpp'
-		!rm ./%<.o
-	endif
-endfunction
-
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
-nnoremap <silent> <leader>d :call DelCodesCache()<CR>
 nnoremap <silent> co :only<CR>
