@@ -85,12 +85,6 @@ let g:mapleader = "\<Space>"
 " -- ------ Key Mappings
 " -- ------
 
-" inoremap ( ()<ESC>i
-" inoremap [ []<ESC>i
-" inoremap { {}<ESC>i
-" inoremap < <><ESC>i
-" inoremap " ""<ESC>i
-" inoremap ' ''<ESC>i
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
 inoremap ,; ;
@@ -139,6 +133,7 @@ nmap ch :checkhealth<CR>
 nmap cp :checkhealth provider<CR>
 nmap <leader><Return> gf
 nmap <leader>nrc :e ~/.config/nvim/init.vim<CR>
+nmap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
 nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:syntax on<CR>
 nnoremap css :set spell<CR>
 nnoremap csn :set spell!<CR>
@@ -151,33 +146,13 @@ nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 xmap ; :
 
 " PlaceHolder
+nmap <silent> <leader><leader> /<+++><CR>:nohlsearch<CR>c5l
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
 inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
 
-" Markdown
-" autocmd filetype markdown inoremap ( (
-" autocmd filetype markdown inoremap [ [
-" autocmd filetype markdown inoremap { {
-" autocmd filetype markdown inoremap < <
-" autocmd filetype markdown inoremap " "
-" autocmd filetype markdown inoremap ' '
-" autocmd filetype markdown inoremap ` ``
-
-" vimScript
-auto filetype vim inoremap " "
-
-" Explain
-autocmd filetype html inoremap ?/ <!--<Space>--><ESC>hhi
-autocmd filetype css inoremap ?/ /*<Space>*/<ESC>hi
-autocmd filetype javascript inoremap ?/ /*<Space>*/<ESC>hi
-autocmd filetype php inoremap ?/ /*<Space>*/<ESC>hi
-autocmd filetype vim inoremap ?/ "<Space>
-autocmd filetype python inoremap ?/ #<Space>
-autocmd filetype c inoremap ?/ /*<Space>*/<ESC>hi
-autocmd filetype cpp inoremap ?/ /*<Space>*/<ESC>hi
-autocmd filetype sh inoremap ?/ #<Space>
-autocmd filetype java inoremap ?/ /*<Space>*/<ESC>hi
+" Snippets
+source ~/.config/nvim/snippets.vim
 
 
 " -- ------
@@ -226,7 +201,7 @@ Plug 'honza/vim-snippets'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': 'markdown' }
 
 " Undotree
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -248,6 +223,10 @@ Plug 'jiangmiao/auto-pairs'
 
 " vim-easy-align
 Plug 'junegunn/vim-easy-align'
+
+" Special Words
+Plug 'itchyny/vim-cursorword'
+Plug 'lfv89/vim-interestingwords'
 
 
 call plug#end()
@@ -433,6 +412,12 @@ let g:AutoPairsShortcutBackInsert = 'M-b'
 
 " Vim-easy-align
 xmap ga <Plug>(EasyAlign)
+
+" Interesting Words
+nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
+nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
+nnoremap <silent> n :call WordNavigation('forward')<CR>
+nnoremap <silent> N :call WordNavigation('backward')<CR>
 
 
 " -- ------
