@@ -29,8 +29,8 @@ endif
 " -- ------ The Path
 " -- ------
 
-let g:python_host_prog = ''
-let g:python3_host_prog = ''
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 
 " -- ------
@@ -85,6 +85,19 @@ let g:mapleader = "\<Space>"
 " -- ------ Key Mappings
 " -- ------
 
+" Important Mappings
+noremap e j
+noremap i l
+noremap u k
+noremap U 5k
+noremap E 5j
+noremap l u
+noremap h i
+noremap k n
+noremap K N
+noremap H I
+noremap n h
+
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
 inoremap ,; ;
@@ -102,12 +115,10 @@ inoremap ?? ?
 inoremap ,x <ESC>xa
 inoremap ,X <ESC>xi
 inoremap .x <ESC>lxi
-nmap J 5j
-nmap K 5k
+
 nmap ; :
 nmap > >>
 nmap < <<
-nmap H hi
 nmap <silent> cl :bp<CR>
 nmap <silent> cn :bn<CR>
 nmap <silent> cww :w<CR>
@@ -226,7 +237,6 @@ Plug 'junegunn/vim-easy-align'
 
 " Special Words
 Plug 'itchyny/vim-cursorword'
-Plug 'lfv89/vim-interestingwords'
 
 
 call plug#end()
@@ -412,12 +422,6 @@ let g:AutoPairsShortcutBackInsert = 'M-b'
 
 " Vim-easy-align
 xmap ga <Plug>(EasyAlign)
-
-" Interesting Words
-nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
-nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
-nnoremap <silent> n :call WordNavigation('forward')<CR>
-nnoremap <silent> N :call WordNavigation('backward')<CR>
 
 
 " -- ------
