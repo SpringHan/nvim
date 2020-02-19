@@ -67,15 +67,16 @@ set history=800
 set scrolloff=5
 set cursorline
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-" set viewoptions=cursor,folds,slash,unix
+set viewoptions=cursor,folds,slash,unix
 set list
-set listchars=tab:\|\ ,trail:-
+set listchars=tab:\┆\ ,trail:-
 set guicursor=n:block,i:ver1,v:block,r:block,c:block,ci:block,cr:block
 set relativenumber
 set autoindent
 set path=.,/usr/include,/usr/local/include/
 set foldmethod=marker
 set foldlevelstart=99
+set colorcolumn=80
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 hi Normal ctermfg=252 ctermbg=none
 let g:mapleader = "\<Space>"
@@ -192,8 +193,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dracula/vim', { 'as': 'dracula' }
 
-" Space-vim-theme
-Plug 'liuchengxu/space-vim-theme'
+" vim-theme
+"Plug 'liuchengxu/space-vim-theme'
+Plug 'morhetz/gruvbox'
 
 " TheNerdTree
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -238,6 +240,9 @@ Plug 'junegunn/vim-easy-align'
 " Special Words
 Plug 'itchyny/vim-cursorword'
 
+" vim-peekaboo
+Plug 'junegunn/vim-peekaboo'
+
 
 call plug#end()
 
@@ -248,11 +253,12 @@ call plug#end()
 
 
 " AirLine
+set termguicolors
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let g:airline#extentions#tabline#enable = 1 " Show the Buffers' Line
 let g:airline_theme='dracula'
-let g:space_vim_transp_bg = 1
 set background=dark
-colorscheme space_vim_theme
+colorscheme gruvbox
 
 " NerdTree
 nnoremap <silent> tt :NERDTreeMirror<CR>
@@ -264,7 +270,7 @@ let g:NERDTreeDirArrowCollapsible = '-'
 set hidden
 set updatetime=50
 " Plugins
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-yank', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite']
+let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite']
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -422,6 +428,10 @@ let g:AutoPairsShortcutBackInsert = 'M-b'
 
 " Vim-easy-align
 xmap ga <Plug>(EasyAlign)
+
+" Vim-peekaboo
+xnoremap Y "+y
+nnoremap P "+p
 
 
 " -- ------
