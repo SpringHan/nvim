@@ -29,7 +29,9 @@ endif
 " -- ------ The Path
 " -- ------
 
+let g:python_host_skip_check=1
 let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_skip_check=1
 let g:python3_host_prog = '/usr/bin/python3'
 
 
@@ -58,6 +60,7 @@ set noswapfile
 set noexpandtab
 set showmatch
 set ruler
+set noshowmode
 set smartcase
 set notimeout
 set ttimeoutlen=0
@@ -78,7 +81,6 @@ set foldmethod=marker
 set foldlevelstart=99
 set colorcolumn=80
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-hi Normal ctermfg=252 ctermbg=none
 let g:mapleader = "\<Space>"
 
 
@@ -98,6 +100,7 @@ noremap k n
 noremap K N
 noremap H I
 noremap n h
+nnoremap ci ci
 
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
@@ -146,7 +149,7 @@ nmap cp :checkhealth provider<CR>
 nmap <leader><Return> gf
 nmap <leader>nrc :e ~/.config/nvim/init.vim<CR>
 nmap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
-nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:syntax on<CR>
+nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:call ReloadSyntax()<CR>
 nnoremap css :set spell<CR>
 nnoremap csn :set spell!<CR>
 nnoremap sc z=
@@ -188,10 +191,12 @@ call plug#begin('~/.config/nvim/plugged')
 " TheBegining
 Plug 'mhinz/vim-startify'
 
-" TheAirline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" StatusLine
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'itchyny/vim-gitbranch'
 
 " vim-theme
 "Plug 'liuchengxu/space-vim-theme'
@@ -252,13 +257,30 @@ call plug#end()
 " -- ------
 
 
-" AirLine
+" StatusLine
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-let g:airline#extentions#tabline#enable = 1 " Show the Buffers' Line
-let g:airline_theme='dracula'
+"let g:airline#extentions#tabline#enable = 1 " Show the Buffers' Line
+"let g:airline_theme='dracula'
+set laststatus=2
+let g:lightline = {
+\  'colorscheme': 'dracula',
+\  'active': {
+\    'left': [ [ 'mode', 'paste' ],
+\              [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+\    'right': [ [ 'lineinfo' ],
+\                [ 'percent' ],
+\                [ 'fileformat', 'fileencoding', 'filetype' ] ],
+\  },
+\  'component_function': {
+\    'gitbranch': 'gitbranch#name'
+\  },
+\  }
 set background=dark
 colorscheme gruvbox
+hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
+hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
+au BufNewFile,BufRead * :match Over80 /.\%>81v/
 
 " NerdTree
 nnoremap <silent> tt :NERDTreeMirror<CR>
@@ -484,6 +506,13 @@ function! RunCodes(runType) " By the filetype to run the code.
 			!go run ./%
 		endif
 	endif
+endfunction
+
+function! ReloadSyntax()
+	syntax on
+	hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
+	hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
+	au BufNewFile,BufRead * :match Over80 /.\%>81v/
 endfunction
 
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
