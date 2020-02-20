@@ -71,6 +71,9 @@ set scrolloff=5
 set cursorline
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 set viewoptions=cursor,folds,slash,unix
+set wildmenu
+set wildmode=full
+set wildchar=<Tab>
 set list
 set listchars=tab:\┆\ ,trail:-
 set guicursor=n:block,i:ver1,v:block,r:block,c:block,ci:block,cr:block
@@ -94,6 +97,8 @@ noremap i l
 noremap u k
 noremap U 5k
 noremap E 5j
+noremap N 5h
+noremap I 5l
 noremap l u
 noremap h i
 noremap k n
@@ -101,6 +106,8 @@ noremap K N
 noremap H I
 noremap n h
 nnoremap ci ci
+nnoremap cI cl
+nnoremap C c
 
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
@@ -145,7 +152,6 @@ nmap <silent> cd :nohlsearch<CR>
 nmap sr :r<Space>
 nmap sh :!
 nmap ch :checkhealth<CR>
-nmap cp :checkhealth provider<CR>
 nmap <leader><Return> gf
 nmap <leader>nrc :e ~/.config/nvim/init.vim<CR>
 nmap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
@@ -179,7 +185,7 @@ set smartindent
 
 " Terminal
 autocmd TermOpen term://* startinsert
-tnoremap <silent> Q <C-\><C-n>:q<CR>
+tnoremap <silent> <C-q> <C-\><C-n>:q<CR>
 
 
 " -- ------
@@ -197,6 +203,7 @@ Plug 'mhinz/vim-startify'
 Plug 'itchyny/lightline.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'itchyny/vim-gitbranch'
+Plug 'taohexxx/lightline-buffer'
 
 " vim-theme
 "Plug 'liuchengxu/space-vim-theme'
@@ -228,10 +235,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " Tagbar
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
 " Far
-Plug 'brooth/far.vim'
+Plug 'brooth/far.vim', { 'on': 'Far' }
 
 " Bash-language-server
 Plug 'mads-hartmann/bash-language-server', { 'for': 'sh' }
@@ -248,7 +255,6 @@ Plug 'itchyny/vim-cursorword'
 " vim-peekaboo
 Plug 'junegunn/vim-peekaboo'
 
-
 call plug#end()
 
 
@@ -260,20 +266,48 @@ call plug#end()
 " StatusLine
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"let g:airline#extentions#tabline#enable = 1 " Show the Buffers' Line
+"let g:airline#extentions#tabline#enabled = 1 " Show the Buffers' Line
 "let g:airline_theme='dracula'
 set laststatus=2
 let g:lightline = {
 \  'colorscheme': 'dracula',
 \  'active': {
 \    'left': [ [ 'mode', 'paste' ],
-\              [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-\    'right': [ [ 'lineinfo' ],
-\                [ 'percent' ],
-\                [ 'fileformat', 'fileencoding', 'filetype' ] ],
+\              [ 'gitbranch', 'readonly', 'modified' ],
+\              [ 'separator' ],
+\              [ 'bufferbefore','buffercurrent', 'bufferafter' ], ],
+\    'right': [ [  'percent', 'lineinfo' ],
+\               [ 'fileencoding', 'fileformat' ],
+\               [ 'filetype' ] ],
 \  },
 \  'component_function': {
 \    'gitbranch': 'gitbranch#name'
+\  },
+\  'component_expand': {
+\    'buffercurrent': 'lightline#buffer#buffercurrent',
+\    'bufferbefore': 'lightline#buffer#bufferbefore',
+\    'bufferafter': 'lightline#buffer#bufferafter',
+\  },
+\  'component_type': {
+\    'buffercurrent': 'tabsel',
+\    'bufferbefore': 'raw',
+\    'bufferafter': 'raw',
+\  },
+\  'component': {
+\    'separator': '',
+\  },
+\  'mode_map': {
+\    'n' : 'NOR',
+\    'i' : 'INS',
+\    'R' : 'REP',
+\    'v' : 'VIS',
+\    'V' : 'VI-L',
+\    "\<C-v>": 'VI-B',
+\    'c' : 'COM',
+\    's' : 'SEL',
+\    'S' : 'SE-L',
+\    "\<C-s>": 'SE-B',
+\    't': 'TER'
 \  },
 \  }
 set background=dark
@@ -287,6 +321,8 @@ nnoremap <silent> tt :NERDTreeMirror<CR>
 nnoremap <silent> tt :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '-'
+let g:NERDTreeMapUpdir = 'N'
+let g:NERDTreeMapOpenVSplit = 'I'
 
 " coc.nvim
 set hidden
@@ -379,8 +415,8 @@ let g:UltiSnipsEditSplit = "vertical"
 " Undotree
 nnoremap <leader>ut :UndotreeToggle<CR>
 if has("persistent_undo")
-    set undodir="/home/spring/.undodir"
-    set undofile
+  set undofile
+  set undodir=~/.config/nvim/do_history
 endif
 
 " Fuzzy Finder
@@ -399,15 +435,15 @@ let g:mkdp_browser = 'google-chrome-stable'
 let g:mkdp_echo_preview_url = 0
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
-\ 'mkit': {},
-\ 'katex': {},
-\ 'uml': {},
-\ 'maid': {},
-\ 'disable_sync_scroll': 0,
-\ 'sync_scroll_type': 'middle',
-\ 'hide_yaml_meta': 1,
-\ 'sequence_diagrams': {}
-\ }
+\  'mkit': {},
+\  'katex': {},
+\  'uml': {},
+\  'maid': {},
+\  'disable_sync_scroll': 0,
+\  'sync_scroll_type': 'middle',
+\  'hide_yaml_meta': 1,
+\  'sequence_diagrams': {}
+\  }
 let g:mkdp_markdown_css = ''
 let g:mkdp_highlight_css = ''
 let g:mkdp_port = ''
@@ -446,7 +482,7 @@ let g:AutoPairsMapCR = 1
 let g:AutoPairsCenterLine = 1
 let g:AutoPairsMapSpace = 1
 let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = 'M-b'
+let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " Vim-easy-align
 xmap ga <Plug>(EasyAlign)
