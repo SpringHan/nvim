@@ -69,13 +69,13 @@ set visualbell
 set history=800
 set scrolloff=5
 set cursorline
+set list
+set listchars=tab:\┆\ ,trail:-
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 set viewoptions=cursor,folds,slash,unix
 set wildmenu
 set wildmode=full
 set wildchar=<Tab>
-set list
-set listchars=tab:\┆\ ,trail:-
 set guicursor=n:block,i:ver1,v:block,r:block,c:block,ci:block,cr:block
 set relativenumber
 set autoindent
@@ -108,6 +108,7 @@ noremap n h
 nnoremap ci ci
 nnoremap cI cl
 nnoremap C c
+nnoremap vI :call LoadIndent()
 
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
@@ -198,14 +199,12 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'mhinz/vim-startify'
 
 " StatusLine
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
 Plug 'itchyny/lightline.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'SpringHan/dracula'
 Plug 'itchyny/vim-gitbranch'
 Plug 'taohexxx/lightline-buffer'
 
-" vim-theme
+" vim-style
 "Plug 'liuchengxu/space-vim-theme'
 Plug 'morhetz/gruvbox'
 
@@ -229,7 +228,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': 'mar
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " Fuzzy Finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': 'FZF' }
 
 " JavaScript
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -266,8 +265,6 @@ call plug#end()
 " StatusLine
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"let g:airline#extentions#tabline#enabled = 1 " Show the Buffers' Line
-"let g:airline_theme='dracula'
 set laststatus=2
 let g:lightline = {
 \  'colorscheme': 'dracula',
@@ -325,6 +322,11 @@ let g:NERDTreeMapUpdir = 'N'
 let g:NERDTreeMapOpenVSplit = 'I'
 
 " coc.nvim
+let g:coc_start_at_startup = 0
+function! CocTimerStart(timer)
+	exec "CocStart"
+endfunction
+call timer_start(300, 'CocTimerStart', {'repeat': 1})
 set hidden
 set updatetime=50
 " Plugins
