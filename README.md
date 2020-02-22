@@ -6,7 +6,7 @@ First,look an example:
 
 ![TheExample](./demo.png)
 
-(I'm not very good at this.Now,I am only a novice.)
+(I'm a colemak user.)
 
 ## Plugins
 
@@ -15,8 +15,18 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 #### My Plugins
 
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
-- [vim-airline](https://github.com/vim-airline/vim-airline) - A status-line which is light like air
-- [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) - vim-airline official themes
+- [LightLine](https://github.com/itchyny/lightline.vim) - A light and useful statusline in vim
+- [Dracula](https://github.com/dracula/vim) - A really beautiful theme in vim(And I modified sonething,you can [Look here](https://github.com/SpringHan/dracula))
+- [vim-gitbranch](https://github.com/itchyny/vim-gitbranch) - A simple git plugin which can show the branch name in vim
+- [LightLine-buffer](https://github.com/taohexxx/lightline-buffer) - LightLine's buffer line.
+- [GruvBox](https://github.com/morhetz/gruvbox) - A popular theme in vim
+- [vim-javascript](https://github.com/pangloss/vim-javascript) - A vim plugin provides javascript syntax
+- [Tagbar](https://github.com/majutsushi/tagbar) - A plug can show the functions in vim
+- [Far](https://github.com/brooth/far.vim) - A great plug which can do a good job on finding in vim
+- [Auto-Pairs](https://github.com/jiangmiao/auto-pairs) - A plug that can insert or delete brackets, parens, quotes in pair
+- [vim-easy-align](https://github.com/junegunn/vim-easy-align) - A plug that can center code easily
+- [vim-cursorline](https://github.com/itchyny/vim-cursorword) - A plug that can make words have underline
+- [vim-peakaboo](https://github.com/junegunn/vim-peekaboo) - A plug which extension `@` and `"`
 - [NERDTree](https://github.com/scrooloose/nerdtree) - A files tree in vim
 - [coc.vim](https://github.com/neoclide/coc.vim) - A completor in vim
 - [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - A Plugin which can help you format the tables.
@@ -35,16 +45,17 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 
 #### Set your Python3 path
 
-You can find __Line 34__ in the `init.vim`,and then input your Python3 path.
+You can find __Line 33__ and __Line 35__ in the `init.vim`,and then input your Python3 path.
 
 Like this:
 ```vim
+let g:python_host_prog = '/bin/python'
 let g:python3_host_prog = '/bin/python3'
 ```
 
 #### Some other custom settings
 
-You can find __Line 61__ in the `init.vim` to set your own `leader`.
+You can find __Line 87__ in the `init.vim` to set your own `leader`.
 
 
 ## Key Mappings
@@ -67,30 +78,47 @@ These are my Key Mappings,of course you can change them.
 | ,X         | ESC xi     |
 | .X         | ESC lxi    |
 
-| Normal Key | origin Key   |
-|------------|--------------|
-| cl         | :bp CR       |
-| cn         | :bn CR       |
-| cw         | :w CR        |
-| cq         | :q CR        |
-| wq         | :wq CR       |
-| wa         | :qa CR       |
-| eq         | :q! CR       |
-| bf         | :buffers CR  |
-| et         | :edit        |
-| sp         | :split       |
-| vs         | :vsplit      |
-| va         | C-w +        |
-| vr         | C-w -        |
-| ve         | C-w =        |
-| vj         | C-w j        |
-| vk         | C-w k        |
-| vh         | C-w h        |
-| vl         | C-w l        |
-| tm         | :terminal CR |
-| bd         | :bd CR       |
-| die        | :noh CR      |
-| leader-r   | RunCodes     |
+| Normal Key | origin Key       |
+|------------|------------------|
+| n          | h                |
+| i          | l                |
+| u          | k                |
+| e          | j                |
+| h          | i                |
+| U          | 5k               |
+| E          | 5j               |
+| N          | 5h               |
+| I          | 5l               |
+| l          | u                |
+| k          | n                |
+| K          | N                |
+| H          | I                |
+| ci         | ci               |
+| cI         | cl               |
+| C          | C                |
+| cl         | :bp CR           |
+| cn         | :bn CR           |
+| cw         | :w CR            |
+| cq         | :q CR            |
+| wq         | :wq CR           |
+| wa         | :qa CR           |
+| eq         | :q! CR           |
+| bf         | :buffers CR      |
+| et         | :edit            |
+| sp         | :split           |
+| vs         | :vsplit          |
+| va         | C-w +            |
+| vr         | C-w -            |
+| ve         | C-w =            |
+| vj         | C-w j            |
+| vk         | C-w k            |
+| vh         | C-w h            |
+| vl         | C-w l            |
+| tm         | :terminal CR     |
+| bd         | :bd CR           |
+| cd         | :noh CR          |
+| leader-r   | RunCodes         |
+| leader-tm  | :TableModeToggle |
 
 
 ## The End
