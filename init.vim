@@ -108,7 +108,6 @@ noremap n h
 nnoremap ci ci
 nnoremap cI cl
 nnoremap C c
-nnoremap vI :call LoadIndent()
 
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
