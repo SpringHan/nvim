@@ -555,3 +555,6 @@ endfunction
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
 nnoremap <silent> co :only<CR>
+
+" Debug
+"source ~/.config/nvim/plugged/todolist.vim/test.vim
