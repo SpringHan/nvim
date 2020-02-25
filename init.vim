@@ -253,6 +253,9 @@ Plug 'itchyny/vim-cursorword'
 " vim-peekaboo
 Plug 'junegunn/vim-peekaboo'
 
+" Todo
+Plug 'SpringHan/lightTodo.vim', { 'on': 'LightTodoToggle' }
+
 call plug#end()
 
 
@@ -492,6 +495,17 @@ xmap ga <Plug>(EasyAlign)
 xnoremap Y "+y
 nnoremap P "+p
 
+" LightTodo
+nnoremap <leader>tt :LightTodoToggle<CR>
+nnoremap <leader>taa :LightTodoAdd<CR>
+nnoremap <leader>tld :LightTodoDone<CR>
+nnoremap <leader>tu :LightTodoUndone<CR>
+nnoremap <leader>tad :LightTodoAllDone<CR>
+nnoremap <leader>tau :LightTodoAllUndone<CR>
+nnoremap <leader>td :LightTodoDelete<CR>
+nnoremap <leader>tc :LightTodoClean<CR>
+let g:LightTodoFile = $HOME.'/.todo'
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -555,6 +569,3 @@ endfunction
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
 nnoremap <silent> co :only<CR>
-
-" Debug
-"source ~/.config/nvim/plugged/todolist.vim/test.vim

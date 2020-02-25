@@ -16,6 +16,7 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
 - [LightLine](https://github.com/itchyny/lightline.vim) - A light and useful statusline in vim
+- [LightTodo.vim](https://github.com/SpringHan/lightTodo.vim) - A light todolist in (neo)vim written by me
 - [Dracula](https://github.com/dracula/vim) - A really beautiful theme in vim(And I modified sonething,you can [Look here](https://github.com/SpringHan/dracula))
 - [vim-gitbranch](https://github.com/itchyny/vim-gitbranch) - A simple git plugin which can show the branch name in vim
 - [LightLine-buffer](https://github.com/taohexxx/lightline-buffer) - LightLine's buffer line.
