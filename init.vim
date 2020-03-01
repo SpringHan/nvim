@@ -3,7 +3,7 @@
 "	 | |\/| | | | | |  \| |/ _ \/ _ \ \ / / | '_ ` _ \| '__/ __|
 "	 | |  | | |_| | | |\  |  __/ (_) \ V /| | | | | | | | | (__ 
 "	 |_|  |_|\__, | |_| \_|\___|\___/ \_/ |_|_| |_| |_|_|  \___|
-"			 |___/                                              
+"					 |___/                                              
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
@@ -198,17 +198,18 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'mhinz/vim-startify'
 
 " StatusLine
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 Plug 'SpringHan/dracula'
-Plug 'itchyny/vim-gitbranch'
-Plug 'taohexxx/lightline-buffer'
+"Plug 'itchyny/vim-gitbranch'
+"Plug 'taohexxx/lightline-buffer'
+"Plug 'Styadev/HicusLine'
 
 " vim-style
 "Plug 'liuchengxu/space-vim-theme'
 Plug 'morhetz/gruvbox'
 
 " TheNerdTree
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Coc.nvim
 Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
@@ -254,7 +255,7 @@ Plug 'itchyny/vim-cursorword'
 Plug 'junegunn/vim-peekaboo'
 
 " Todo
-Plug 'SpringHan/lightTodo.vim', { 'on': 'LightTodoToggle' }
+Plug 'SpringHan/lightTodo.vim'
 
 call plug#end()
 
@@ -267,48 +268,48 @@ call plug#end()
 " StatusLine
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-set laststatus=2
-let g:lightline = {
-\  'colorscheme': 'dracula',
-\  'active': {
-\    'left': [ [ 'mode', 'paste' ],
-\              [ 'gitbranch', 'readonly', 'modified' ],
-\              [ 'separator' ],
-\              [ 'bufferbefore','buffercurrent', 'bufferafter' ], ],
-\    'right': [ [  'percent', 'lineinfo' ],
-\               [ 'fileencoding', 'fileformat' ],
-\               [ 'filetype' ] ],
-\  },
-\  'component_function': {
-\    'gitbranch': 'gitbranch#name'
-\  },
-\  'component_expand': {
-\    'buffercurrent': 'lightline#buffer#buffercurrent',
-\    'bufferbefore': 'lightline#buffer#bufferbefore',
-\    'bufferafter': 'lightline#buffer#bufferafter',
-\  },
-\  'component_type': {
-\    'buffercurrent': 'tabsel',
-\    'bufferbefore': 'raw',
-\    'bufferafter': 'raw',
-\  },
-\  'component': {
-\    'separator': '',
-\  },
-\  'mode_map': {
-\    'n' : 'NOR',
-\    'i' : 'INS',
-\    'R' : 'REP',
-\    'v' : 'VIS',
-\    'V' : 'VI-L',
-\    "\<C-v>": 'VI-B',
-\    'c' : 'COM',
-\    's' : 'SEL',
-\    'S' : 'SE-L',
-\    "\<C-s>": 'SE-B',
-\    't': 'TER'
-\  },
-\  }
+"set laststatus=2
+"let g:lightline = {
+"\  'colorscheme': 'dracula',
+"\  'active': {
+"\    'left': [ [ 'mode', 'paste' ],
+"\              [ 'gitbranch', 'readonly', 'modified' ],
+"\              [ 'separator' ],
+"\              [ 'bufferbefore','buffercurrent', 'bufferafter' ], ],
+"\    'right': [ [  'percent', 'lineinfo' ],
+"\               [ 'fileencoding', 'fileformat' ],
+"\               [ 'filetype' ] ],
+"\  },
+"\  'component_function': {
+"\    'gitbranch': 'gitbranch#name'
+"\  },
+"\  'component_expand': {
+"\    'buffercurrent': 'lightline#buffer#buffercurrent',
+"\    'bufferbefore': 'lightline#buffer#bufferbefore',
+"\    'bufferafter': 'lightline#buffer#bufferafter',
+"\  },
+"\  'component_type': {
+"\    'buffercurrent': 'tabsel',
+"\    'bufferbefore': 'raw',
+"\    'bufferafter': 'raw',
+"\  },
+"\  'component': {
+"\    'separator': '',
+"\  },
+"\  'mode_map': {
+"\    'n' : 'NOR',
+"\    'i' : 'INS',
+"\    'R' : 'REP',
+"\    'v' : 'VIS',
+"\    'V' : 'VI-L',
+"\    "\<C-v>": 'VI-B',
+"\    'c' : 'COM',
+"\    's' : 'SEL',
+"\    'S' : 'SE-L',
+"\    "\<C-s>": 'SE-B',
+"\    't': 'TER'
+"\  },
+"\  }
 set background=dark
 colorscheme gruvbox
 hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
@@ -506,6 +507,13 @@ nnoremap <leader>td :LightTodoDelete<CR>
 nnoremap <leader>tc :LightTodoClean<CR>
 let g:LightTodoFile = $HOME.'/.todo'
 
+" HicusLine
+set laststatus=2
+"let g:HicusLineEnabled = 1
+"let g:HicusLine = {
+"\  'left': [],
+"\}
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -569,3 +577,7 @@ endfunction
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
 nnoremap <silent> co :only<CR>
+
+" Debug
+"set runtimepath+=~/Github/HicusLine
+"let g:HicusLineDebug = 1
