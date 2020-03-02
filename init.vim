@@ -60,7 +60,7 @@ set noswapfile
 set noexpandtab
 set showmatch
 set ruler
-set noshowmode
+"set noshowmode
 set smartcase
 set notimeout
 set ttimeoutlen=0
@@ -167,7 +167,7 @@ nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 xmap ; :
 
 " PlaceHolder
-nmap <silent> <leader><leader> /<+++><CR>:nohlsearch<CR>c5l
+nmap <silent> <leader><leader> /<+++><CR>:nohlsearch<CR>c5i
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
 inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
@@ -511,7 +511,7 @@ let g:LightTodoFile = $HOME.'/.todo'
 set laststatus=2
 "let g:HicusLineEnabled = 1
 "let g:HicusLine = {
-"\  'left': [],
+"\   'left': [ 'filename', 'modified2', ],
 "\}
 
 
