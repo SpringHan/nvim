@@ -60,7 +60,7 @@ set noswapfile
 set noexpandtab
 set showmatch
 set ruler
-"set noshowmode
+set noshowmode
 set smartcase
 set notimeout
 set ttimeoutlen=0
@@ -265,51 +265,9 @@ call plug#end()
 " -- ------
 
 
-" StatusLine
+" NeoVim Styles
 set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"set laststatus=2
-"let g:lightline = {
-"\  'colorscheme': 'dracula',
-"\  'active': {
-"\    'left': [ [ 'mode', 'paste' ],
-"\              [ 'gitbranch', 'readonly', 'modified' ],
-"\              [ 'separator' ],
-"\              [ 'bufferbefore','buffercurrent', 'bufferafter' ], ],
-"\    'right': [ [  'percent', 'lineinfo' ],
-"\               [ 'fileencoding', 'fileformat' ],
-"\               [ 'filetype' ] ],
-"\  },
-"\  'component_function': {
-"\    'gitbranch': 'gitbranch#name'
-"\  },
-"\  'component_expand': {
-"\    'buffercurrent': 'lightline#buffer#buffercurrent',
-"\    'bufferbefore': 'lightline#buffer#bufferbefore',
-"\    'bufferafter': 'lightline#buffer#bufferafter',
-"\  },
-"\  'component_type': {
-"\    'buffercurrent': 'tabsel',
-"\    'bufferbefore': 'raw',
-"\    'bufferafter': 'raw',
-"\  },
-"\  'component': {
-"\    'separator': '',
-"\  },
-"\  'mode_map': {
-"\    'n' : 'NOR',
-"\    'i' : 'INS',
-"\    'R' : 'REP',
-"\    'v' : 'VIS',
-"\    'V' : 'VI-L',
-"\    "\<C-v>": 'VI-B',
-"\    'c' : 'COM',
-"\    's' : 'SEL',
-"\    'S' : 'SE-L',
-"\    "\<C-s>": 'SE-B',
-"\    't': 'TER'
-"\  },
-"\  }
 set background=dark
 colorscheme gruvbox
 hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
@@ -497,22 +455,57 @@ xnoremap Y "+y
 nnoremap P "+p
 
 " LightTodo
-nnoremap <leader>tt :LightTodoToggle<CR>
+nnoremap <leader>tt  :LightTodoToggle<CR>
 nnoremap <leader>taa :LightTodoAdd<CR>
 nnoremap <leader>tld :LightTodoDone<CR>
-nnoremap <leader>tu :LightTodoUndone<CR>
+nnoremap <leader>tu  :LightTodoUndone<CR>
 nnoremap <leader>tad :LightTodoAllDone<CR>
 nnoremap <leader>tau :LightTodoAllUndone<CR>
-nnoremap <leader>td :LightTodoDelete<CR>
-nnoremap <leader>tc :LightTodoClean<CR>
+nnoremap <leader>td  :LightTodoDelete<CR>
+nnoremap <leader>tc  :LightTodoClean<CR>
 let g:LightTodoFile = $HOME.'/.todo'
 
 " HicusLine
 set laststatus=2
-"let g:HicusLineEnabled = 1
-"let g:HicusLine = {
-"\   'left': [ 'filename', 'modified2', ],
-"\}
+let g:HicusLineEnabled = 1
+let g:HicusLine = {
+\   'active': {
+\       'left': [ 1, 'mode', 0, 'modified', 'filename', ],
+\       'right': [ 2, 'fileencoding', '\ ', 'fileformat', 1, 'linenumber', ':',
+\                  'bufferlinesnumber', 0, ],
+\   },
+\}
+let g:HicusLineMode = {
+\   'n':      'NORMAL',
+\   'i':      'INSERT',
+\   'R':      'REPLACE',
+\   'v':      'VISUAL',
+\   'V':      'L-VISU',
+\   "\<C-v>": 'B-VISU',
+\   'c':      'COMMAND',
+\   's':      'SELECT',
+\   'S':      'L-SELE',
+\   "\<C-s>": 'B-SELE',
+\   't':      'TERMINAL',
+\}
+hi StatusLine gui=None guifg=#8BE9FD guibg=#44475A
+function! ChangeStatuslineColor()
+	let l:mode = mode()
+	if l:mode == 'n'
+		hi User1 gui=bold guifg=#282A36 guibg=#BD93F9
+		hi User2 gui=None guifg=White guibg=#6272A4
+	elseif l:mode == 'i'
+		hi User1 gui=bold guifg=#282A36 guibg=#50FA7B
+		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
+	elseif l:mode == 'R'
+		hi User1 gui=bold guifg=#282A36 guibg=#FF5555
+		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
+	elseif l:mode == 'v'
+		hi User1 gui=bold guifg=#282A36 guibg=#FFB86C
+		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
+	endif
+endfunction
+autocmd BufEnter,BufDelete,SessionLoadPost * call ChangeStatuslineColor()
 
 
 " -- ------
@@ -520,9 +513,9 @@ set laststatus=2
 " -- ------
 
 function! TermSet() " The function was written for set the split position.
-	:set splitbelow
-	:split
-	:set nosplitbelow
+	set splitbelow
+	split
+	set nosplitbelow
 endfunction
 
 function! RunCodes(runType) " By the filetype to run the code.
