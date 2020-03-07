@@ -146,7 +146,7 @@ nmap vj <C-w>j
 nmap vk <C-w>k
 nmap vh <C-w>h
 nmap vl <C-w>l
-nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR>
+nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR><C-\><C-n>:setlocal nonumber norelativenumber<CR>A
 nmap <silent> cb :bd<CR>
 nmap <silent> cd :nohlsearch<CR>
 nmap sr :r<Space>
@@ -489,23 +489,34 @@ let g:HicusLineMode = {
 \   't':      'TERMINAL',
 \}
 hi StatusLine gui=None guifg=#8BE9FD guibg=#44475A
-function! ChangeStatuslineColor()
-	let l:mode = mode()
+function! ChangeStatuslineColor(...)
+	if a:0 == 1
+		let l:mode = a:1
+	else
+		let l:mode = mode()
+	endif
 	if l:mode == 'n'
 		hi User1 gui=bold guifg=#282A36 guibg=#BD93F9
-		hi User2 gui=None guifg=White guibg=#6272A4
+		hi User2 gui=None guifg=#FFFFFF guibg=#6272A4
 	elseif l:mode == 'i'
 		hi User1 gui=bold guifg=#282A36 guibg=#50FA7B
 		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-	elseif l:mode == 'R'
+	elseif l:mode == 'r'
 		hi User1 gui=bold guifg=#282A36 guibg=#FF5555
 		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-	elseif l:mode == 'v'
+	elseif l:mode == 'v' || l:mode == 'V' || l:mode == "\<C-v>"
 		hi User1 gui=bold guifg=#282A36 guibg=#FFB86C
 		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
 	endif
+	unlet l:mode
 endfunction
-autocmd BufEnter,BufDelete,SessionLoadPost * call ChangeStatuslineColor()
+augroup HighLightStatusline
+	autocmd VimEnter     * call ChangeStatuslineColor()
+	autocmd BufRead      * call ChangeStatuslineColor()
+	autocmd InsertEnter  * call ChangeStatuslineColor(v:insertmode)
+	autocmd InsertChange * call ChangeStatuslineColor(v:insertmode)
+	autocmd InsertLeave  * call ChangeStatuslineColor()
+augroup END
 
 
 " -- ------
@@ -572,5 +583,5 @@ nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
-"set runtimepath+=~/Github/HicusLine
+set runtimepath+=~/Github/HicusLine
 "let g:HicusLineDebug = 1
