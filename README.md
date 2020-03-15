@@ -1,4 +1,4 @@
- My Neovim Configuration
+# My Neovim Configuration
 
 This is my Neovim's Configuration files.
 
