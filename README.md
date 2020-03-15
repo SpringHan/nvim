@@ -1,4 +1,4 @@
-# My Neovim Configuration
+ My Neovim Configuration
 
 This is my Neovim's Configuration files.
 
@@ -17,7 +17,7 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
 - [HicusLine](https://github.com/Styadev/HicusLine) - A highly customizable statusline in (neo)vim
 - [LightTodo.vim](https://github.com/SpringHan/lightTodo.vim) - A light todolist in (neo)vim written by me
-- [Dracula](https://github.com/dracula/vim) - A really beautiful theme in vim(And I modified sonething,you can [Look here](https://github.com/SpringHan/dracula))
+- [Dracula](https://github.com/dracula/vim) - A really beautiful theme in vim(And I modified something,you can [Look here](https://github.com/SpringHan/dracula))
 - [vim-bufferline](https://github.com/bling/vim-bufferline) - A buffer shower in commnad.
 - [GruvBox](https://github.com/morhetz/gruvbox) - A popular theme in vim
 - [vim-javascript](https://github.com/pangloss/vim-javascript) - A vim plugin provides javascript syntax
