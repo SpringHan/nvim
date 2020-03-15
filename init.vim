@@ -82,7 +82,6 @@ set autoindent
 set path=.,/usr/include,/usr/local/include/
 set foldmethod=marker
 set foldlevelstart=99
-set colorcolumn=80
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 let g:mapleader = "\<Space>"
 
@@ -151,11 +150,10 @@ nmap <silent> cb :bd<CR>
 nmap <silent> cd :nohlsearch<CR>
 nmap sr :r<Space>
 nmap sh :!
-nmap ch :checkhealth<CR>
 nmap <leader><Return> gf
 nmap <leader>nrc :e ~/.config/nvim/init.vim<CR>
 nmap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
-nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:call ReloadSyntax()<CR>
+nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>
 nnoremap css :set spell<CR>
 nnoremap csn :set spell!<CR>
 nnoremap sc z=
@@ -171,6 +169,11 @@ nmap <silent> <leader><leader> /<+++><CR>:nohlsearch<CR>c5i
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
 inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
+
+" Notes
+nnoremap <silent> <leader>la :hi Normal ctermfg=None ctermbg=None guifg=None guibg=None<CR>
+nnoremap <silent> <leader>lmd :set filetype=markdown<CR>
+nnoremap <silent> <leader>lna :hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828<CR>
 
 " Snippets
 source ~/.config/nvim/snippets.vim
@@ -201,8 +204,8 @@ Plug 'mhinz/vim-startify'
 "Plug 'itchyny/lightline.vim'
 Plug 'SpringHan/dracula'
 "Plug 'itchyny/vim-gitbranch'
-"Plug 'taohexxx/lightline-buffer'
-"Plug 'Styadev/HicusLine'
+Plug 'Styadev/HicusLine'
+Plug 'bling/vim-bufferline'
 
 " vim-style
 "Plug 'liuchengxu/space-vim-theme'
@@ -221,8 +224,9 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-" MarkDown Preview
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': 'markdown' }
+" Reader
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': [ 'vimwiki', 'markdown' ] }
+Plug 'vimwiki/vimwiki'
 
 " Undotree
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -387,7 +391,7 @@ nmap <leader>FZ :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
-autocmd filetype markdown nmap <leader>md <Plug>MarkdownPreviewStop
+autocmd filetype markdown nmap <leader>md <Plug>MarkdownPreviewStop:set filetype=vimwiki<CR>
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -466,13 +470,48 @@ nnoremap <leader>tc  :LightTodoClean<CR>
 let g:LightTodoFile = $HOME.'/.todo'
 
 " HicusLine
+" StatusFunction {{{
+function! GitInfo()
+	let l:gitinfo = get(g:, 'coc_git_status', '')
+	if empty(l:gitinfo)
+		return ''
+	endif
+	return l:gitinfo
+endfunction
+function! ErrorStatus()
+	let l:status = get(b:, 'coc_diagnostic_info', '')
+	if empty(l:status)
+		return ''
+	endif
+	let l:errors = get(l:status, 'error', '')
+	if l:errors == ''
+		return ''
+	endif
+	return '●'.l:errors
+endfunction
+function! WarningStatus()
+	let l:status = get(b:, 'coc_diagnostic_info', '')
+	if empty(l:status)
+		return ''
+	endif
+	let l:warning = get(l:status, 'warning', '')
+	if l:warning == ''
+		return ''
+	endif
+	return '●'.l:warning
+endfunction
+" }}}
 set laststatus=2
 let g:HicusLineEnabled = 1
 let g:HicusLine = {
 \   'active': {
-\       'left': [ 1, 'mode', 0, 'modified', 'filename', ],
-\       'right': [ 2, 'fileencoding', '\ ', 'fileformat', 1, 'linenumber', ':',
-\                  'bufferlinesnumber', 0, ],
+\       'left': [ 1, 'space', 'mode', 'space', 'spell', 2, '%{GitInfo()}', 0,
+\                 'modified', 'filename', 'space',
+\                 '%#ErrorStatus#%{ErrorStatus()}', 'space',
+\                 '%#WarningStatus#%{WarningStatus()}', 0, ],
+\       'right': [ 'filetype', 'space', 2, 'fileencoding', 'space','fileformat',
+\                  1, 'space', 'linenumber', ':', 'bufferlinesnumber', 'space',
+\                  'windowpercentage', 'space', ],
 \   },
 \}
 let g:HicusLineMode = {
@@ -488,35 +527,47 @@ let g:HicusLineMode = {
 \   "\<C-s>": 'B-SELE',
 \   't':      'TERMINAL',
 \}
-hi StatusLine gui=None guifg=#8BE9FD guibg=#44475A
-function! ChangeStatuslineColor(...)
-	if a:0 == 1
-		let l:mode = a:1
-	else
-		let l:mode = mode()
-	endif
-	if l:mode == 'n'
-		hi User1 gui=bold guifg=#282A36 guibg=#BD93F9
-		hi User2 gui=None guifg=#FFFFFF guibg=#6272A4
-	elseif l:mode == 'i'
-		hi User1 gui=bold guifg=#282A36 guibg=#50FA7B
-		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-	elseif l:mode == 'r'
-		hi User1 gui=bold guifg=#282A36 guibg=#FF5555
-		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-	elseif l:mode == 'v' || l:mode == 'V' || l:mode == "\<C-v>"
-		hi User1 gui=bold guifg=#282A36 guibg=#FFB86C
-		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-	endif
-	unlet l:mode
-endfunction
-augroup HighLightStatusline
-	autocmd VimEnter     * call ChangeStatuslineColor()
-	autocmd BufRead      * call ChangeStatuslineColor()
-	autocmd InsertEnter  * call ChangeStatuslineColor(v:insertmode)
-	autocmd InsertChange * call ChangeStatuslineColor(v:insertmode)
-	autocmd InsertLeave  * call ChangeStatuslineColor()
-augroup END
+"let g:HicusColorChanges = {
+"\   'MODE': {
+"\       'NORMALMode': [ [ '#282A36', '#BD93F9', ], "mode()=='n'", ],
+"\       'INSERTMode': [ [ '#282A36', '#50FA7B', ], "mode()=='i'", ],
+"\       'VISUALMode': [ [ '#282A36', '#FFB86C', ], "mode()=='v'",
+"\                      "mode()=='V'", "mode()==\"<C-v>\"", ],
+"\       'REPLACEMode': [ [ '#282A36', '#FF5555', ], "mode()=='r'", ],
+"\       'NORMALChild': [ [ '#FFFFFF', '#6272A4', ], "mode()=='n'", ],
+"\       'OtherChild': [ [ '#44475A', '#8BE9FD', ], "mode()!='n'", ],
+"\   },
+"\}
+"function! ChangeStatuslineColor(...)
+"	if a:0 == 1
+"		let l:mode = a:1
+"	else
+"		let l:mode = mode()
+"	endif
+"	if l:mode == 'n'
+"	elseif l:mode == 'i'
+"		hi User1 gui=bold guifg=#282A36 guibg=#50FA7B
+"		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
+"	elseif l:mode == 'r'
+"		hi User1 gui=bold guifg=#282A36 guibg=#FF5555
+"		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
+"	elseif l:mode == 'v' || l:mode == 'V' || l:mode == "\<C-v>"
+"		hi User1 gui=bold guifg=#282A36 guibg=#FFB86C
+"		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
+"	endif
+"	unlet l:mode
+"endfunction
+"augroup HighLightStatusline
+"	autocmd VimEnter     * call ChangeStatuslineColor()
+"	autocmd BufRead      * call ChangeStatuslineColor()
+"	autocmd InsertEnter  * call ChangeStatuslineColor(v:insertmode)
+"	autocmd InsertChange * call ChangeStatuslineColor(v:insertmode)
+"	autocmd InsertLeave  * call ChangeStatuslineColor()
+"augroup END
+
+" vimwiki
+let g:vimwiki_list = [ { 'path': '~/Github/StudyNotes/',
+\   'syntax': 'markdown', 'ext': '.md', }, ]
 
 
 " -- ------
@@ -538,33 +589,36 @@ function! RunCodes(runType) " By the filetype to run the code.
 		exec "!google-chrome-stable 127.0.0.1:8080"
 	elseif &filetype == 'sh'
 		if a:runType == 'interactive'
-			:call TermSet()
-			:terminal sh ./%
+			call TermSet()
+			terminal sh ./%
 		elseif a:runType == 'normal'
 			exec "!chmod +x ./%"
 			exec "!./%"
 		endif
 	elseif &filetype == 'python'
 		if a:runType == 'interactive'
-			:call TermSet()
-			:terminal python3 ./%
+			call TermSet()
+			terminal python3 ./%
 		elseif a:runType == 'normal'
 			!python3 ./%
 		endif
 	elseif &filetype == 'c'
 		if a:runType == 'interactive'
-			:call TermSet()
-			:terminal gcc % -o /tmp/%<.o; /tmp/%<.o
+			call TermSet()
+			terminal gcc % -o /tmp/%<.o; /tmp/%<.o
 		elseif a:runType == 'normal'
 			exec "!gcc % -o /tmp/%<.o"
 			exec "!/tmp/%<.o"
 		endif
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
+	elseif &filetype == 'vimwiki'
+		exec "set filetype=markdown"
+		exec "MarkdownPreview"
 	elseif &filetype == 'go'
 		if a:runType == 'interactive'
-			:call TermSet()
-			:terminal go run ./%
+			call TermSet()
+			terminal go run ./%
 		elseif a:runType == 'normal'
 			!go run ./%
 		endif
@@ -573,15 +627,27 @@ endfunction
 
 function! ReloadSyntax()
 	syntax on
-	hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
-	hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
-	au BufNewFile,BufRead * :match Over80 /.\%>81v/
+	if &filetype == 'vimwiki' || &filetype == 'markdown'
+		hi Normal ctermfg=None ctermbg=None guifg=None guibg=None
+		set colorcolumn=""
+	else
+		hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
+		set colorcolumn=80
+		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
+		au BufNewFile,BufRead * :match Over80 /.\%>81v/
+	endif
+	hi StatusLine gui=None guifg=#8BE9FD guibg=#44475A
+	hi User1 gui=bold guifg=#282A36 guibg=#BD93F9
+	hi User2 gui=None guifg=#FFFFFF guibg=#6272A4
+	hi ErrorStatus gui=None guifg=#FF0033 guibg=#44475A
+	hi WarningStatus gui=None guifg=#FFCC00 guibg=#44475A
 endfunction
+
+call ReloadSyntax()
 
 nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
 nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
-set runtimepath+=~/Github/HicusLine
-"let g:HicusLineDebug = 1
+"set runtimepath+=~/Github/HicusLine

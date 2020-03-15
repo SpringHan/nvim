@@ -15,11 +15,10 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 #### My Plugins
 
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
-- [LightLine](https://github.com/itchyny/lightline.vim) - A light and useful statusline in vim
+- [HicusLine](https://github.com/Styadev/HicusLine) - A highly customizable statusline in (neo)vim
 - [LightTodo.vim](https://github.com/SpringHan/lightTodo.vim) - A light todolist in (neo)vim written by me
 - [Dracula](https://github.com/dracula/vim) - A really beautiful theme in vim(And I modified sonething,you can [Look here](https://github.com/SpringHan/dracula))
-- [vim-gitbranch](https://github.com/itchyny/vim-gitbranch) - A simple git plugin which can show the branch name in vim
-- [LightLine-buffer](https://github.com/taohexxx/lightline-buffer) - LightLine's buffer line.
+- [vim-bufferline](https://github.com/bling/vim-bufferline) - A buffer shower in commnad.
 - [GruvBox](https://github.com/morhetz/gruvbox) - A popular theme in vim
 - [vim-javascript](https://github.com/pangloss/vim-javascript) - A vim plugin provides javascript syntax
 - [Tagbar](https://github.com/majutsushi/tagbar) - A plug can show the functions in vim
@@ -34,6 +33,7 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [Ultisnips](https://github.com/SirVer/ultisnips) - A Plugin which can provide code snippets in vim
 - [vim-space-theme](https://github.com/liuchengxu/space-vim-theme) - A pretty nice vim theme
 - [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) - A markdown previewer
+- [vimwiki](https://github.com/vimwiki/vimwiki) - Make your own wiki in (neo)vim.
 - [Undotree](https://github.com/mbbill/undotree) - A plugin which can save the editing histroy
 - [fzf](https://github.com/junegunn/fzf) - A fuzzy finder in vim
 
