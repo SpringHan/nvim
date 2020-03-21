@@ -126,33 +126,33 @@ inoremap ,x <ESC>xa
 inoremap ,X <ESC>xi
 inoremap .x <ESC>lxi
 
-nmap ; :
-nmap > >>
-nmap < <<
-nmap <silent> cl :bp<CR>
-nmap <silent> cn :bn<CR>
-nmap <silent> cww :w<CR>
-nmap <silent> cq :q<CR>
-nmap <silent> cwq :wq<CR>
-nmap <silent> ca :qa<CR>
-nmap <silent> ceq :q!<CR>
-nmap <silent> cf :buffers<CR>
-nmap cet :edit<Space>
-nmap va <C-w>+
-nmap vr <C-w>-
-nmap ve <C-w>=
-nmap vj <C-w>j
-nmap vk <C-w>k
-nmap vh <C-w>h
-nmap vl <C-w>l
-nmap <silent> tm :vsplit<CR><C-W>l:terminal<CR><C-\><C-n>:setlocal nonumber norelativenumber<CR>A
-nmap <silent> cb :bd<CR>
-nmap <silent> cd :nohlsearch<CR>
-nmap sr :r<Space>
-nmap sh :!
-nmap <leader><Return> gf
-nmap <leader>nrc :e ~/.config/nvim/init.vim<CR>
-nmap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
+nnoremap ; :
+nnoremap > >>
+nnoremap < <<
+nnoremap <silent> cl :bp<CR>
+nnoremap <silent> cn :bn<CR>
+nnoremap <silent> cww :w<CR>
+nnoremap <silent> cq :q<CR>
+nnoremap <silent> cwq :wq<CR>
+nnoremap <silent> ca :qa<CR>
+nnoremap <silent> ceq :q!<CR>
+nnoremap <silent> cf :buffers<CR>
+nnoremap cet :edit<Space>
+nnoremap va <C-w>+
+nnoremap vr <C-w>-
+nnoremap vj <C-w>=
+nnoremap ve <C-w>j
+nnoremap vu <C-w>k
+nnoremap vn <C-w>h
+nnoremap vi <C-w>l
+nnoremap <silent> tm :vsplit<CR><C-W>l:terminal<CR><C-\><C-n>:setlocal nonumber norelativenumber<CR>A
+nnoremap <silent> cb :bd<CR>
+nnoremap <silent> cd :nohlsearch<CR>
+nnoremap sr :r<Space>
+nnoremap sh :!
+nnoremap <leader><Return> gf
+nnoremap <leader>nrc :e ~/.config/nvim/init.vim<CR>
+nnoremap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
 nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>
 nnoremap css :set spell<CR>
 nnoremap csn :set spell!<CR>
@@ -171,7 +171,7 @@ inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
 
 " Notes
-nnoremap <silent> <leader>la :hi Normal ctermfg=None ctermbg=None guifg=None guibg=None<CR>
+nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
 nnoremap <silent> <leader>lmd :set filetype=markdown<CR>
 nnoremap <silent> <leader>lna :hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828<CR>
 
@@ -214,15 +214,12 @@ Plug 'morhetz/gruvbox'
 " TheNerdTree
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
-" Coc.nvim
+" Autosuggestion
 Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
+Plug 'mattn/emmet-vim', { 'for': 'html' }
 
 " VimTableMode
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-
-" Ultisnips
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 
 " Reader
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': [ 'vimwiki', 'markdown' ] }
@@ -261,6 +258,9 @@ Plug 'junegunn/vim-peekaboo'
 " Todo
 Plug 'SpringHan/lightTodo.vim'
 
+" vim-multiple-cursors
+Plug 'terryma/vim-multiple-cursors'
+
 call plug#end()
 
 
@@ -274,9 +274,6 @@ set termguicolors
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
 colorscheme gruvbox
-hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
-hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
-au BufNewFile,BufRead * :match Over80 /.\%>81v/
 
 " NerdTree
 nnoremap <silent> tt :NERDTreeMirror<CR>
@@ -373,8 +370,8 @@ let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
 " UltiSnips
 let g:tex_flavor = "latex"
-let g:UltiSnipsExpandTrigger = "<C-d>"
-let g:UltiSnipsJumpForwardTrigger = "<C-d>"
+let g:UltiSnipsExpandTrigger = "<C-i>"
+let g:UltiSnipsJumpForwardTrigger = "<C-i>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-b>"
 let g:UltiSnipsSnippetDirectories = ['Ultisnips']
 let g:UltiSnipsEditSplit = "vertical"
@@ -391,7 +388,8 @@ nmap <leader>FZ :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
-autocmd filetype markdown nmap <leader>md <Plug>MarkdownPreviewStop:set filetype=vimwiki<CR>
+autocmd filetype markdown nnoremap <leader>md <Plug>MarkdownPreviewStop
+autocmd filetype markdown nnoremap <leader>vmd <Plug>MarkdownPreviewStop:set filetype=vimwiki<CR>
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -431,11 +429,11 @@ let g:javascript_conceal_noarg_arrow_function      = "🞅"
 let g:javascript_conceal_underscore_arrow_function = "🞅"
 
 " Tagbar
-nmap <leader>T :TagbarToggle<CR>
+nnoremap <leader>T :TagbarToggle<CR>
 let g:tagbar_ctags_bin = '/usr/bin/ctags'
 
 " Far.vim
-nmap <leader>FA :Far %<Left><Left><Space>
+nnoremap <leader>FA :Far %<Left><Left><Space>
 
 " Auto-Pairs
 let g:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", '"':'"', '<':'>'}
@@ -452,7 +450,7 @@ let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " Vim-easy-align
-xmap ga <Plug>(EasyAlign)
+xnoremap ga <Plug>(EasyAlign)
 
 " Vim-peekaboo
 xnoremap Y "+y
@@ -506,12 +504,16 @@ let g:HicusLineEnabled = 1
 let g:HicusLine = {
 \   'active': {
 \       'left': [ 1, 'space', 'mode', 'space', 'spell', 2, '%{GitInfo()}', 0,
-\                 'modified', 'filename', 'space',
-\                 '%#ErrorStatus#%{ErrorStatus()}', 'space',
-\                 '%#WarningStatus#%{WarningStatus()}', 0, ],
+\                 'modified', 'filename', 'space', '%#ErrorStatus#',
+\                 '%{ErrorStatus()}', 'space', '%#WarningStatus#',
+\                 '%{WarningStatus()}', 0, ],
 \       'right': [ 'filetype', 'space', 2, 'fileencoding', 'space','fileformat',
 \                  1, 'space', 'linenumber', ':', 'bufferlinesnumber', 'space',
 \                  'windowpercentage', 'space', ],
+\   },
+\   'basic_option': {
+\       'ErrorSign': '●',
+\       'WarningSign': '●',
 \   },
 \}
 let g:HicusLineMode = {
@@ -569,6 +571,21 @@ let g:HicusLineMode = {
 let g:vimwiki_list = [ { 'path': '~/Github/StudyNotes/',
 \   'syntax': 'markdown', 'ext': '.md', }, ]
 
+" vim-multiple-cursors
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_start_word_key      = '<C-n>'
+let g:multi_cursor_select_all_word_key = '<A-n>'
+let g:multi_cursor_start_key           = 'g<C-n>'
+let g:multi_cursor_select_all_key      = 'g<A-n>'
+let g:multi_cursor_next_key            = '<C-n>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+
+" emmet
+let g:user_emmet_mode = 'i'
+let g:user_emmet_leader_key = '<C-R>'
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -625,9 +642,9 @@ function! RunCodes(runType) " By the filetype to run the code.
 	endif
 endfunction
 
-function! ReloadSyntax()
+function! ReloadSyntax(...)
 	syntax on
-	if &filetype == 'vimwiki' || &filetype == 'markdown'
+	if &filetype == 'vimwiki' || &filetype == 'markdown' || exists('a:1')
 		hi Normal ctermfg=None ctermbg=None guifg=None guibg=None
 		set colorcolumn=""
 	else

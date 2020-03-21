@@ -30,11 +30,11 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [NERDTree](https://github.com/scrooloose/nerdtree) - A files tree in vim
 - [coc.vim](https://github.com/neoclide/coc.vim) - A completor in vim
 - [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - A Plugin which can help you format the tables.
-- [Ultisnips](https://github.com/SirVer/ultisnips) - A Plugin which can provide code snippets in vim
 - [vim-space-theme](https://github.com/liuchengxu/space-vim-theme) - A pretty nice vim theme
 - [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) - A markdown previewer
 - [vimwiki](https://github.com/vimwiki/vimwiki) - Make your own wiki in (neo)vim.
 - [Undotree](https://github.com/mbbill/undotree) - A plugin which can save the editing histroy
+- [emmet-vim](https://github.com/mattn/emmet-vim) - Emmet for vim.
 - [fzf](https://github.com/junegunn/fzf) - A fuzzy finder in vim
 
 
@@ -46,7 +46,7 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 
 #### Set your Python3 path
 
-You can find __Line 33__ and __Line 35__ in the `init.vim`,and then input your Python3 path.
+You can find the python path or the python3 path in the `init.vim`,and then input your Python3 path.
 
 Like this:
 ```vim
