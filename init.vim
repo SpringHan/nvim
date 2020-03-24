@@ -173,7 +173,7 @@ inoremap .p <+++>
 " Notes
 nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
 nnoremap <silent> <leader>lmd :set filetype=markdown<CR>
-nnoremap <silent> <leader>lna :hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828<CR>
+nnoremap <silent> <leader>lna :call ReloadSyntax()<CR>
 
 " Snippets
 source ~/.config/nvim/snippets.vim
@@ -212,7 +212,7 @@ Plug 'bling/vim-bufferline'
 Plug 'morhetz/gruvbox'
 
 " TheNerdTree
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+"Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Autosuggestion
 Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
@@ -276,12 +276,16 @@ set background=dark
 colorscheme gruvbox
 
 " NerdTree
-nnoremap <silent> tt :NERDTreeMirror<CR>
-nnoremap <silent> tt :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
-let g:NERDTreeMapUpdir = 'N'
-let g:NERDTreeMapOpenVSplit = 'I'
+"nnoremap <silent> tt :NERDTreeMirror<CR>
+"nnoremap <silent> tt :NERDTreeToggle<CR>
+"let g:NERDTreeDirArrowExpandable = '+'
+"let g:NERDTreeDirArrowCollapsible = '-'
+"let g:NERDTreeMapJumpFirstChild = 'u'
+"let g:NERDTreeMapJumpLastChild = 'e'
+"let g:NERDTreeMapOpenExpl = 'i'
+"let g:NERDTreeMapOpenSplit = 'o'
+"let g:NERDTreeMapUpdir = 'N'
+"let g:NERDTreeMapOpenVSplit = 'I'
 
 " coc.nvim
 let g:coc_start_at_startup = 0
@@ -357,6 +361,8 @@ nnoremap <silent> <space>j :<C-u>CocNext<CR>
 nnoremap <silent> <space>k :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p :<C-u>CocListResume<CR>
+nnoremap <silent> tt :CocCommand explorer<CR>
+nnoremap <silent> <leader>cfg :CocConfig<CR>
 
 " VimTableMode
 nnoremap <leader>tm :TableModeToggle<CR>
@@ -384,8 +390,8 @@ nmap <leader>FZ :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
-autocmd filetype markdown nnoremap <leader>md <Plug>MarkdownPreviewStop
-autocmd filetype markdown nnoremap <leader>vmd <Plug>MarkdownPreviewStop:set filetype=vimwiki<CR>
+nnoremap <leader>md <Plug>MarkdownPreviewStop
+nnoremap <leader>vmd <Plug>MarkdownPreviewStop:set filetype=vimwiki<CR>
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0

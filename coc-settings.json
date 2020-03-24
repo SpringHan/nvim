@@ -21,12 +21,57 @@
 		"bash": {
 			"command": "bash-language-server",
 			"args": ["start"],
-			"filetypes": ["sh"],
-			"ignoredRootPaths": ["~"]
+			"filetypes": ["sh"]
 		}
 	},
 	"suggest.enablePreview": true,
 	"coc.preferences.previewAutoClose": false,
 	"suggest.enablePreselect": true,
-	"coc.preferences.hoverTarget": "float"
+	"coc.preferences.hoverTarget": "float",
+	"html.enable": true,
+	"html.filetypes": [
+		"html",
+		"handlebars",
+		"htmldjango"
+	],
+	"html.format.enable": true,
+	"explorer.keyMappings": {
+		"u": "nodePrev",
+		"e": "nodeNext",
+		"gu": "expandablePrev",
+		"ge": "expandableNext",
+		"<CR>": "open",
+		"I": "open:vsplit",
+		"S": "open:split",
+		"zh": "toggleHidden",
+		"R": "Refresh",
+		"?": "help",
+		"q": "quit",
+		"s": "search",
+		"a": "addFile",
+		"o": "open:tab",
+		"yp": "copyFilepath",
+		"yn": "copyFilename",
+		"yy": "copyFile",
+		"pp": "pasteFile",
+		"dd": "cutFile",
+		"dD": "deleteForever",
+		"A": "addDirectory",
+		"cn": "rename",
+		"i": "expand",
+		"n": "collapse",
+		"N": "gotoParent",
+		"F": "searchRecursive",
+		"B": "gotoSource:file",
+		"b": "gotoSource:buffer",
+		"[[": "sourcePrev",
+		"]]": "sourceNext",
+		"[d": "diagnosticPrev",
+		"]d": "diagnosticNext",
+		"[c": "gitPrev",
+		"]c": "gitNext",
+		"<<": "gitStage",
+		"X": "systemExecute",
+		">>": "gitUnstage"
+	}
 }

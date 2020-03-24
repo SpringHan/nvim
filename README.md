@@ -27,7 +27,6 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [vim-easy-align](https://github.com/junegunn/vim-easy-align) - A plug that can center code easily
 - [vim-cursorline](https://github.com/itchyny/vim-cursorword) - A plug that can make words have underline
 - [vim-peakaboo](https://github.com/junegunn/vim-peekaboo) - A plug which extension `@` and `"`
-- [NERDTree](https://github.com/scrooloose/nerdtree) - A files tree in vim
 - [coc.vim](https://github.com/neoclide/coc.vim) - A completor in vim
 - [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - A Plugin which can help you format the tables.
 - [vim-space-theme](https://github.com/liuchengxu/space-vim-theme) - A pretty nice vim theme
