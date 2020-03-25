@@ -18,8 +18,8 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [HicusLine](https://github.com/Styadev/HicusLine) - A highly customizable statusline in (neo)vim
 - [LightTodo.vim](https://github.com/SpringHan/lightTodo.vim) - A light todolist in (neo)vim written by me
 - [Dracula](https://github.com/dracula/vim) - A really beautiful theme in vim(And I modified something,you can [Look here](https://github.com/SpringHan/dracula))
-- [vim-bufferline](https://github.com/bling/vim-bufferline) - A buffer shower in commnad.
-- [GruvBox](https://github.com/morhetz/gruvbox) - A popular theme in vim
+- [vim-bufferline](https://github.com/bling/vim-bufferline) - A buffer shower in commnad
+- [Deus](https://github.com/ajmwagar/vim-deus) - A better color scheme for the late night coder(I did some changes on the original,you can [Look Here](https://github.com/SpringHan/vim-deus))
 - [vim-javascript](https://github.com/pangloss/vim-javascript) - A vim plugin provides javascript syntax
 - [Tagbar](https://github.com/majutsushi/tagbar) - A plug can show the functions in vim
 - [Far](https://github.com/brooth/far.vim) - A great plug which can do a good job on finding in vim
@@ -31,9 +31,9 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - A Plugin which can help you format the tables.
 - [vim-space-theme](https://github.com/liuchengxu/space-vim-theme) - A pretty nice vim theme
 - [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) - A markdown previewer
-- [vimwiki](https://github.com/vimwiki/vimwiki) - Make your own wiki in (neo)vim.
+- [vimwiki](https://github.com/vimwiki/vimwiki) - Make your own wiki in (neo)vim
 - [Undotree](https://github.com/mbbill/undotree) - A plugin which can save the editing histroy
-- [emmet-vim](https://github.com/mattn/emmet-vim) - Emmet for vim.
+- [emmet-vim](https://github.com/mattn/emmet-vim) - Emmet for vim
 - [fzf](https://github.com/junegunn/fzf) - A fuzzy finder in vim
 
 

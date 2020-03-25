@@ -22,6 +22,7 @@
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
 	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 
@@ -122,6 +123,8 @@ inoremap ?o <ESC>o
 inoremap ?I <ESC>I
 inoremap ?h <ESC>i
 inoremap ?? ?
+inoremap ?< <ESC><<a
+inoremap ?> <ESC>>>a
 inoremap ,x <ESC>xa
 inoremap ,X <ESC>xi
 inoremap .x <ESC>lxi
@@ -204,12 +207,13 @@ Plug 'mhinz/vim-startify'
 "Plug 'itchyny/lightline.vim'
 Plug 'SpringHan/dracula'
 "Plug 'itchyny/vim-gitbranch'
-Plug 'Styadev/HicusLine'
+"Plug 'Styadev/HicusLine'
 Plug 'bling/vim-bufferline'
 
 " vim-style
 "Plug 'liuchengxu/space-vim-theme'
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox'
+Plug 'SpringHan/vim-deus'
 
 " TheNerdTree
 "Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -231,7 +235,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': 'FZF' }
 
-" JavaScript
+" Highlight
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " Tagbar
@@ -271,21 +275,7 @@ call plug#end()
 
 " NeoVim Styles
 set termguicolors
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-set background=dark
-colorscheme gruvbox
-
-" NerdTree
-"nnoremap <silent> tt :NERDTreeMirror<CR>
-"nnoremap <silent> tt :NERDTreeToggle<CR>
-"let g:NERDTreeDirArrowExpandable = '+'
-"let g:NERDTreeDirArrowCollapsible = '-'
-"let g:NERDTreeMapJumpFirstChild = 'u'
-"let g:NERDTreeMapJumpLastChild = 'e'
-"let g:NERDTreeMapOpenExpl = 'i'
-"let g:NERDTreeMapOpenSplit = 'o'
-"let g:NERDTreeMapUpdir = 'N'
-"let g:NERDTreeMapOpenVSplit = 'I'
+colorscheme deus
 
 " coc.nvim
 let g:coc_start_at_startup = 0
@@ -370,14 +360,6 @@ let g:table_mode_corner = '|'
 let g:table_mode_delimiter = ''
 let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
-" UltiSnips
-let g:tex_flavor = "latex"
-let g:UltiSnipsExpandTrigger = "<C-i>"
-let g:UltiSnipsJumpForwardTrigger = "<C-i>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-b>"
-let g:UltiSnipsSnippetDirectories = ['Ultisnips']
-let g:UltiSnipsEditSplit = "vertical"
-
 " Undotree
 nnoremap <leader>ut :UndotreeToggle<CR>
 if has("persistent_undo")
@@ -390,8 +372,8 @@ nmap <leader>FZ :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
-nnoremap <leader>md <Plug>MarkdownPreviewStop
-nnoremap <leader>vmd <Plug>MarkdownPreviewStop:set filetype=vimwiki<CR>
+nnoremap <leader>md :exec "MarkdownPreviewStop"<CR>
+nnoremap <leader>vmd :exec "MarkdownPreviewStop"<CR>:set filetype=vimwiki<CR>
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -531,6 +513,13 @@ let g:HicusLineMode = {
 \   "\<C-s>": 'B-SELE',
 \   't':      'TERMINAL',
 \}
+"let g:HicusColor = {
+"\   'StatusLine': [ 'none' ,'#8BE9FD', '#44475A', ],
+"\   1: [ 'bold' ,'#282A36', '#BD93F9', ],
+"\   2: [ 'none', '#FFFFFF', '#6272A4', ],
+"\   'ErrorStatus': [ 'none', '#FF0033', '#44475A', ],
+"\   'WarningStatus': [ 'none', '#FFCC00', '#44475A', ],
+"\}
 "let g:HicusColorChanges = {
 "\   'MODE': {
 "\       'NORMALMode': [ [ '#282A36', '#BD93F9', ], "mode()=='n'", ],
@@ -586,7 +575,7 @@ let g:multi_cursor_quit_key            = '<Esc>'
 
 " emmet
 let g:user_emmet_mode = 'i'
-let g:user_emmet_leader_key = '<C-R>'
+let g:user_emmet_leader_key = '<C-r>'
 
 
 " -- ------
@@ -602,7 +591,7 @@ endfunction
 function! RunCodes(runType) " By the filetype to run the code.
 	exec "w"
 	if &filetype == 'html'
-		!google-chrome-stable ./% &
+		!google-chrome-stable ./%
 	elseif &filetype == 'php'
 		exec "!php -S 127.0.0.1:8080 -t ./ &"
 		exec "!google-chrome-stable 127.0.0.1:8080"
@@ -650,16 +639,15 @@ function! ReloadSyntax(...)
 		hi Normal ctermfg=None ctermbg=None guifg=None guibg=None
 		set colorcolumn=""
 	else
-		hi Normal ctermfg=241 ctermbg=235 guifg=#6272A4 guibg=#282828
 		set colorcolumn=80
 		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
 		au BufNewFile,BufRead * :match Over80 /.\%>81v/
 	endif
-	hi StatusLine gui=None guifg=#8BE9FD guibg=#44475A
-	hi User1 gui=bold guifg=#282A36 guibg=#BD93F9
-	hi User2 gui=None guifg=#FFFFFF guibg=#6272A4
-	hi ErrorStatus gui=None guifg=#FF0033 guibg=#44475A
-	hi WarningStatus gui=None guifg=#FFCC00 guibg=#44475A
+"hi StatusLine gui=None guifg=#8BE9FD guibg=#44475A
+"hi User1 gui=bold guifg=#282A36 guibg=#BD93F9
+"hi User2 gui=None guifg=#FFFFFF guibg=#6272A4
+"hi ErrorStatus gui=None guifg=#FF0033 guibg=#44475A
+"hi WarningStatus gui=None guifg=#FFCC00 guibg=#44475A
 endfunction
 
 call ReloadSyntax()
