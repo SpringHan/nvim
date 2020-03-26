@@ -62,6 +62,7 @@ set noexpandtab
 set showmatch
 set ruler
 set noshowmode
+set showtabline=1
 set smartcase
 set notimeout
 set ttimeoutlen=0
@@ -181,6 +182,18 @@ nnoremap <silent> <leader>lna :call ReloadSyntax()<CR>
 " Snippets
 source ~/.config/nvim/snippets.vim
 
+" Tab
+nnoremap tn :tabnew<CR>
+nnoremap te :tabedit<Space>
+nnoremap ctn :tabnext<CR>
+nnoremap ctp :tabprevious<CR>
+nnoremap ctf :tabfirst<CR>
+nnoremap ctl :tablast<CR>
+nnoremap cta :+tabmove<CR>
+nnoremap ctr :-tabmove<CR>
+nnoremap ctc :tabclose<CR>
+nnoremap cto :tabonly<CR>
+
 
 " -- ------
 " -- ------ Other Settings
@@ -207,7 +220,7 @@ Plug 'mhinz/vim-startify'
 "Plug 'itchyny/lightline.vim'
 Plug 'SpringHan/dracula'
 "Plug 'itchyny/vim-gitbranch'
-"Plug 'Styadev/HicusLine'
+Plug 'Styadev/HicusLine'
 Plug 'bling/vim-bufferline'
 
 " vim-style
@@ -262,6 +275,9 @@ Plug 'junegunn/vim-peekaboo'
 " Todo
 Plug 'SpringHan/lightTodo.vim'
 
+" XTab
+"Plug 'mg979/vim-xtabline'
+
 " vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
 
@@ -277,7 +293,7 @@ call plug#end()
 set termguicolors
 colorscheme deus
 
-" coc.nvim
+" Coc.nvim
 let g:coc_start_at_startup = 0
 function! CocTimerStart(timer)
 	exec "CocStart"
@@ -286,7 +302,7 @@ call timer_start(300, 'CocTimerStart', {'repeat': 1})
 set hidden
 set updatetime=50
 " Plugins
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite']
+let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite', 'coc-yank', ]
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -353,6 +369,8 @@ nnoremap <silent> <space>k :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p :<C-u>CocListResume<CR>
 nnoremap <silent> tt :CocCommand explorer<CR>
 nnoremap <silent> <leader>cfg :CocConfig<CR>
+nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<CR>
+nnoremap <silent> <leader>cy :CocCommand yank.clean<CR>
 
 " VimTableMode
 nnoremap <leader>tm :TableModeToggle<CR>
@@ -362,6 +380,10 @@ let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
 " Undotree
 nnoremap <leader>ut :UndotreeToggle<CR>
+function g:Undotree_CustomMap()
+		nmap <buffer> U <plug>UndotreeNextState
+		nmap <buffer> E <plug>UndotreePreviousState
+endfunc
 if has("persistent_undo")
   set undofile
   set undodir=~/.config/nvim/do_history
@@ -485,41 +507,43 @@ endfunction
 " }}}
 set laststatus=2
 let g:HicusLineEnabled = 1
+let g:HicusColorSetWay = 1
 let g:HicusLine = {
-\   'active': {
-\       'left': [ 1, 'space', 'mode', 'space', 'spell', 2, '%{GitInfo()}', 0,
-\                 'modified', 'filename', 'space', '%#ErrorStatus#',
-\                 '%{ErrorStatus()}', 'space', '%#WarningStatus#',
-\                 '%{WarningStatus()}', 0, ],
-\       'right': [ 'filetype', 'space', 2, 'fileencoding', 'space','fileformat',
-\                  1, 'space', 'linenumber', ':', 'bufferlinesnumber', 'space',
-\                  'windowpercentage', 'space', ],
-\   },
-\   'basic_option': {
-\       'ErrorSign': '●',
-\       'WarningSign': '●',
-\   },
+			\'active': {
+			\    'left': [ '%#double#', 'space', 'mode', 'space', 'spell', '%#infos#',
+			\              '%{GitInfo()}', 0, 'modified', 'filename', 'space',
+			\              '%#ErrorStatus#', '%{ErrorStatus()}', 'space',
+			\              '%#WarningStatus#', '%{WarningStatus()}', 0, ],
+			\    'right': [ 'filetype', 'space', '%#infos#', 'fileencoding', 'space',
+			\               'fileformat', '%#double#', 'space', 'linenumber', ':',
+			\               'bufferlinesnumber', 'space', 'windowpercentage', 'space',
+			\    ],
+			\},
 \}
 let g:HicusLineMode = {
-\   'n':      'NORMAL',
-\   'i':      'INSERT',
-\   'R':      'REPLACE',
-\   'v':      'VISUAL',
-\   'V':      'L-VISU',
-\   "\<C-v>": 'B-VISU',
-\   'c':      'COMMAND',
-\   's':      'SELECT',
-\   'S':      'L-SELE',
-\   "\<C-s>": 'B-SELE',
-\   't':      'TERMINAL',
+			\'n':      'NORMAL',
+			\'i':      'INSERT',
+			\'R':      'REPLACE',
+			\'v':      'VISUAL',
+			\'V':      'L-VISU',
+			\"\<C-v>": 'B-VISU',
+			\'c':      'COMMAND',
+			\'s':      'SELECT',
+			\'S':      'L-SELE',
+			\"\<C-s>": 'B-SELE',
+			\'t':      'TERMINAL',
 \}
-"let g:HicusColor = {
-"\   'StatusLine': [ 'none' ,'#8BE9FD', '#44475A', ],
-"\   1: [ 'bold' ,'#282A36', '#BD93F9', ],
-"\   2: [ 'none', '#FFFFFF', '#6272A4', ],
-"\   'ErrorStatus': [ 'none', '#FF0033', '#44475A', ],
-"\   'WarningStatus': [ 'none', '#FFCC00', '#44475A', ],
-"\}
+let g:HicusColor = {
+			\'StatusLine':    [ 'none' ,'#8BE9FD', '#44475A', ],
+			\'double':        [ 'bold' ,'#282A36', '#BD93F9', ],
+			\'infos':         [ 'none', '#FFFFFF', '#6272A4', ],
+			\'ErrorStatus':   [ 'none', '#FF0033', '#44475A', ],
+			\'WarningStatus': [ 'none', '#FFCC00', '#44475A', ],
+\}
+"\'basic_option': {
+"\    'ErrorSign': '●',
+"\    'WarningSign': '●',
+"\},
 "let g:HicusColorChanges = {
 "\   'MODE': {
 "\       'NORMALMode': [ [ '#282A36', '#BD93F9', ], "mode()=='n'", ],
@@ -563,7 +587,7 @@ let g:vimwiki_list = [ { 'path': '~/Github/StudyNotes/',
 \   'syntax': 'markdown', 'ext': '.md', }, ]
 
 " vim-multiple-cursors
-let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_use_default_mapping = 0
 let g:multi_cursor_start_word_key      = '<C-n>'
 let g:multi_cursor_select_all_word_key = '<A-n>'
 let g:multi_cursor_start_key           = 'g<C-n>'
@@ -643,12 +667,19 @@ function! ReloadSyntax(...)
 		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
 		au BufNewFile,BufRead * :match Over80 /.\%>81v/
 	endif
-"hi StatusLine gui=None guifg=#8BE9FD guibg=#44475A
-"hi User1 gui=bold guifg=#282A36 guibg=#BD93F9
-"hi User2 gui=None guifg=#FFFFFF guibg=#6272A4
-"hi ErrorStatus gui=None guifg=#FF0033 guibg=#44475A
-"hi WarningStatus gui=None guifg=#FFCC00 guibg=#44475A
+	"hi TabLine gui=None guifg=#FFFFFF guibg=#6272A4
+	"hi TabLineFill gui=None guifg=#8BE9FD guibg=#44475A
+	"hi TabLineSel gui=bold guifg=#282A36 guibg=#BD93F9
 endfunction
+
+"function! TabLineTest()
+"	let l:test = tabpagenr().' %f'
+"	for l:i in range(tabpagenr('$'))
+"	endfor
+"	return l:test
+"endfunction
+
+"set tabline=%!TabLineTest()
 
 call ReloadSyntax()
 
