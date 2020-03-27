@@ -108,6 +108,10 @@ noremap H I
 noremap n h
 nnoremap ci ci
 nnoremap cI cl
+nnoremap di di
+nnoremap cW cw
+nnoremap cE ce
+nnoremap cB cb
 nnoremap C c
 
 inoremap .* /* */<ESC>hi
@@ -157,7 +161,7 @@ nnoremap sh :!
 nnoremap <leader><Return> gf
 nnoremap <leader>nrc :e ~/.config/nvim/init.vim<CR>
 nnoremap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
-nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>
+nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:HicusSyntaxReload<CR>
 nnoremap css :set spell<CR>
 nnoremap csn :set spell!<CR>
 nnoremap sc z=
@@ -177,7 +181,7 @@ inoremap .p <+++>
 " Notes
 nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
 nnoremap <silent> <leader>lmd :set filetype=markdown<CR>
-nnoremap <silent> <leader>lna :call ReloadSyntax()<CR>
+nnoremap <silent> <leader>lna :call ReloadSyntax(2)<CR>
 
 " Snippets
 source ~/.config/nvim/snippets.vim
@@ -218,7 +222,7 @@ Plug 'mhinz/vim-startify'
 
 " StatusLine
 "Plug 'itchyny/lightline.vim'
-Plug 'SpringHan/dracula'
+"Plug 'SpringHan/dracula'
 "Plug 'itchyny/vim-gitbranch'
 Plug 'Styadev/HicusLine'
 Plug 'bling/vim-bufferline'
@@ -474,113 +478,50 @@ nnoremap <leader>tc  :LightTodoClean<CR>
 let g:LightTodoFile = $HOME.'/.todo'
 
 " HicusLine
-" StatusFunction {{{
-function! GitInfo()
-	let l:gitinfo = get(g:, 'coc_git_status', '')
-	if empty(l:gitinfo)
-		return ''
-	endif
-	return l:gitinfo
-endfunction
-function! ErrorStatus()
-	let l:status = get(b:, 'coc_diagnostic_info', '')
-	if empty(l:status)
-		return ''
-	endif
-	let l:errors = get(l:status, 'error', '')
-	if l:errors == ''
-		return ''
-	endif
-	return '●'.l:errors
-endfunction
-function! WarningStatus()
-	let l:status = get(b:, 'coc_diagnostic_info', '')
-	if empty(l:status)
-		return ''
-	endif
-	let l:warning = get(l:status, 'warning', '')
-	if l:warning == ''
-		return ''
-	endif
-	return '●'.l:warning
-endfunction
-" }}}
 set laststatus=2
 let g:HicusLineEnabled = 1
 let g:HicusColorSetWay = 1
 let g:HicusLine = {
 			\'active': {
-			\    'left': [ '%#double#', 'space', 'mode', 'space', 'spell', '%#infos#',
-			\              '%{GitInfo()}', 0, 'modified', 'filename', 'space',
-			\              '%#ErrorStatus#', '%{ErrorStatus()}', 'space',
-			\              '%#WarningStatus#', '%{WarningStatus()}', 0, ],
-			\    'right': [ 'filetype', 'space', '%#infos#', 'fileencoding', 'space',
-			\               'fileformat', '%#double#', 'space', 'linenumber', ':',
+			\    'left': [ 'modehighlight', 'space', 'mode', 'space', 'spell',
+			\              '%#infos#', 'gitinfo', 0, 'modified', 'filename',
+			\              'space', '%#ErrorStatus#', 'errorstatus', 'space',
+			\              '%#WarningStatus#', 'warningstatus', 0, ],
+			\    'right': [ 'filetype2', 'space', '%#infos#', 'fileencoding', 'space',
+			\               'fileformat', 'modehighlight', 'space', 'linenumber', ':',
 			\               'bufferlinesnumber', 'space', 'windowpercentage', 'space',
 			\    ],
 			\},
+			\'basic_option': {
+			\    'ErrorSign': '●',
+			\    'WarningSign': '●',
+			\},
 \}
 let g:HicusLineMode = {
-			\'n':      'NORMAL',
-			\'i':      'INSERT',
-			\'R':      'REPLACE',
-			\'v':      'VISUAL',
-			\'V':      'L-VISU',
-			\"\<C-v>": 'B-VISU',
-			\'c':      'COMMAND',
-			\'s':      'SELECT',
-			\'S':      'L-SELE',
-			\"\<C-s>": 'B-SELE',
-			\'t':      'TERMINAL',
+			\'n':      [ 'NORMAL', 'normalmode', { 'infos': 'normalinfos', }, ],
+			\'i':      [ 'INSERT', 'insertmode', { 'infos': 'otherinfos',  }, ],
+			\'R':      [ 'REPLACE', 'replacemode', { 'infos': 'otherinfos',  }, ],
+			\'v':      [ 'VISUAL', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\'V':      [ 'L-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\"\<C-v>": [ 'B-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\'c':      [ 'COMMAND', 'commandmode', { 'infos': 'otherinfos',  }, ],
+			\'s':      [ 'SELECT', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\'S':      [ 'L-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\"\<C-s>": [ 'B-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\'t':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ],
 \}
 let g:HicusColor = {
-			\'StatusLine':    [ 'none' ,'#8BE9FD', '#44475A', ],
-			\'double':        [ 'bold' ,'#282A36', '#BD93F9', ],
-			\'infos':         [ 'none', '#FFFFFF', '#6272A4', ],
-			\'ErrorStatus':   [ 'none', '#FF0033', '#44475A', ],
-			\'WarningStatus': [ 'none', '#FFCC00', '#44475A', ],
+			\'StatusLine':     [ 'none' ,'#8BE9FD', '#44475A', ],
+			\'normalmode':     [ 'bold' ,'#282A36', '#BD93F9', ],
+			\'insertmode':     [ 'bold', '#282A36', '#50FA7B', ],
+			\'visualmode':     [ 'bold', '#282A36', '#FFB86C', ],
+			\'replacemode':    [ 'bold', '#282A36', '#FF5555', ],
+			\'commandmode':    [ 'bold', '#C6C6C6', '#3A81C3' ],
+			\'normalinfos':    [ 'none', '#FFFFFF', '#6272A4', ],
+			\'otherinfos':     [ 'none', '#44475A', '#8BE9FD', ],
+			\'ErrorStatus':    [ 'none', '#FF0033', '#44475A', ],
+			\'WarningStatus':  [ 'none', '#FFCC00', '#44475A', ],
 \}
-"\'basic_option': {
-"\    'ErrorSign': '●',
-"\    'WarningSign': '●',
-"\},
-"let g:HicusColorChanges = {
-"\   'MODE': {
-"\       'NORMALMode': [ [ '#282A36', '#BD93F9', ], "mode()=='n'", ],
-"\       'INSERTMode': [ [ '#282A36', '#50FA7B', ], "mode()=='i'", ],
-"\       'VISUALMode': [ [ '#282A36', '#FFB86C', ], "mode()=='v'",
-"\                      "mode()=='V'", "mode()==\"<C-v>\"", ],
-"\       'REPLACEMode': [ [ '#282A36', '#FF5555', ], "mode()=='r'", ],
-"\       'NORMALChild': [ [ '#FFFFFF', '#6272A4', ], "mode()=='n'", ],
-"\       'OtherChild': [ [ '#44475A', '#8BE9FD', ], "mode()!='n'", ],
-"\   },
-"\}
-"function! ChangeStatuslineColor(...)
-"	if a:0 == 1
-"		let l:mode = a:1
-"	else
-"		let l:mode = mode()
-"	endif
-"	if l:mode == 'n'
-"	elseif l:mode == 'i'
-"		hi User1 gui=bold guifg=#282A36 guibg=#50FA7B
-"		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-"	elseif l:mode == 'r'
-"		hi User1 gui=bold guifg=#282A36 guibg=#FF5555
-"		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-"	elseif l:mode == 'v' || l:mode == 'V' || l:mode == "\<C-v>"
-"		hi User1 gui=bold guifg=#282A36 guibg=#FFB86C
-"		hi User2 gui=None guifg=#44475A guibg=#8BE9FD
-"	endif
-"	unlet l:mode
-"endfunction
-"augroup HighLightStatusline
-"	autocmd VimEnter     * call ChangeStatuslineColor()
-"	autocmd BufRead      * call ChangeStatuslineColor()
-"	autocmd InsertEnter  * call ChangeStatuslineColor(v:insertmode)
-"	autocmd InsertChange * call ChangeStatuslineColor(v:insertmode)
-"	autocmd InsertLeave  * call ChangeStatuslineColor()
-"augroup END
 
 " vimwiki
 let g:vimwiki_list = [ { 'path': '~/Github/StudyNotes/',
@@ -612,7 +553,7 @@ function! TermSet() " The function was written for set the split position.
 	set nosplitbelow
 endfunction
 
-function! RunCodes(runType) " By the filetype to run the code.
+function! RunCodes() " By the filetype to run the code.
 	exec "w"
 	if &filetype == 'html'
 		!google-chrome-stable ./%
@@ -620,52 +561,37 @@ function! RunCodes(runType) " By the filetype to run the code.
 		exec "!php -S 127.0.0.1:8080 -t ./ &"
 		exec "!google-chrome-stable 127.0.0.1:8080"
 	elseif &filetype == 'sh'
-		if a:runType == 'interactive'
-			call TermSet()
-			terminal sh ./%
-		elseif a:runType == 'normal'
-			exec "!chmod +x ./%"
-			exec "!./%"
-		endif
+		call TermSet()
+		terminal sh ./%
 	elseif &filetype == 'python'
-		if a:runType == 'interactive'
-			call TermSet()
-			terminal python3 ./%
-		elseif a:runType == 'normal'
-			!python3 ./%
-		endif
+		call TermSet()
+		terminal python3 ./%
 	elseif &filetype == 'c'
-		if a:runType == 'interactive'
-			call TermSet()
-			terminal gcc % -o /tmp/%<.o; /tmp/%<.o
-		elseif a:runType == 'normal'
-			exec "!gcc % -o /tmp/%<.o"
-			exec "!/tmp/%<.o"
-		endif
+		call TermSet()
+		terminal gcc % -o /tmp/%<.o; /tmp/%<.o
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
 	elseif &filetype == 'vimwiki'
 		exec "set filetype=markdown"
 		exec "MarkdownPreview"
 	elseif &filetype == 'go'
-		if a:runType == 'interactive'
-			call TermSet()
-			terminal go run ./%
-		elseif a:runType == 'normal'
-			!go run ./%
-		endif
+		call TermSet()
+		terminal go run ./%
 	endif
 endfunction
 
-function! ReloadSyntax(...)
+function! ReloadSyntax(type)
 	syntax on
-	if &filetype == 'vimwiki' || &filetype == 'markdown' || exists('a:1')
+	if &filetype == 'vimwiki' || &filetype == 'markdown' || a:type == 1
 		hi Normal ctermfg=None ctermbg=None guifg=None guibg=None
 		set colorcolumn=""
 	else
 		set colorcolumn=80
 		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
 		au BufNewFile,BufRead * :match Over80 /.\%>81v/
+	endif
+	if a:type != 0
+		HicusSyntaxReload
 	endif
 	"hi TabLine gui=None guifg=#FFFFFF guibg=#6272A4
 	"hi TabLineFill gui=None guifg=#8BE9FD guibg=#44475A
@@ -681,10 +607,10 @@ endfunction
 
 "set tabline=%!TabLineTest()
 
-call ReloadSyntax()
+call ReloadSyntax(0)
 
-nnoremap <silent> <leader>r :call RunCodes("normal")<CR>
-nnoremap <silent> <leader>ir :call RunCodes("interactive")<CR>
+nnoremap <silent> <leader>r :call RunCodes()<CR>
+nnoremap <silent> <leader>ir :call RunCodes()<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
