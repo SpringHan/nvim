@@ -170,6 +170,7 @@ nnoremap spt :set nosplitbelow<CR>:split<Space>
 nnoremap spb :set splitbelow<CR>:split<Space>
 nnoremap vsr :set splitright<CR>:vsplit<Space>
 nnoremap vsl :set nosplitright<CR>:vsplit<Space>
+nnoremap csc :%s/\r//<CR>
 xmap ; :
 
 " PlaceHolder
@@ -243,8 +244,7 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
 " Reader
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': [ 'vimwiki', 'markdown' ] }
-Plug 'vimwiki/vimwiki'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': 'markdown' }
 
 " Undotree
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -307,10 +307,7 @@ set hidden
 set updatetime=50
 " Plugins
 let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite', 'coc-yank', ]
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -399,7 +396,6 @@ nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
 nnoremap <leader>md :exec "MarkdownPreviewStop"<CR>
-nnoremap <leader>vmd :exec "MarkdownPreviewStop"<CR>:set filetype=vimwiki<CR>
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -485,9 +481,9 @@ let g:HicusLine = {
 			\'active': {
 			\    'left': [ 'modehighlight', 'space', 'mode', 'space', 'spell',
 			\              '%#infos#', 'gitinfo', 0, 'modified', 'filename',
-			\              'space', '%#ErrorStatus#', 'errorstatus', 'space',
-			\              '%#WarningStatus#', 'warningstatus', 0, ],
-			\    'right': [ 'filetype2', 'space', '%#infos#', 'fileencoding', 'space',
+			\              'readonly', 'space', '%#ErrorStatus#', 'errorstatus',
+			\              'space', '%#WarningStatus#', 'warningstatus', 0, ],
+			\    'right': [ 'filetype3', 'space', '%#infos#', 'fileencoding', 'space',
 			\               'fileformat', 'modehighlight', 'space', 'linenumber', ':',
 			\               'bufferlinesnumber', 'space', 'windowpercentage', 'space',
 			\    ],
@@ -522,10 +518,6 @@ let g:HicusColor = {
 			\'ErrorStatus':    [ 'none', '#FF0033', '#44475A', ],
 			\'WarningStatus':  [ 'none', '#FFCC00', '#44475A', ],
 \}
-
-" vimwiki
-let g:vimwiki_list = [ { 'path': '~/Github/StudyNotes/',
-\   'syntax': 'markdown', 'ext': '.md', }, ]
 
 " vim-multiple-cursors
 let g:multi_cursor_use_default_mapping = 0
@@ -571,9 +563,6 @@ function! RunCodes() " By the filetype to run the code.
 		terminal gcc % -o /tmp/%<.o; /tmp/%<.o
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
-	elseif &filetype == 'vimwiki'
-		exec "set filetype=markdown"
-		exec "MarkdownPreview"
 	elseif &filetype == 'go'
 		call TermSet()
 		terminal go run ./%
@@ -582,7 +571,7 @@ endfunction
 
 function! ReloadSyntax(type)
 	syntax on
-	if &filetype == 'vimwiki' || &filetype == 'markdown' || a:type == 1
+	if &filetype == 'markdown' || a:type == 1
 		hi Normal ctermfg=None ctermbg=None guifg=None guibg=None
 		set colorcolumn=""
 	else
