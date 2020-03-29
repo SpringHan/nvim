@@ -55,8 +55,6 @@ set number
 set tabstop=2
 set shiftwidth=2
 set showcmd
-set syntax=enable
-set syntax=on
 set noswapfile
 set noexpandtab
 set showmatch
@@ -86,6 +84,8 @@ set foldmethod=marker
 set foldlevelstart=99
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 let g:mapleader = "\<Space>"
+syntax enable
+syntax on
 
 
 " -- ------
@@ -222,8 +222,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'mhinz/vim-startify'
 
 " StatusLine
-"Plug 'itchyny/lightline.vim'
-"Plug 'SpringHan/dracula'
 "Plug 'itchyny/vim-gitbranch'
 Plug 'Styadev/HicusLine'
 Plug 'bling/vim-bufferline'
@@ -232,9 +230,6 @@ Plug 'bling/vim-bufferline'
 "Plug 'liuchengxu/space-vim-theme'
 "Plug 'morhetz/gruvbox'
 Plug 'SpringHan/vim-deus'
-
-" TheNerdTree
-"Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Autosuggestion
 Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
