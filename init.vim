@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
-" @Date: 2020.1.2
+" @Date: 2020.4.1
 
 " Tips:
 " --- I use the 'vim-plug' to control my plugins.
@@ -19,9 +19,7 @@
 " -- ------ Autoload on the first time
 " -- ------
 
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('~/.config/nvim/plugged/'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -68,10 +66,12 @@ set lazyredraw
 set visualbell
 set history=800
 set scrolloff=5
+set hlsearch
+set incsearch
 set cursorline
 set list
 set listchars=tab:\┆\ ,trail:-
-hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+hi CursorLine ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 set viewoptions=cursor,folds,slash,unix
 set wildmenu
 set wildmode=full
@@ -106,13 +106,9 @@ noremap k n
 noremap K N
 noremap H I
 noremap n h
-nnoremap ci ci
-nnoremap cI cl
-nnoremap di di
 nnoremap cW cw
 nnoremap cE ce
 nnoremap cB cb
-nnoremap C c
 
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
@@ -147,12 +143,18 @@ nnoremap <silent> ceq :q!<CR>
 nnoremap <silent> cf :buffers<CR>
 nnoremap cet :edit<Space>
 nnoremap va <C-w>+
-nnoremap vr <C-w>-
+nnoremap vx <C-w>-
 nnoremap vj <C-w>=
 nnoremap ve <C-w>j
 nnoremap vu <C-w>k
 nnoremap vn <C-w>h
 nnoremap vi <C-w>l
+nnoremap vE <C-w>J
+nnoremap vU <C-w>K
+nnoremap vN <C-w>H
+nnoremap vI <C-w>L
+nnoremap vr <C-w>r
+nnoremap vR <C-w>R
 nnoremap <silent> tm :vsplit<CR><C-W>l:terminal<CR><C-\><C-n>:setlocal nonumber norelativenumber<CR>A
 nnoremap <silent> cb :bd<CR>
 nnoremap <silent> cd :nohlsearch<CR>
@@ -162,8 +164,7 @@ nnoremap <leader><Return> gf
 nnoremap <leader>nrc :e ~/.config/nvim/init.vim<CR>
 nnoremap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
 nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:HicusSyntaxReload<CR>
-nnoremap css :set spell<CR>
-nnoremap csn :set spell!<CR>
+nnoremap css :set spell!<CR>
 nnoremap sc z=
 nnoremap vv v
 nnoremap spt :set nosplitbelow<CR>:split<Space>
@@ -174,7 +175,7 @@ nnoremap csc :%s/\r//<CR>
 xmap ; :
 
 " PlaceHolder
-nmap <silent> <leader><leader> /<+++><CR>:nohlsearch<CR>c5i
+nnoremap <silent> <leader><leader> /<+++><CR>:nohlsearch<CR>c5l
 inoremap <silent> ,p <ESC>/<+++><CR>:nohlsearch<CR>c5l
 inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
@@ -183,6 +184,11 @@ inoremap .p <+++>
 nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
 nnoremap <silent> <leader>lmd :set filetype=markdown<CR>
 nnoremap <silent> <leader>lna :call ReloadSyntax(2)<CR>
+
+" ChangeSign
+nnoremap <silent> <leader>CS /\!<CS>!<CR>:nohlsearch<CR>
+inoremap <silent> ,CS <ESC>/\!<CS>!<CR>:nohlsearch<CR>
+inoremap <silent> .CS !<CS>!
 
 " Snippets
 source ~/.config/nvim/snippets.vim
@@ -223,7 +229,7 @@ Plug 'mhinz/vim-startify'
 
 " StatusLine
 "Plug 'itchyny/vim-gitbranch'
-Plug 'Styadev/HicusLine'
+"Plug 'Styadev/HicusLine'
 Plug 'bling/vim-bufferline'
 
 " vim-style
@@ -273,9 +279,6 @@ Plug 'junegunn/vim-peekaboo'
 
 " Todo
 Plug 'SpringHan/lightTodo.vim'
-
-" XTab
-"Plug 'mg979/vim-xtabline'
 
 " vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
@@ -591,11 +594,8 @@ endfunction
 
 "set tabline=%!TabLineTest()
 
-call ReloadSyntax(0)
-
 nnoremap <silent> <leader>r :call RunCodes()<CR>
-nnoremap <silent> <leader>ir :call RunCodes()<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
-"set runtimepath+=~/Github/HicusLine
+set runtimepath+=~/Github/HicusLine
