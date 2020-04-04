@@ -82,6 +82,9 @@ set autoindent
 set path=.,/usr/include,/usr/local/include/
 set foldmethod=marker
 set foldlevelstart=99
+set colorcolumn=80
+hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
+au BufNewFile,BufRead * :match Over80 /.\%>81v/
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 let g:mapleader = "\<Space>"
 syntax enable
@@ -182,8 +185,9 @@ inoremap .p <+++>
 
 " Notes
 nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
-nnoremap <silent> <leader>lmd :set filetype=markdown<CR>
 nnoremap <silent> <leader>lna :call ReloadSyntax(2)<CR>
+nnoremap <silent> <leader>te :exec "!touch ~/Github/StudyNotes/".expand("<cWORD>")<CR>
+nnoremap <silent> <leader>ww :e ~/Github/StudyNotes/index.md<CR>
 
 " ChangeSign
 nnoremap <silent> <leader>CS /\!<CS>!<CR>:nohlsearch<CR>
@@ -191,7 +195,7 @@ inoremap <silent> ,CS <ESC>/\!<CS>!<CR>:nohlsearch<CR>
 inoremap <silent> .CS !<CS>!
 
 " Snippets
-source ~/.config/nvim/snippets.vim
+autocmd filetype markdown source ~/.config/nvim/snippets.vim
 
 " Tab
 nnoremap tn :tabnew<CR>
@@ -215,7 +219,7 @@ set smartindent
 
 " Terminal
 autocmd TermOpen term://* startinsert
-tnoremap <silent> <C-q> <C-\><C-n>:q<CR>
+tnoremap <silent> <C-q> <C-\><C-n>:q!<CR>
 
 
 " -- ------
@@ -282,6 +286,9 @@ Plug 'SpringHan/lightTodo.vim'
 
 " vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
+
+" Ranger
+Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': 'RnvimrToggle' }
 
 call plug#end()
 
@@ -393,7 +400,6 @@ nmap <leader>FZ :FZF<CR>
 nmap <leader>ff :FZF<Space>
 
 " Markdown Preview
-nnoremap <leader>md :exec "MarkdownPreviewStop"<CR>
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -532,6 +538,15 @@ let g:multi_cursor_quit_key            = '<Esc>'
 let g:user_emmet_mode = 'i'
 let g:user_emmet_leader_key = '<C-r>'
 
+" Rnvimr
+nnoremap <silent> <leader>R :RnvimrToggle<CR>
+let g:rnvimr_layout = { 'relative': 'editor',
+			\'width': float2nr(round(0.95 * &columns)),
+			\'height': float2nr(round(0.95 * &lines)),
+			\'col': float2nr(round(0.03 * &columns)),
+			\'row': float2nr(round(0.03 * &lines)),
+			\'style': 'minimal', }
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -543,13 +558,13 @@ function! TermSet() " The function was written for set the split position.
 	set nosplitbelow
 endfunction
 
-function! RunCodes() " By the filetype to run the code.
+function! TestCodes(type) " By the filetype to run the code.
 	exec "w"
 	if &filetype == 'html'
-		!google-chrome-stable ./%
+		exec "!google-chrome-stable ./% &"
 	elseif &filetype == 'php'
-		exec "!php -S 127.0.0.1:8080 -t ./ &"
-		exec "!google-chrome-stable 127.0.0.1:8080"
+		exec a:type == 0?"!php -S 127.0.0.1:8080 -t ./ &":"killall php"
+		exec a:type == 0?"!google-chrome-stable 127.0.0.1:8080 &":""
 	elseif &filetype == 'sh'
 		call TermSet()
 		terminal sh ./%
@@ -560,7 +575,7 @@ function! RunCodes() " By the filetype to run the code.
 		call TermSet()
 		terminal gcc % -o /tmp/%<.o; /tmp/%<.o
 	elseif &filetype == 'markdown'
-		exec "MarkdownPreview"
+		exec a:type == 0?"MarkdownPreview":"MarkdownPreviewStop"
 	elseif &filetype == 'go'
 		call TermSet()
 		terminal go run ./%
@@ -578,7 +593,7 @@ function! ReloadSyntax(type)
 		au BufNewFile,BufRead * :match Over80 /.\%>81v/
 	endif
 	if a:type != 0
-		HicusSyntaxReload
+		exec "HicusSyntaxReload"
 	endif
 	"hi TabLine gui=None guifg=#FFFFFF guibg=#6272A4
 	"hi TabLineFill gui=None guifg=#8BE9FD guibg=#44475A
@@ -594,7 +609,8 @@ endfunction
 
 "set tabline=%!TabLineTest()
 
-nnoremap <silent> <leader>r :call RunCodes()<CR>
+nnoremap <silent> <leader>r :call TestCodes(0)<CR>
+nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
