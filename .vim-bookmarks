@@ -1,3 +1,3 @@
 let l:bm_file_version = 1
-let l:bm_sessions = {'default': {'/home/spring/.config/nvim/init.vim': [{'sign_idx': 9501, 'line_nr': 310, 'content': '" NeoVim Styles'},{'sign_idx': 9500, 'line_nr': 234, 'content': 'call plug#begin(''~/.config/nvim/plugged'')'},{'sign_idx': 9502, 'line_nr': 582, 'content': 'function! TermSet() " The function was written for set the split position.'},],}}
+let l:bm_sessions = {'default': {'/home/spring/.config/nvim/init.vim': [{'sign_idx': 9501, 'line_nr': 311, 'content': '" NeoVim Styles'},{'sign_idx': 9503, 'line_nr': 98, 'content': '" Important Mappings'},{'sign_idx': 9500, 'line_nr': 235, 'content': 'call plug#begin(''~/.config/nvim/plugged'')'},{'sign_idx': 9502, 'line_nr': 584, 'content': 'function! TermSet() " The function was written for set the split position.'},],}}
 let l:bm_current_session = 'default'

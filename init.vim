@@ -134,6 +134,7 @@ inoremap ,x <ESC>xa
 inoremap ,X <ESC>xi
 inoremap .x <ESC>lxi
 inoremap <C-x> <C-x><C-s>
+inoremap .z <ESC>zza
 
 " Normal Bindings
 nnoremap ; :
@@ -562,7 +563,8 @@ let g:bookmark_no_default_key_mappings = 1
 let g:bookmark_no_default_key_mappings = 1
 let g:bookmark_sign = '>>'
 let g:bookmark_annotation_sign = '##'
-let g:bookmark_save_per_working_dir = 1
+let g:bookmark_save_per_working_dir = 0
+let g:bookmark_auto_save_file = $HOME.'/.config/nvim/.vim-bookmarks'
 nmap <leader>mm <Plug>BookmarkToggle
 nmap <leader>mi <Plug>BookmarkAnnotate
 nmap <leader>ma <Plug>BookmarkShowAll
