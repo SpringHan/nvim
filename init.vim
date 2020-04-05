@@ -113,6 +113,7 @@ nnoremap cW cw
 nnoremap cE ce
 nnoremap cB cb
 
+" Insert bindings
 inoremap .* /* */<ESC>hi
 inoremap ;; <ESC>A;
 inoremap ,; ;
@@ -132,7 +133,9 @@ inoremap ?> <ESC>>>a
 inoremap ,x <ESC>xa
 inoremap ,X <ESC>xi
 inoremap .x <ESC>lxi
+inoremap <C-x> <C-x><C-s>
 
+" Normal Bindings
 nnoremap ; :
 nnoremap > >>
 nnoremap < <<
@@ -166,7 +169,7 @@ nnoremap sh :!
 nnoremap <leader><Return> gf
 nnoremap <leader>nrc :e ~/.config/nvim/init.vim<CR>
 nnoremap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
-nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:HicusSyntaxReload<CR>
+nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:call ReloadSyntax(2)<CR>:nohlsearch<CR>
 nnoremap css :set spell!<CR>
 nnoremap sc z=
 nnoremap vv v
@@ -175,6 +178,8 @@ nnoremap spb :set splitbelow<CR>:split<Space>
 nnoremap vsr :set splitright<CR>:vsplit<Space>
 nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 nnoremap csc :%s/\r//<CR>
+
+" Other mode bingdings
 xmap ; :
 
 " PlaceHolder
@@ -186,7 +191,7 @@ inoremap .p <+++>
 " Notes
 nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
 nnoremap <silent> <leader>lna :call ReloadSyntax(2)<CR>
-nnoremap <silent> <leader>te :exec "!touch ~/Github/StudyNotes/".expand("<cWORD>")<CR>
+nnoremap <silent> <leader>te :exec "!touch ./".expand("<cWORD>")<CR>
 nnoremap <silent> <leader>ww :e ~/Github/StudyNotes/index.md<CR>
 
 " ChangeSign
@@ -195,7 +200,7 @@ inoremap <silent> ,CS <ESC>/\!<CS>!<CR>:nohlsearch<CR>
 inoremap <silent> .CS !<CS>!
 
 " Snippets
-autocmd filetype markdown source ~/.config/nvim/snippets.vim
+autocmd filetype markdown source ~/.config/nvim/md-snippets.vim
 
 " Tab
 nnoremap tn :tabnew<CR>
@@ -288,7 +293,11 @@ Plug 'SpringHan/lightTodo.vim'
 Plug 'terryma/vim-multiple-cursors'
 
 " Ranger
-Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': 'RnvimrToggle' }
+Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'RnvimrSync' ] }
+
+" Useful plugin
+Plug 'tpope/vim-surround'
+Plug 'MattesGroeger/vim-bookmarks'
 
 call plug#end()
 
@@ -460,7 +469,7 @@ let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " Vim-easy-align
-xnoremap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 " Vim-peekaboo
 xnoremap Y "+y
@@ -539,13 +548,31 @@ let g:user_emmet_mode = 'i'
 let g:user_emmet_leader_key = '<C-r>'
 
 " Rnvimr
-nnoremap <silent> <leader>R :RnvimrToggle<CR>
+nnoremap <silent> <leader>Rt :RnvimrToggle<CR>
+nnoremap <silent> <leader>Rs :RnvimrSync<CR>
 let g:rnvimr_layout = { 'relative': 'editor',
 			\'width': float2nr(round(0.95 * &columns)),
 			\'height': float2nr(round(0.95 * &lines)),
 			\'col': float2nr(round(0.03 * &columns)),
 			\'row': float2nr(round(0.03 * &lines)),
 			\'style': 'minimal', }
+
+" vim-bookmarks
+let g:bookmark_no_default_key_mappings = 1
+let g:bookmark_no_default_key_mappings = 1
+let g:bookmark_sign = '>>'
+let g:bookmark_annotation_sign = '##'
+let g:bookmark_save_per_working_dir = 1
+nmap <leader>mm <Plug>BookmarkToggle
+nmap <leader>mi <Plug>BookmarkAnnotate
+nmap <leader>ma <Plug>BookmarkShowAll
+nmap <leader>mn <Plug>BookmarkNext
+nmap <leader>mp <Plug>BookmarkPrev
+nmap <leader>mc <Plug>BookmarkClear
+nmap <leader>mx <Plug>BookmarkClearAll
+nmap <Leader>mP <Plug>BookmarkMoveUp
+nmap <Leader>mN <Plug>BookmarkMoveDown
+nmap <Leader>mt <Plug>BookmarkMoveToLine
 
 
 " -- ------
@@ -587,14 +614,12 @@ function! ReloadSyntax(type)
 	if &filetype == 'markdown' || a:type == 1
 		hi Normal ctermfg=None ctermbg=None guifg=None guibg=None
 		set colorcolumn=""
-	else
+	elseif a:type == 2
 		set colorcolumn=80
 		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
 		au BufNewFile,BufRead * :match Over80 /.\%>81v/
 	endif
-	if a:type != 0
-		exec "HicusSyntaxReload"
-	endif
+	exec a:type != 0?"HicusSyntaxReload":""
 	"hi TabLine gui=None guifg=#FFFFFF guibg=#6272A4
 	"hi TabLineFill gui=None guifg=#8BE9FD guibg=#44475A
 	"hi TabLineSel gui=bold guifg=#282A36 guibg=#BD93F9
