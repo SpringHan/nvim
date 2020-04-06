@@ -83,8 +83,6 @@ set path=.,/usr/include,/usr/local/include/
 set foldmethod=marker
 set foldlevelstart=99
 set colorcolumn=80
-hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
-au BufNewFile,BufRead * :match Over80 /.\%>81v/
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 let g:mapleader = "\<Space>"
 syntax enable
@@ -497,10 +495,10 @@ let g:HicusLine = {
 			\              '%#infos#', 'gitinfo', 0, 'modified', 'filename',
 			\              'readonly', 'space', '%#ErrorStatus#', 'errorstatus',
 			\              'space', '%#WarningStatus#', 'warningstatus', 0, ],
-			\    'right': [ 'filetype3', 'space', '%#infos#', 'fileencoding', 'space',
-			\               'fileformat', 'modehighlight', 'space', 'linenumber', ':',
-			\               'bufferlinesnumber', 'space', 'windowpercentage', 'space',
-			\    ],
+			\    'right': [ 'filetype3', 'space', '%#infos#', 'space','fileencoding',
+			\               'space', 'fileformat', 'space', 'modehighlight', 'space',
+			\               'linenumber', ':', 'bufferlinesnumber', 'space',
+			\               'windowpercentage', 'space', ],
 			\},
 			\'basic_option': {
 			\    'ErrorSign': '●',
@@ -526,7 +524,7 @@ let g:HicusColor = {
 			\'insertmode':     [ 'bold', '#282A36', '#50FA7B', ],
 			\'visualmode':     [ 'bold', '#282A36', '#FFB86C', ],
 			\'replacemode':    [ 'bold', '#282A36', '#FF5555', ],
-			\'commandmode':    [ 'bold', '#C6C6C6', '#3A81C3' ],
+			\'commandmode':    [ 'bold', '#C6C6C6', '#3A81C3', ],
 			\'normalinfos':    [ 'none', '#FFFFFF', '#6272A4', ],
 			\'otherinfos':     [ 'none', '#44475A', '#8BE9FD', ],
 			\'ErrorStatus':    [ 'none', '#FF0033', '#44475A', ],
@@ -552,11 +550,11 @@ let g:user_emmet_leader_key = '<C-r>'
 nnoremap <silent> <leader>Rt :RnvimrToggle<CR>
 nnoremap <silent> <leader>Rs :RnvimrSync<CR>
 let g:rnvimr_layout = { 'relative': 'editor',
-			\'width': float2nr(round(0.95 * &columns)),
+			\'width':  float2nr(round(0.95 * &columns)),
 			\'height': float2nr(round(0.95 * &lines)),
-			\'col': float2nr(round(0.03 * &columns)),
-			\'row': float2nr(round(0.03 * &lines)),
-			\'style': 'minimal', }
+			\'col':    float2nr(round(0.03 * &columns)),
+			\'row':    float2nr(round(0.03 * &lines)),
+			\'style':  'minimal', }
 
 " vim-bookmarks
 let g:bookmark_no_default_key_mappings = 1
@@ -635,6 +633,9 @@ endfunction
 "endfunction
 
 "set tabline=%!TabLineTest()
+
+hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
+au BufNewFile,BufRead * :match Over80 /.\%>81v/
 
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
