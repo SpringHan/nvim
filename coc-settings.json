@@ -35,6 +35,7 @@
 		"htmldjango"
 	],
 	"html.format.enable": true,
+	"explorer.icon.enableNerdfont": true,
 	"explorer.keyMappings": {
 		"u": "nodePrev",
 		"e": "nodeNext",

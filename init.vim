@@ -110,6 +110,7 @@ noremap n h
 nnoremap cW cw
 nnoremap cE ce
 nnoremap cB cb
+nnoremap L e
 
 " Insert bindings
 inoremap .* /* */<ESC>hi
@@ -199,6 +200,7 @@ inoremap <silent> ,CS <ESC>/\!<CS>!<CR>:nohlsearch<CR>
 inoremap <silent> .CS !<CS>!
 
 " Snippets
+source ~/.config/nvim/often-snippets.vim
 autocmd filetype markdown source ~/.config/nvim/md-snippets.vim
 
 " Tab
@@ -224,6 +226,22 @@ set smartindent
 " Terminal
 autocmd TermOpen term://* startinsert
 tnoremap <silent> <C-q> <C-\><C-n>:q!<CR>
+tnoremap <silent> <C-h> <C-\><C-n><C-w>h
+let g:terminal_color_0  = '#000000'
+let g:terminal_color_1  = '#FF5555'
+let g:terminal_color_2  = '#50FA7B'
+let g:terminal_color_3  = '#F1FA8C'
+let g:terminal_color_4  = '#BD93F9'
+let g:terminal_color_5  = '#FF79C6'
+let g:terminal_color_6  = '#8BE9FD'
+let g:terminal_color_7  = '#BFBFBF'
+let g:terminal_color_8  = '#4D4D4D'
+let g:terminal_color_9  = '#FF6E67'
+let g:terminal_color_10 = '#5AF78E'
+let g:terminal_color_11 = '#F4F99D'
+let g:terminal_color_12 = '#CAA9FA'
+let g:terminal_color_13 = '#FF92D0'
+let g:terminal_color_14 = '#9AEDFE'
 
 
 " -- ------
@@ -237,7 +255,7 @@ Plug 'mhinz/vim-startify'
 
 " StatusLine
 "Plug 'itchyny/vim-gitbranch'
-"Plug 'Styadev/HicusLine'
+Plug 'Styadev/HicusLine', { 'branch': 'dev' }
 Plug 'bling/vim-bufferline'
 
 " vim-style
@@ -270,9 +288,6 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " Far
 Plug 'brooth/far.vim', { 'on': 'Far' }
 
-" Bash-language-server
-Plug 'mads-hartmann/bash-language-server', { 'for': 'sh' }
-
 " Auto-pairs
 Plug 'jiangmiao/auto-pairs'
 
@@ -280,13 +295,10 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
 
 " Special Words
-Plug 'itchyny/vim-cursorword'
-
-" vim-peekaboo
-Plug 'junegunn/vim-peekaboo'
+Plug 'RRethy/vim-illuminate'
 
 " Todo
-Plug 'SpringHan/lightTodo.vim'
+Plug 'SpringHan/lightTodo.vim', { 'on': 'LightTodoToggle' }
 
 " vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
@@ -399,8 +411,8 @@ function g:Undotree_CustomMap()
 		nmap <buffer> E <plug>UndotreePreviousState
 endfunc
 if has("persistent_undo")
-  set undofile
-  set undodir=~/.config/nvim/do_history
+	set undofile
+	set undodir=~/.config/nvim/do_history
 endif
 
 " Fuzzy Finder
@@ -418,15 +430,15 @@ let g:mkdp_browser = 'google-chrome-stable'
 let g:mkdp_echo_preview_url = 0
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
-\  'mkit': {},
-\  'katex': {},
-\  'uml': {},
-\  'maid': {},
-\  'disable_sync_scroll': 0,
-\  'sync_scroll_type': 'middle',
-\  'hide_yaml_meta': 1,
-\  'sequence_diagrams': {}
-\  }
+			\ 'mkit': {},
+			\ 'katex': {},
+			\ 'uml': {},
+			\ 'maid': {},
+			\ 'disable_sync_scroll': 0,
+			\ 'sync_scroll_type': 'middle',
+			\ 'hide_yaml_meta': 1,
+			\ 'sequence_diagrams': {}
+			\ }
 let g:mkdp_markdown_css = ''
 let g:mkdp_highlight_css = ''
 let g:mkdp_port = ''
@@ -490,45 +502,45 @@ set laststatus=2
 let g:HicusLineEnabled = 1
 let g:HicusColorSetWay = 1
 let g:HicusLine = {
-			\'active': {
-			\    'left': [ 'modehighlight', 'space', 'mode', 'space', 'spell',
-			\              '%#infos#', 'gitinfo', 0, 'modified', 'filename',
-			\              'readonly', 'space', '%#ErrorStatus#', 'errorstatus',
-			\              'space', '%#WarningStatus#', 'warningstatus', 0, ],
-			\    'right': [ 'filetype3', 'space', '%#infos#', 'space','fileencoding',
-			\               'space', 'fileformat', 'space', 'modehighlight', 'space',
-			\               'linenumber', ':', 'bufferlinesnumber', 'space',
-			\               'windowpercentage', 'space', ],
-			\},
-			\'basic_option': {
-			\    'ErrorSign': '●',
-			\    'WarningSign': '●',
-			\},
+			\ 'active': {
+			\     'left': [ 'modehighlight', 'space', 'mode', 'space', 'spell',
+			\               '%#infos#', 'gitinfo', 0, 'modified', 'filename',
+			\               'readonly', 'space', '%#ErrorStatus#', 'errorstatus',
+			\               'space', '%#WarningStatus#', 'warningstatus', 0, ],
+			\     'right': [ 'filetype3', 'space', '%#infos#', 'space','fileencoding',
+			\                'space', 'fileformat', 'space', 'modehighlight', 'space',
+			\                'linenumber', ':', 'bufferlinesnumber', 'space',
+			\                'windowpercentage', 'space', ],
+			\ },
+			\ 'basic_option': {
+			\     'ErrorSign': '●',
+			\     'WarningSign': '●',
+			\ },
 \}
 let g:HicusLineMode = {
-			\'n':      [ 'NORMAL', 'normalmode', { 'infos': 'normalinfos', }, ],
-			\'i':      [ 'INSERT', 'insertmode', { 'infos': 'otherinfos',  }, ],
-			\'R':      [ 'REPLACE', 'replacemode', { 'infos': 'otherinfos',  }, ],
-			\'v':      [ 'VISUAL', 'visualmode', { 'infos': 'otherinfos',  }, ],
-			\'V':      [ 'L-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
-			\"\<C-v>": [ 'B-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
-			\'c':      [ 'COMMAND', 'commandmode', { 'infos': 'otherinfos',  }, ],
-			\'s':      [ 'SELECT', 'normalmode', { 'infos': 'normalinfos',  }, ],
-			\'S':      [ 'L-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
-			\"\<C-s>": [ 'B-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
-			\'t':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ 'n':      [ 'NORMAL', 'normalmode', { 'infos': 'normalinfos', }, ],
+			\ 'i':      [ 'INSERT', 'insertmode', { 'infos': 'otherinfos',  }, ],
+			\ 'R':      [ 'REPLACE', 'replacemode', { 'infos': 'otherinfos',  }, ],
+			\ 'v':      [ 'VISUAL', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\ 'V':      [ 'L-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\ "\<C-v>": [ 'B-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\ 'c':      [ 'COMMAND', 'commandmode', { 'infos': 'otherinfos',  }, ],
+			\ 's':      [ 'SELECT', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ 'S':      [ 'L-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ "\<C-s>": [ 'B-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ 't':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ],
 \}
 let g:HicusColor = {
-			\'StatusLine':     [ 'none' ,'#8BE9FD', '#44475A', ],
-			\'normalmode':     [ 'bold' ,'#282A36', '#BD93F9', ],
-			\'insertmode':     [ 'bold', '#282A36', '#50FA7B', ],
-			\'visualmode':     [ 'bold', '#282A36', '#FFB86C', ],
-			\'replacemode':    [ 'bold', '#282A36', '#FF5555', ],
-			\'commandmode':    [ 'bold', '#C6C6C6', '#3A81C3', ],
-			\'normalinfos':    [ 'none', '#FFFFFF', '#6272A4', ],
-			\'otherinfos':     [ 'none', '#44475A', '#8BE9FD', ],
-			\'ErrorStatus':    [ 'none', '#FF0033', '#44475A', ],
-			\'WarningStatus':  [ 'none', '#FFCC00', '#44475A', ],
+			\ 'StatusLine':     [ 'none' ,'#8BE9FD', '#44475A', ],
+			\ 'normalmode':     [ 'bold' ,'#282A36', '#BD93F9', ],
+			\ 'insertmode':     [ 'bold', '#282A36', '#50FA7B', ],
+			\ 'visualmode':     [ 'bold', '#282A36', '#FFB86C', ],
+			\ 'replacemode':    [ 'bold', '#282A36', '#FF5555', ],
+			\ 'commandmode':    [ 'bold', '#C6C6C6', '#3A81C3', ],
+			\ 'normalinfos':    [ 'none', '#FFFFFF', '#6272A4', ],
+			\ 'otherinfos':     [ 'none', '#44475A', '#8BE9FD', ],
+			\ 'ErrorStatus':    [ 'none', '#FF0033', '#44475A', ],
+			\ 'WarningStatus':  [ 'none', '#FFCC00', '#44475A', ],
 \}
 
 " vim-multiple-cursors
@@ -550,11 +562,11 @@ let g:user_emmet_leader_key = '<C-r>'
 nnoremap <silent> <leader>Rt :RnvimrToggle<CR>
 nnoremap <silent> <leader>Rs :RnvimrSync<CR>
 let g:rnvimr_layout = { 'relative': 'editor',
-			\'width':  float2nr(round(0.95 * &columns)),
-			\'height': float2nr(round(0.95 * &lines)),
-			\'col':    float2nr(round(0.03 * &columns)),
-			\'row':    float2nr(round(0.03 * &lines)),
-			\'style':  'minimal', }
+			\ 'width':  float2nr(round(0.95 * &columns)),
+			\ 'height': float2nr(round(0.95 * &lines)),
+			\ 'col':    float2nr(round(0.03 * &columns)),
+			\ 'row':    float2nr(round(0.03 * &lines)),
+			\ 'style':  'minimal', }
 
 " vim-bookmarks
 let g:bookmark_no_default_key_mappings = 1
@@ -573,6 +585,10 @@ nmap <leader>mx <Plug>BookmarkClearAll
 nmap <Leader>mP <Plug>BookmarkMoveUp
 nmap <Leader>mN <Plug>BookmarkMoveDown
 nmap <Leader>mt <Plug>BookmarkMoveToLine
+
+" Illuminate
+let g:Illuminate_delay = 750
+hi illuminatedWord cterm=undercurl gui=undercurl
 
 
 " -- ------
@@ -619,6 +635,7 @@ function! ReloadSyntax(type)
 		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
 		au BufNewFile,BufRead * :match Over80 /.\%>81v/
 	endif
+	hi illuminatedWord cterm=undercurl gui=undercurl
 	exec a:type != 0?"HicusSyntaxReload":""
 	"hi TabLine gui=None guifg=#FFFFFF guibg=#6272A4
 	"hi TabLineFill gui=None guifg=#8BE9FD guibg=#44475A
@@ -642,4 +659,7 @@ nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
-set runtimepath+=~/Github/HicusLine
+"set runtimepath+=~/Github/HicusLine
+set runtimepath+=~/Github/Terslation.vim
+"let g:TerslationWidth = 50
+"let g:TerslationPosition = 'botright'
