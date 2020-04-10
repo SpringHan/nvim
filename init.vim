@@ -134,6 +134,7 @@ inoremap ,X <ESC>xi
 inoremap .x <ESC>lxi
 inoremap <C-x> <C-x><C-s>
 inoremap .z <ESC>zza
+inoremap \\ \
 
 " Normal Bindings
 nnoremap ; :
@@ -193,11 +194,6 @@ nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
 nnoremap <silent> <leader>lna :call ReloadSyntax(2)<CR>
 nnoremap <silent> <leader>te :exec "!touch ./".expand("<cWORD>")<CR>
 nnoremap <silent> <leader>ww :e ~/Github/StudyNotes/index.md<CR>
-
-" ChangeSign
-nnoremap <silent> <leader>CS /\!<CS>!<CR>:nohlsearch<CR>
-inoremap <silent> ,CS <ESC>/\!<CS>!<CR>:nohlsearch<CR>
-inoremap <silent> .CS !<CS>!
 
 " Snippets
 source ~/.config/nvim/often-snippets.vim
@@ -309,6 +305,9 @@ Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'Rnvimr
 " Useful plugin
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
+
+" Translation
+"Plug 'SpringHan/Terslation.vim', { 'on': 'TerslationToggle' }
 
 call plug#end()
 
@@ -661,5 +660,6 @@ nnoremap <silent> co :only<CR>
 " Debug
 "set runtimepath+=~/Github/HicusLine
 set runtimepath+=~/Github/Terslation.vim
+nnoremap <leader>ts :TerslationToggle<CR>
 "let g:TerslationWidth = 50
 "let g:TerslationPosition = 'botright'
