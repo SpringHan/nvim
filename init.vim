@@ -663,3 +663,5 @@ set runtimepath+=~/Github/Terslation.vim
 nnoremap <leader>ts :TerslationToggle<CR>
 "let g:TerslationWidth = 50
 "let g:TerslationPosition = 'botright'
+"let g:TerslationDefaultSyntax = 1
+"let g:TerslationLang = 'cn'
