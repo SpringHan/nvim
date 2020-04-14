@@ -251,7 +251,7 @@ Plug 'mhinz/vim-startify'
 
 " StatusLine
 "Plug 'itchyny/vim-gitbranch'
-Plug 'Styadev/HicusLine', { 'branch': 'dev' }
+Plug 'Styadev/HicusLine', { 'branch': 'master' }
 Plug 'bling/vim-bufferline'
 
 " vim-style
@@ -307,7 +307,8 @@ Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
 
 " Translation
-"Plug 'SpringHan/Terslation.vim', { 'on': 'TerslationToggle' }
+"Plug 'denstiny/Terslation'
+Plug 'SpringHan/Terslation.vim', { 'on': 'TerslationToggle' }
 
 call plug#end()
 
@@ -589,6 +590,11 @@ nmap <Leader>mt <Plug>BookmarkMoveToLine
 let g:Illuminate_delay = 750
 hi illuminatedWord cterm=undercurl gui=undercurl
 
+" Terslation.vim
+nnoremap <silent><leader>tp "tp
+nnoremap <silent><leader>ts :TerslationToggle<CR>
+nnoremap <silent><leader>tws :TerslationWordTrans<CR>
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -659,9 +665,4 @@ nnoremap <silent> co :only<CR>
 
 " Debug
 "set runtimepath+=~/Github/HicusLine
-set runtimepath+=~/Github/Terslation.vim
-nnoremap <leader>ts :TerslationToggle<CR>
-"let g:TerslationWidth = 50
-"let g:TerslationPosition = 'botright'
-"let g:TerslationDefaultSyntax = 1
-"let g:TerslationLang = 'cn'
+"set runtimepath+=~/Github/Terslation.vim
