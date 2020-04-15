@@ -308,7 +308,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 
 " Translation
 "Plug 'denstiny/Terslation'
-Plug 'SpringHan/Terslation.vim', { 'on': 'TerslationToggle' }
+Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTrans' ] }
 
 call plug#end()
 
@@ -321,6 +321,9 @@ call plug#end()
 " NeoVim Styles
 set termguicolors
 colorscheme deus
+
+" Startify
+let g:startify_custom_header = 'startify#center(startify#fortune#cowsay())'
 
 " Coc.nvim
 let g:coc_start_at_startup = 0
@@ -633,7 +636,7 @@ endfunction
 function! ReloadSyntax(type)
 	syntax on
 	if &filetype == 'markdown' || a:type == 1
-		hi Normal ctermfg=None ctermbg=None guifg=None guibg=None
+		hi Normal ctermfg=223 ctermbg=None guifg=#ebdbb2 guibg=None
 		set colorcolumn=""
 	elseif a:type == 2
 		set colorcolumn=80
@@ -666,3 +669,4 @@ nnoremap <silent> co :only<CR>
 " Debug
 "set runtimepath+=~/Github/HicusLine
 "set runtimepath+=~/Github/Terslation.vim
+"set runtimepath+=~/Github/lightTodo.vim
