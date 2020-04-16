@@ -251,7 +251,7 @@ Plug 'mhinz/vim-startify'
 
 " StatusLine
 "Plug 'itchyny/vim-gitbranch'
-Plug 'Styadev/HicusLine', { 'branch': 'master' }
+Plug 'Styadev/HicusLine', { 'branch': 'dev' }
 Plug 'bling/vim-bufferline'
 
 " vim-style
@@ -294,7 +294,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'RRethy/vim-illuminate'
 
 " Todo
-Plug 'SpringHan/lightTodo.vim', { 'on': 'LightTodoToggle' }
+Plug 'SpringHan/lightTodo.vim', { 'branch': 'dev', 'on': 'LightTodoToggle' }
 
 " vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
@@ -506,10 +506,10 @@ let g:HicusLineEnabled = 1
 let g:HicusColorSetWay = 1
 let g:HicusLine = {
 			\ 'active': {
-			\     'left': [ 'modehighlight', 'space', 'mode', 'space', 'spell',
-			\               '%#infos#', 'gitinfo', 0, 'modified', 'filename',
-			\               'readonly', 'space', '%#ErrorStatus#', 'errorstatus',
-			\               'space', '%#WarningStatus#', 'warningstatus', 0, ],
+			\     'left': [ 'modehighlight', 'space', 'filename', 'space', 'spell',
+			\               '%#infos#', 'gitinfo', 0, 'modified', 'readonly', 'space',
+			\               '%#ErrorStatus#', 'errorstatus', 'space',
+			\               '%#WarningStatus#', 'warningstatus', 0, ],
 			\     'right': [ 'filetype3', 'space', '%#infos#', 'space','fileencoding',
 			\                'space', 'fileformat', 'space', 'modehighlight', 'space',
 			\                'linenumber', ':', 'bufferlinesnumber', 'space',
