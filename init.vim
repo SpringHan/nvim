@@ -180,6 +180,10 @@ nnoremap vsr :set splitright<CR>:vsplit<Space>
 nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 nnoremap csc :%s/\r//<CR>
 
+" Command bindings
+cnoremap <C-n> <HOME>
+cnoremap <C-i> <END>
+
 " Other mode bingdings
 xmap ; :
 
@@ -252,7 +256,7 @@ Plug 'mhinz/vim-startify'
 " StatusLine
 "Plug 'itchyny/vim-gitbranch'
 Plug 'Styadev/HicusLine', { 'branch': 'dev' }
-Plug 'bling/vim-bufferline'
+"Plug 'bling/vim-bufferline'
 
 " vim-style
 "Plug 'liuchengxu/space-vim-theme'
@@ -509,7 +513,7 @@ let g:HicusLine = {
 			\     'left': [ 'modehighlight', 'space', 'filename', 'space', 'spell',
 			\               '%#infos#', 'gitinfo', 0, 'modified', 'readonly', 'space',
 			\               '%#ErrorStatus#', 'errorstatus', 'space',
-			\               '%#WarningStatus#', 'warningstatus', 0, ],
+			\               '%#WarningStatus#', 'warningstatus', 0, 'bufferline', ],
 			\     'right': [ 'filetype3', 'space', '%#infos#', 'space','fileencoding',
 			\                'space', 'fileformat', 'space', 'modehighlight', 'space',
 			\                'linenumber', ':', 'bufferlinesnumber', 'space',
@@ -534,16 +538,18 @@ let g:HicusLineMode = {
 			\ 't':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ],
 \}
 let g:HicusColor = {
-			\ 'StatusLine':     [ 'none' ,'#8BE9FD', '#44475A', ],
-			\ 'normalmode':     [ 'bold' ,'#282A36', '#BD93F9', ],
-			\ 'insertmode':     [ 'bold', '#282A36', '#50FA7B', ],
-			\ 'visualmode':     [ 'bold', '#282A36', '#FFB86C', ],
-			\ 'replacemode':    [ 'bold', '#282A36', '#FF5555', ],
-			\ 'commandmode':    [ 'bold', '#C6C6C6', '#3A81C3', ],
-			\ 'normalinfos':    [ 'none', '#FFFFFF', '#6272A4', ],
-			\ 'otherinfos':     [ 'none', '#44475A', '#8BE9FD', ],
-			\ 'ErrorStatus':    [ 'none', '#FF0033', '#44475A', ],
-			\ 'WarningStatus':  [ 'none', '#FFCC00', '#44475A', ],
+			\ 'StatusLine':         [ 'none' ,'#8BE9FD', '#44475A', ],
+			\ 'normalmode':         [ 'bold' ,'#282A36', '#BD93F9', ],
+			\ 'insertmode':         [ 'bold', '#282A36', '#50FA7B', ],
+			\ 'visualmode':         [ 'bold', '#282A36', '#FFB86C', ],
+			\ 'replacemode':        [ 'bold', '#282A36', '#FF5555', ],
+			\ 'commandmode':        [ 'bold', '#C6C6C6', '#3A81C3', ],
+			\ 'normalinfos':        [ 'none', '#FFFFFF', '#6272A4', ],
+			\ 'otherinfos':         [ 'none', '#44475A', '#8BE9FD', ],
+			\ 'ErrorStatus':        [ 'none', '#FF0033', '#44475A', ],
+			\ 'WarningStatus':      [ 'none', '#FFCC00', '#44475A', ],
+			\ 'HicusBuffer':        [ 'none', '#FFFFFF', '#44475A', ],
+			\ 'HicusCurrentBuffer': [ 'bold', '#FFFFFF', 'none', ],
 \}
 
 " vim-multiple-cursors
@@ -641,7 +647,7 @@ function! ReloadSyntax(type)
 	elseif a:type == 2
 		set colorcolumn=80
 		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
-		au BufNewFile,BufRead * :match Over80 /.\%>81v/
+		au BufNewFile,BufRead * match Over80 /.\%>81v/
 	endif
 	hi illuminatedWord cterm=undercurl gui=undercurl
 	exec a:type != 0?"HicusSyntaxReload":""
@@ -660,7 +666,7 @@ endfunction
 "set tabline=%!TabLineTest()
 
 hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
-au BufNewFile,BufRead * :match Over80 /.\%>81v/
+au BufNewFile,BufRead * match Over80 /.\%>81v/
 
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
