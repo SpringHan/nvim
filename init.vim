@@ -57,6 +57,7 @@ set noswapfile
 set noexpandtab
 set showmatch
 set ruler
+set wrap
 set noshowmode
 set showtabline=1
 set smartcase
@@ -168,8 +169,7 @@ nnoremap <silent> cd :nohlsearch<CR>
 nnoremap sr :r<Space>
 nnoremap sh :!
 nnoremap <leader><Return> gf
-nnoremap <leader>nrc :e ~/.config/nvim/init.vim<CR>
-nnoremap <leader>nst :e ~/.config/nvim/snippets.vim<CR>
+nnoremap <silent><leader>nrc :e ~/.config/nvim/init.vim<CR>
 nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:call ReloadSyntax(2)<CR>:nohlsearch<CR>
 nnoremap css :set spell!<CR>
 nnoremap sc z=
@@ -181,8 +181,10 @@ nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 nnoremap csc :%s/\r//<CR>
 
 " Command bindings
-cnoremap <C-n> <HOME>
-cnoremap <C-i> <END>
+cnoremap <C-a> <HOME>
+cnoremap <C-e> <END>
+cnoremap <C-b> <LEFT>
+cnoremap <C-k> <RIGHT>
 
 " Other mode bingdings
 xmap ; :
@@ -255,7 +257,7 @@ Plug 'mhinz/vim-startify'
 
 " StatusLine
 "Plug 'itchyny/vim-gitbranch'
-Plug 'Styadev/HicusLine', { 'branch': 'dev' }
+Plug 'Styadev/HicusLine'
 "Plug 'bling/vim-bufferline'
 
 " vim-style
@@ -309,6 +311,7 @@ Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'Rnvimr
 " Useful plugin
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'lambdalisue/suda.vim'
 
 " Translation
 "Plug 'denstiny/Terslation'
@@ -513,7 +516,7 @@ let g:HicusLine = {
 			\     'left': [ 'modehighlight', 'space', 'filename', 'space', 'spell',
 			\               '%#infos#', 'gitinfo', 0, 'modified', 'readonly', 'space',
 			\               '%#ErrorStatus#', 'errorstatus', 'space',
-			\               '%#WarningStatus#', 'warningstatus', 0, 'bufferline', ],
+			\               '%#WarningStatus#', 'warningstatus', 'bufferline', ],
 			\     'right': [ 'filetype3', 'space', '%#infos#', 'space','fileencoding',
 			\                'space', 'fileformat', 'space', 'modehighlight', 'space',
 			\                'linenumber', ':', 'bufferlinesnumber', 'space',
@@ -538,8 +541,8 @@ let g:HicusLineMode = {
 			\ 't':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ],
 \}
 let g:HicusColor = {
-			\ 'StatusLine':         [ 'none' ,'#8BE9FD', '#44475A', ],
-			\ 'normalmode':         [ 'bold' ,'#282A36', '#BD93F9', ],
+			\ 'StatusLine':         [ 'none', '#8BE9FD', '#44475A', ],
+			\ 'normalmode':         [ 'bold', '#282A36', '#BD93F9', ],
 			\ 'insertmode':         [ 'bold', '#282A36', '#50FA7B', ],
 			\ 'visualmode':         [ 'bold', '#282A36', '#FFB86C', ],
 			\ 'replacemode':        [ 'bold', '#282A36', '#FF5555', ],
@@ -604,6 +607,9 @@ nnoremap <silent><leader>tp "tp
 nnoremap <silent><leader>ts :TerslationToggle<CR>
 nnoremap <silent><leader>tws :TerslationWordTrans<CR>
 
+" suda.vim
+let g:suda#prefix = 'sudo://'
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -651,19 +657,7 @@ function! ReloadSyntax(type)
 	endif
 	hi illuminatedWord cterm=undercurl gui=undercurl
 	exec a:type != 0?"HicusSyntaxReload":""
-	"hi TabLine gui=None guifg=#FFFFFF guibg=#6272A4
-	"hi TabLineFill gui=None guifg=#8BE9FD guibg=#44475A
-	"hi TabLineSel gui=bold guifg=#282A36 guibg=#BD93F9
 endfunction
-
-"function! TabLineTest()
-"	let l:test = tabpagenr().' %f'
-"	for l:i in range(tabpagenr('$'))
-"	endfor
-"	return l:test
-"endfunction
-
-"set tabline=%!TabLineTest()
 
 hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
 au BufNewFile,BufRead * match Over80 /.\%>81v/
