@@ -108,10 +108,8 @@ noremap k n
 noremap K N
 noremap H I
 noremap n h
-nnoremap cW cw
-nnoremap cE ce
 nnoremap cB cb
-nnoremap L e
+noremap L e
 
 " Insert bindings
 inoremap .* /* */<ESC>hi
@@ -141,14 +139,15 @@ inoremap \\ \
 nnoremap ; :
 nnoremap > >>
 nnoremap < <<
+nnoremap s <nop>
+nnoremap cq Q
 nnoremap <silent> cl :bp<CR>
 nnoremap <silent> cn :bn<CR>
-nnoremap <silent> cww :w<CR>
-nnoremap <silent> cq :q<CR>
-nnoremap <silent> cwq :wq<CR>
-nnoremap <silent> ca :qa<CR>
-nnoremap <silent> ceq :q!<CR>
-nnoremap <silent> cf :buffers<CR>
+nnoremap <silent> S :w<CR>
+nnoremap <silent> Q :q<CR>
+nnoremap <silent> sq :wq<CR>
+nnoremap <silent> sa :qa<CR>
+nnoremap <silent> se :q!<CR>
 nnoremap cet :edit<Space>
 nnoremap va <C-w>+
 nnoremap vx <C-w>-
@@ -179,6 +178,7 @@ nnoremap spb :set splitbelow<CR>:split<Space>
 nnoremap vsr :set splitright<CR>:vsplit<Space>
 nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 nnoremap csc :%s/\r//<CR>
+nnoremap cmit :r ~/.config/nvim/CopyRight/MIT<CR>
 
 " Command bindings
 cnoremap <C-a> <HOME>
@@ -608,6 +608,7 @@ nnoremap <silent><leader>ts :TerslationToggle<CR>
 nnoremap <silent><leader>tws :TerslationWordTrans<CR>
 
 " suda.vim
+nnoremap csw :w sudo://%<CR>
 let g:suda#prefix = 'sudo://'
 
 

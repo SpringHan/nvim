@@ -17,24 +17,25 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
 - [HicusLine](https://github.com/Styadev/HicusLine) - A highly customizable statusline in (neo)vim
 - [LightTodo.vim](https://github.com/SpringHan/lightTodo.vim) - A light todolist in (neo)vim written by me
-- [Dracula](https://github.com/dracula/vim) - A really beautiful theme in vim(And I modified something,you can [Look here](https://github.com/SpringHan/dracula))
-- [vim-bufferline](https://github.com/bling/vim-bufferline) - A buffer shower in commnad
+- [Terslation.vim](https://github.com/SpringHan/Terslation.vim) - Terminal Translator interface for vim
 - [Deus](https://github.com/ajmwagar/vim-deus) - A better color scheme for the late night coder(I did some changes on the original,you can [Look Here](https://github.com/SpringHan/vim-deus))
 - [vim-javascript](https://github.com/pangloss/vim-javascript) - A vim plugin provides javascript syntax
 - [Tagbar](https://github.com/majutsushi/tagbar) - A plug can show the functions in vim
 - [Far](https://github.com/brooth/far.vim) - A great plug which can do a good job on finding in vim
 - [Auto-Pairs](https://github.com/jiangmiao/auto-pairs) - A plug that can insert or delete brackets, parens, quotes in pair
 - [vim-easy-align](https://github.com/junegunn/vim-easy-align) - A plug that can center code easily
-- [vim-cursorline](https://github.com/itchyny/vim-cursorword) - A plug that can make words have underline
-- [vim-peakaboo](https://github.com/junegunn/vim-peekaboo) - A plug which extension `@` and `"`
 - [coc.vim](https://github.com/neoclide/coc.vim) - A completor in vim
 - [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - A Plugin which can help you format the tables.
-- [vim-space-theme](https://github.com/liuchengxu/space-vim-theme) - A pretty nice vim theme
 - [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) - A markdown previewer
-- [vimwiki](https://github.com/vimwiki/vimwiki) - Make your own wiki in (neo)vim
 - [Undotree](https://github.com/mbbill/undotree) - A plugin which can save the editing histroy
 - [emmet-vim](https://github.com/mattn/emmet-vim) - Emmet for vim
-- [fzf](https://github.com/junegunn/fzf) - A fuzzy finder in vim
+- [fzf](https://github.com/junegunn/fzf) - Fuzzy finder in vim
+- [vim-illuminate](https://github.com/RRethy/vim-illuminate) - A tool for illuminating the other uses of the current word under the cursor.
+- [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) - True Sublime Text multiple selection in Vim
+- [rnvimr](https://github.com/kevinhwang91/rnvimr) - Ranger in vim with float window
+- [vim-surround](https://github.com/tpope/vim-surround) - A plugin which can change the symbol easily
+- [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks) - A Vim plugin for using line-based bookmarks
+- [suda.vim](https://github.com/lambdalisue/suda.vim) - A plugin can make you use sudo in neovim
 
 
 ## Plugins provider
@@ -90,12 +91,10 @@ These are my Key Mappings,of course you can change them.
 | N          | 5h               |
 | I          | 5l               |
 | l          | u                |
+| L          | e                |
 | k          | n                |
 | K          | N                |
 | H          | I                |
-| ci         | ci               |
-| cI         | cl               |
-| C          | C                |
 | cl         | :bp CR           |
 | cn         | :bn CR           |
 | cw         | :w CR            |
