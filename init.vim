@@ -317,6 +317,9 @@ Plug 'lambdalisue/suda.vim'
 "Plug 'denstiny/Terslation'
 Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTrans' ] }
 
+" Debug
+"Plug 'idanarye/vim-vebugger'
+
 call plug#end()
 
 
@@ -608,8 +611,11 @@ nnoremap <silent><leader>ts :TerslationToggle<CR>
 nnoremap <silent><leader>tws :TerslationWordTrans<CR>
 
 " suda.vim
-nnoremap csw :w sudo://%<CR>
+nnoremap sw :w sudo://%<CR>
 let g:suda#prefix = 'sudo://'
+
+" Vebugger
+let g:vebugger_leader = '<Leader>d'
 
 
 " -- ------
