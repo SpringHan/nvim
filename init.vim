@@ -229,6 +229,7 @@ set smartindent
 autocmd TermOpen term://* startinsert
 tnoremap <silent> <C-q> <C-\><C-n>:q!<CR>
 tnoremap <silent> <C-h> <C-\><C-n><C-w>h
+tnoremap <silent> <C-\> <C-\><C-n>
 let g:terminal_color_0  = '#000000'
 let g:terminal_color_1  = '#FF5555'
 let g:terminal_color_2  = '#50FA7B'
