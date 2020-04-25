@@ -318,6 +318,9 @@ Plug 'lambdalisue/suda.vim'
 "Plug 'denstiny/Terslation'
 Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTrans' ] }
 
+" Comment
+Plug 'preservim/nerdcommenter'
+
 " Debug
 "Plug 'idanarye/vim-vebugger'
 
@@ -616,7 +619,10 @@ nnoremap sw :w sudo://%<CR>
 let g:suda#prefix = 'sudo://'
 
 " Vebugger
-let g:vebugger_leader = '<Leader>d'
+"let g:vebugger_leader = '<Leader>d'
+
+" NerdCommenter
+let g:NERDSpaceDelims = 1
 
 
 " -- ------
