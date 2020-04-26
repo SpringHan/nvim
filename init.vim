@@ -343,6 +343,7 @@ let g:startify_custom_header = 'startify#center(startify#fortune#cowsay())'
 let g:coc_start_at_startup = 0
 function! CocTimerStart(timer)
 	exec "CocStart"
+	echohl MoreMsg | echo "Coc.nvim loaded." | echohl None
 endfunction
 call timer_start(300, 'CocTimerStart', {'repeat': 1})
 set hidden
@@ -412,8 +413,8 @@ nnoremap <silent> <space>k :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p :<C-u>CocListResume<CR>
 nnoremap <silent> tt :CocCommand explorer<CR>
 nnoremap <silent> <leader>cfg :CocConfig<CR>
-nnoremap <silent> <leader>y :<C-u>CocList -A --normal yank<CR>
-nnoremap <silent> <leader>cy :CocCommand yank.clean<CR>
+nnoremap <silent> <leader>yy :<C-u>CocList -A --normal yank<CR>
+nnoremap <silent> <leader>yc :CocCommand yank.clean<CR>
 
 " VimTableMode
 nnoremap <leader>tm :TableModeToggle<CR>
