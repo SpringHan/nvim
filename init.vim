@@ -257,13 +257,13 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'mhinz/vim-startify'
 
 " StatusLine
-"Plug 'itchyny/vim-gitbranch'
+" Plug 'itchyny/vim-gitbranch'
 Plug 'Styadev/HicusLine'
-"Plug 'bling/vim-bufferline'
+" Plug 'bling/vim-bufferline'
 
 " vim-style
-"Plug 'liuchengxu/space-vim-theme'
-"Plug 'morhetz/gruvbox'
+" Plug 'liuchengxu/space-vim-theme'
+" Plug 'morhetz/gruvbox'
 Plug 'SpringHan/vim-deus'
 
 " Autosuggestion
@@ -315,7 +315,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'lambdalisue/suda.vim'
 
 " Translation
-"Plug 'denstiny/Terslation'
+" Plug 'denstiny/Terslation'
 Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTrans' ] }
 
 " Comment
@@ -611,6 +611,7 @@ let g:Illuminate_delay = 750
 hi illuminatedWord cterm=undercurl gui=undercurl
 
 " Terslation.vim
+let g:TerslationFloatWin = 1
 nnoremap <silent><leader>tp "tp
 nnoremap <silent><leader>ts :TerslationToggle<CR>
 nnoremap <silent><leader>tws :TerslationWordTrans<CR>
@@ -618,9 +619,6 @@ nnoremap <silent><leader>tws :TerslationWordTrans<CR>
 " suda.vim
 nnoremap sw :w sudo://%<CR>
 let g:suda#prefix = 'sudo://'
-
-" Vebugger
-"let g:vebugger_leader = '<Leader>d'
 
 " NerdCommenter
 let g:NERDSpaceDelims = 1
@@ -682,6 +680,6 @@ nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
-"set runtimepath+=~/Github/HicusLine
-"set runtimepath+=~/Github/Terslation.vim
-"set runtimepath+=~/Github/lightTodo.vim
+" set runtimepath+=~/Github/HicusLine
+" set runtimepath+=~/Github/Terslation.vim
+" set runtimepath+=~/Github/lightTodo.vim
