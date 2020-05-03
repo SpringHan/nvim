@@ -49,6 +49,7 @@ set autochdir
 set termencoding=utf-8
 set fileformats=unix
 set encoding=utf-8
+set mouse=nv
 set number
 set tabstop=2
 set shiftwidth=2
@@ -321,8 +322,8 @@ Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTr
 " Comment
 Plug 'preservim/nerdcommenter'
 
-" Debug
-"Plug 'idanarye/vim-vebugger'
+" Other filetype
+Plug 'rhysd/open-pdf.vim', { 'on': [ 'Pdf', 'Unite' ] }
 
 call plug#end()
 
@@ -357,7 +358,7 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 nnoremap <silent> <TAB> <Plug>(coc-range-select)
 xnoremap <silent> <TAB> <Plug>(coc-range-select)
 nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -404,7 +405,7 @@ nnoremap <silent> <space>co :<C-u>CocList commands<cr>
 " Find symbol of current document
 nnoremap <silent> <space>o :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>ss :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -623,6 +624,10 @@ let g:suda#prefix = 'sudo://'
 " NerdCommenter
 let g:NERDSpaceDelims = 1
 
+" LeetCode
+" let g:leetcode_china = 1
+" let g:leetcode_browser = 'chrome'
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -665,15 +670,10 @@ function! ReloadSyntax(type)
 		set colorcolumn=""
 	elseif a:type == 2
 		set colorcolumn=80
-		hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
-		au BufNewFile,BufRead * match Over80 /.\%>81v/
 	endif
 	hi illuminatedWord cterm=undercurl gui=undercurl
 	exec a:type != 0?"HicusSyntaxReload":""
 endfunction
-
-hi Over80 cterm=bold ctermbg=241 gui=bold guibg=#665C54
-au BufNewFile,BufRead * match Over80 /.\%>81v/
 
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
