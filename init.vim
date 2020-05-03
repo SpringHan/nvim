@@ -624,10 +624,6 @@ let g:suda#prefix = 'sudo://'
 " NerdCommenter
 let g:NERDSpaceDelims = 1
 
-" LeetCode
-" let g:leetcode_china = 1
-" let g:leetcode_browser = 'chrome'
-
 
 " -- ------
 " -- ------ Programming Settings
