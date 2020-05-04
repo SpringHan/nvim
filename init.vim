@@ -111,6 +111,7 @@ noremap H I
 noremap n h
 nnoremap cB cb
 noremap L e
+nnoremap <C-q> <nop>
 
 " Insert bindings
 inoremap .* /* */<ESC>hi
@@ -260,11 +261,8 @@ Plug 'mhinz/vim-startify'
 " StatusLine
 " Plug 'itchyny/vim-gitbranch'
 Plug 'Styadev/HicusLine'
-" Plug 'bling/vim-bufferline'
 
 " vim-style
-" Plug 'liuchengxu/space-vim-theme'
-" Plug 'morhetz/gruvbox'
 Plug 'SpringHan/vim-deus'
 
 " Autosuggestion
@@ -338,7 +336,14 @@ set termguicolors
 colorscheme deus
 
 " Startify
-let g:startify_custom_header = 'startify#center(startify#fortune#cowsay())'
+let g:startify_custom_header = [
+			\ '        _____            _                _   __         _    ___              ',
+			\ '       / ___/____  _____(_)___  ____ _   / | / /__  ____| |  / (_)___ ___      ',
+			\ '       \__ \/ __ \/ ___/ / __ \/ __ `/  /  |/ / _ \/ __ \ | / / / __ `__ \     ',
+			\ '      ___/ / /_/ / /  / / / / / /_/ /  / /|  /  __/ /_/ / |/ / / / / / / /     ',
+			\ '     /____/ .___/_/  /_/_/ /_/\__, /  /_/ |_/\___/\____/|___/_/_/ /_/ /_/      ',
+			\ '         /_/                 /____/                                            ',
+			\ ]
 
 " Coc.nvim
 let g:coc_start_at_startup = 0
@@ -671,11 +676,28 @@ function! ReloadSyntax(type)
 	exec a:type != 0?"HicusSyntaxReload":""
 endfunction
 
+function! FloatTerm()
+	let l:FloatTermBuf = nvim_create_buf(v:false, v:true)
+	let l:opt = { 'relative': 'win', 'width': float2nr(round(0.95 * &columns)),
+			\ 'height': float2nr(round(0.95 * &lines)),
+			\ 'col':    float2nr(round(0.03 * &columns)),
+			\ 'row':    float2nr(round(0.03 * &lines)),
+			\ 'anchor': 'NW',
+			\ }
+	let l:window = nvim_open_win(l:FloatTermBuf, v:true, l:opt)
+	call nvim_win_set_option(l:window, 'number', v:false)
+	call nvim_win_set_option(l:window, 'relativenumber', v:false)
+	call nvim_buf_set_option(l:FloatTermBuf, 'buftype', 'nofile')
+	terminal
+endfunction
+
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
+nnoremap <silent> <leader>Ft :call FloatTerm()<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
 " set runtimepath+=~/Github/HicusLine
 " set runtimepath+=~/Github/Terslation.vim
 " set runtimepath+=~/Github/lightTodo.vim
+" set runtimepath+=~/Github/NoToC.vim
