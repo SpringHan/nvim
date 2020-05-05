@@ -321,7 +321,8 @@ Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTr
 Plug 'preservim/nerdcommenter'
 
 " Other filetype
-Plug 'rhysd/open-pdf.vim', { 'on': [ 'Pdf', 'Unite' ] }
+" Plug 'rhysd/open-pdf.vim', { 'on': [ 'Pdf', 'Unite' ] }
+Plug 'makerj/vim-pdf'
 
 call plug#end()
 
