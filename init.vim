@@ -300,7 +300,8 @@ Plug 'junegunn/vim-easy-align'
 Plug 'RRethy/vim-illuminate'
 
 " Todo
-Plug 'SpringHan/lightTodo.vim', { 'branch': 'dev', 'on': 'LightTodoToggle' }
+" Plug 'SpringHan/lightTodo.vim', { 'branch': 'dev', 'on': 'LightTodoToggle' }
+" Plug 'SpringHan/NoToC.vim'
 
 " vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
@@ -674,7 +675,8 @@ function! ReloadSyntax(type)
 		set colorcolumn=80
 	endif
 	hi illuminatedWord cterm=undercurl gui=undercurl
-	exec a:type != 0?"HicusSyntaxReload":""
+	exec a:type != 0 ? "HicusSyntaxReload" : ""
+	exec a:type != 0 ? "NtcSyntaxReload" : ""
 endfunction
 
 function! FloatTerm()
@@ -700,5 +702,5 @@ nnoremap <silent> co :only<CR>
 " Debug
 " set runtimepath+=~/Github/HicusLine
 " set runtimepath+=~/Github/Terslation.vim
-" set runtimepath+=~/Github/lightTodo.vim
-" set runtimepath+=~/Github/NoToC.vim
+set runtimepath+=~/Github/NoToC.vim
+let g:NoToCFoldCache = $HOME.'/.cache/NoToC.vim/'
