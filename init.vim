@@ -697,10 +697,12 @@ endfunction
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
 nnoremap <silent> <leader>Ft :call FloatTerm()<CR>
+nnoremap <silent> <leader>wo :call FocusCodes(1)<CR>
+xnoremap <silent> <leader>wi :call FocusCodes(0)<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
 " set runtimepath+=~/Github/HicusLine
 " set runtimepath+=~/Github/Terslation.vim
 set runtimepath+=~/Github/NoToC.vim
-let g:NoToCFoldCache = $HOME.'/.cache/NoToC.vim/'
+let g:NoToCCache = $HOME.'/.cache/NoToC.vim/'
