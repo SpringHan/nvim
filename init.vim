@@ -313,6 +313,7 @@ Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'Rnvimr
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'lambdalisue/suda.vim'
+Plug 'tpope/vim-capslock'
 
 " Translation
 " Plug 'denstiny/Terslation'
@@ -530,13 +531,15 @@ let g:HicusColorSetWay = 1
 let g:HicusLine = {
 			\ 'active': {
 			\     'left': [ 'modehighlight', 'space', 'filename', 'space', 'spell',
-			\               '%#infos#', 'gitinfo', 0, 'modified', 'readonly', 'space',
+			\               '%#infos#', 'gitinfo',  0, 'modified', 'readonly', 'space',
 			\               '%#ErrorStatus#', 'errorstatus', 'space',
 			\               '%#WarningStatus#', 'warningstatus', 'bufferline', ],
-			\     'right': [ 'filetype3', 'space', '%#infos#', 'space','fileencoding',
-			\                'space', 'fileformat', 'space', 'modehighlight', 'space',
-			\                'linenumber', ':', 'bufferlinesnumber', 'space',
-			\                'windowpercentage', 'space', ],
+			\     'right': [ 'filetype3', 'space', '%#infos#', 'space', 'fileencoding',
+			\                'space', "%{exists('*CapsLockStatusline')".
+			\                "?CapsLockStatusline():''}" , 'space', 'fileformat',
+			\                'space', 'modehighlight', 'space', 'linenumber', ':',
+			\                'bufferlinesnumber', 'space', 'windowpercentage',
+			\                'space', ],
 			\ },
 			\ 'basic_option': {
 			\     'ErrorSign': '●',
@@ -697,8 +700,6 @@ endfunction
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
 nnoremap <silent> <leader>Ft :call FloatTerm()<CR>
-nnoremap <silent> <leader>wo :call FocusCodes(1)<CR>
-xnoremap <silent> <leader>wi :call FocusCodes(0)<CR>
 nnoremap <silent> co :only<CR>
 
 " Debug
