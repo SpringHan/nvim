@@ -300,7 +300,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'RRethy/vim-illuminate'
 
 " Todo
-" Plug 'SpringHan/lightTodo.vim', { 'branch': 'dev', 'on': 'LightTodoToggle' }
 " Plug 'SpringHan/NoToC.vim'
 
 " vim-multiple-cursors
@@ -358,7 +357,7 @@ call timer_start(300, 'CocTimerStart', {'repeat': 1})
 set hidden
 set updatetime=50
 " Plugins
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-translator', 'coc-kite', 'coc-yank', ]
+let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-kite', 'coc-yank', ]
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 function! s:check_back_space() abort
@@ -512,17 +511,6 @@ xmap ga <Plug>(EasyAlign)
 " Vim-peekaboo
 xnoremap Y "+y
 nnoremap P "+p
-
-" LightTodo
-nnoremap <leader>tt  :LightTodoToggle<CR>
-nnoremap <leader>taa :LightTodoAdd<CR>
-nnoremap <leader>tld :LightTodoDone<CR>
-nnoremap <leader>tu  :LightTodoUndone<CR>
-nnoremap <leader>tad :LightTodoAllDone<CR>
-nnoremap <leader>tau :LightTodoAllUndone<CR>
-nnoremap <leader>td  :LightTodoDelete<CR>
-nnoremap <leader>tc  :LightTodoClean<CR>
-let g:LightTodoFile = $HOME.'/.todo'
 
 " HicusLine
 set laststatus=2
