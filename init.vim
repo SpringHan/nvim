@@ -127,6 +127,7 @@ inoremap ?O <ESC>O
 inoremap ?o <ESC>o
 inoremap ?I <ESC>I
 inoremap ?h <ESC>i
+inoremap ?H <ESC>i
 inoremap ?? ?
 inoremap ?< <ESC><<a
 inoremap ?> <ESC>>>a
@@ -181,6 +182,7 @@ nnoremap vsr :set splitright<CR>:vsplit<Space>
 nnoremap vsl :set nosplitright<CR>:vsplit<Space>
 nnoremap csc :%s/\r//<CR>
 nnoremap cmit :r ~/.config/nvim/CopyRight/MIT<CR>
+nnoremap gG ggG
 
 " Command bindings
 cnoremap <C-a> <HOME>
@@ -671,17 +673,19 @@ function! ReloadSyntax(type)
 endfunction
 
 function! FloatTerm()
-	let l:FloatTermBuf = nvim_create_buf(v:false, v:true)
+	execute exists('g:FloatTermBuf') ? "bd! ".g:FloatTermBuf.
+				\ " | unlet g:FloatTermBuf | return" : ""
+	let g:FloatTermBuf = nvim_create_buf(v:false, v:true)
 	let l:opt = { 'relative': 'win', 'width': float2nr(round(0.95 * &columns)),
 			\ 'height': float2nr(round(0.95 * &lines)),
 			\ 'col':    float2nr(round(0.03 * &columns)),
 			\ 'row':    float2nr(round(0.03 * &lines)),
 			\ 'anchor': 'NW',
 			\ }
-	let l:window = nvim_open_win(l:FloatTermBuf, v:true, l:opt)
+	let l:window = nvim_open_win(g:FloatTermBuf, v:true, l:opt)
 	call nvim_win_set_option(l:window, 'number', v:false)
 	call nvim_win_set_option(l:window, 'relativenumber', v:false)
-	call nvim_buf_set_option(l:FloatTermBuf, 'buftype', 'nofile')
+	call nvim_buf_set_option(g:FloatTermBuf, 'buftype', 'nofile')
 	terminal
 endfunction
 
