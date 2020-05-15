@@ -200,8 +200,8 @@ inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
 
 " Notes
-nnoremap <silent> <leader>la :call ReloadSyntax(1)<CR>
-nnoremap <silent> <leader>lna :call ReloadSyntax(2)<CR>
+nnoremap <silent> <leader>la :call BackgroudColor(0)<CR>
+nnoremap <silent> <leader>lna :call BackgroudColor(1)<CR>
 nnoremap <silent> <leader>te :exec "!touch ./".expand("<cWORD>")<CR>
 nnoremap <silent> <leader>ww :e ~/Github/StudyNotes/index.md<CR>
 
@@ -659,10 +659,32 @@ function! TestCodes(type) " By the filetype to run the code.
 	endif
 endfunction
 
+function! BackgroudColor(option)
+	execute a:option != 1 && a:option != 2 && a:option != 0 ? "return" : ""
+	if empty(glob($HOME.'/.config/nvim/.backColor'))
+		call system('touch '.$HOME.'/.config/nvim/.backColor')
+		call writefile([ '1' ], $HOME.'/.config/nvim/.backColor')
+	endif
+	if a:option == 2
+		if readfile($HOME.'/.config/nvim/.backColor')[0] == '1'
+			hi Normal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#2C323B
+		else
+			hi Normal ctermfg=223 ctermbg=None guifg=#ebdbb2 guibg=None
+		endif
+	else
+		execute a:option == 0 ?
+					\ "hi Normal ctermfg=223 ctermbg=None guifg=#ebdbb2 guibg=None"
+					\ : "hi Normal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#2C323B"
+		call writefile(
+					\ a:option == 0 ? [ '0' ] : [ '1' ],
+					\ $HOME.'/.config/nvim/.backColor')
+	endif
+endfunction
+
 function! ReloadSyntax(type)
 	syntax on
 	if &filetype == 'markdown' || a:type == 1
-		hi Normal ctermfg=223 ctermbg=None guifg=#ebdbb2 guibg=None
+		call BackgroudColor()
 		set colorcolumn=""
 	elseif a:type == 2
 		set colorcolumn=80
@@ -693,6 +715,8 @@ nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
 nnoremap <silent> <leader>Ft :call FloatTerm()<CR>
 nnoremap <silent> co :only<CR>
+
+call BackgroudColor(2)
 
 " Debug
 " set runtimepath+=~/Github/HicusLine
