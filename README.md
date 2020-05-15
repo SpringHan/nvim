@@ -6,6 +6,8 @@ First,look an example:
 
 ![TheExample](./demo.png)
 
+![Example](./demo2.png)
+
 (I'm a colemak user.)
 
 ## Plugins
