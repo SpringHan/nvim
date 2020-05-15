@@ -694,7 +694,7 @@ function! ReloadSyntax(type)
 endfunction
 
 function! FloatTerm()
-	execute exists('g:FloatTermBuf') ? "bd! ".g:FloatTermBuf.
+	silent! execute exists('g:FloatTermBuf') ? "bd! ".g:FloatTermBuf.
 				\ " | unlet g:FloatTermBuf | return" : ""
 	let g:FloatTermBuf = nvim_create_buf(v:false, v:true)
 	let l:opt = { 'relative': 'win', 'width': float2nr(round(0.95 * &columns)),
