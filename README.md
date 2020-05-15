@@ -69,11 +69,11 @@ These are my Key Mappings,of course you can change them.
 | .,         | ESC A      |
 | .fl        | {{{        |
 | .fn        | }}}        |
-| ?a         | ESC la     |
+| ?A         | ESC la     |
 | ?O         | ESC O      |
 | ?o         | ESC o      |
 | ?I         | ESC I      |
-| ?h         | ESC i      |
+| ?H         | ESC i      |
 | ,x         | ESC xa     |
 | .x         | ESC lxa    |
 | ,X         | ESC xi     |

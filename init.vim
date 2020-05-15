@@ -122,11 +122,10 @@ inoremap .. .
 inoremap .fl {{{
 inoremap .fn }}}
 inoremap ,, ,
-inoremap ?a <ESC>la
+inoremap ?A <ESC>la
 inoremap ?O <ESC>O
 inoremap ?o <ESC>o
 inoremap ?I <ESC>I
-inoremap ?h <ESC>i
 inoremap ?H <ESC>i
 inoremap ?? ?
 inoremap ?< <ESC><<a
