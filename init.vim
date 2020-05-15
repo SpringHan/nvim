@@ -713,6 +713,7 @@ endfunction
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
 nnoremap <silent> <leader>Ft :call FloatTerm()<CR>
+tnoremap <silent> <C-z> <C-\><C-n>:call FloatTerm()<CR>
 nnoremap <silent> co :only<CR>
 
 call BackgroudColor(2)
