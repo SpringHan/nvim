@@ -171,7 +171,7 @@ nnoremap sr :r<Space>
 nnoremap sh :!
 nnoremap <leader><Return> gf
 nnoremap <silent><leader>nrc :e ~/.config/nvim/init.vim<CR>
-nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:call ReloadSyntax(2)<CR>:nohlsearch<CR>
+nnoremap <silent> vw :source ~/.config/nvim/init.vim<CR>:call ReloadHighlight(2)<CR>:nohlsearch<CR>
 nnoremap css :set spell!<CR>
 nnoremap sc z=
 nnoremap vv v
@@ -313,7 +313,8 @@ Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'Rnvimr
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'lambdalisue/suda.vim'
-Plug 'tpope/vim-capslock'
+Plug 'SpringHan/vim-capslock'
+Plug 'junegunn/goyo.vim'
 
 " Translation
 " Plug 'denstiny/Terslation'
@@ -623,6 +624,10 @@ let g:suda#prefix = 'sudo://'
 " NerdCommenter
 let g:NERDSpaceDelims = 1
 
+" Goyo
+nnoremap <silent> <leader>gy :Goyo 93%x95%<CR>
+nnoremap <silent> <leader>go :Goyo!<CR>:call ReloadHighlight(2)<CR>
+
 
 " -- ------
 " -- ------ Programming Settings
@@ -680,17 +685,9 @@ function! BackgroudColor(option)
 	endif
 endfunction
 
-function! ReloadSyntax(type)
-	syntax on
-	if &filetype == 'markdown' || a:type == 1
-		call BackgroudColor()
-		set colorcolumn=""
-	elseif a:type == 2
-		set colorcolumn=80
-	endif
-	hi illuminatedWord cterm=undercurl gui=undercurl
+function! ReloadHighlight(type)
 	exec a:type != 0 ? "HicusSyntaxReload" : ""
-	exec a:type != 0 ? "NtcSyntaxReload" : ""
+	exec a:type != 0 && &filetype == 'ntc' ? "NtcSyntaxReload" : ""
 endfunction
 
 function! FloatTerm()
