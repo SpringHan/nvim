@@ -687,7 +687,7 @@ endfunction
 
 function! ReloadHighlight(type)
 	exec a:type != 0 ? "HicusSyntaxReload" : ""
-	exec a:type != 0 && &filetype == 'ntc' ? "NtcSyntaxReload" : ""
+	exec a:type != 0 && &filetype == 'ntc' ? "NtcHighlightReload" : ""
 endfunction
 
 function! FloatTerm()
