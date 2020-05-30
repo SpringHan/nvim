@@ -230,8 +230,6 @@ set smartindent
 
 " Terminal
 autocmd TermOpen term://* startinsert
-tnoremap <silent> <C-q> <C-\><C-n>:q!<CR>
-tnoremap <silent> <C-h> <C-\><C-n><C-w>h
 tnoremap <silent> <C-\> <C-\><C-n>
 let g:terminal_color_0  = '#000000'
 let g:terminal_color_1  = '#FF5555'
@@ -690,27 +688,34 @@ function! ReloadHighlight(type)
 	exec a:type != 0 && &filetype == 'ntc' ? "NtcHighlightReload" : ""
 endfunction
 
-function! FloatTerm()
-	silent! execute exists('g:FloatTermBuf') ? "bd! ".g:FloatTermBuf.
-				\ " | unlet g:FloatTermBuf | return" : ""
+function! FloatTerm(type)
+	execute exists('g:FloatTermBuf') && a:type == 0 ? "bd! ".g:FloatTermBuf.
+				\ " | unlet g:FloatTermBuf g:EditingBuf g:FloatWindowNum | return" : ""
+	execute a:type == 2 ? g:EditingBuf."wincmd w | return" : a:type == 3 ?
+				\ g:FloatTermBuf."wincmd w | return" : ""
 	let g:FloatTermBuf = nvim_create_buf(v:false, v:true)
-	let l:opt = { 'relative': 'win', 'width': float2nr(round(0.95 * &columns)),
-			\ 'height': float2nr(round(0.95 * &lines)),
-			\ 'col':    float2nr(round(0.03 * &columns)),
-			\ 'row':    float2nr(round(0.03 * &lines)),
-			\ 'anchor': 'NW',
-			\ }
-	let l:window = nvim_open_win(g:FloatTermBuf, v:true, l:opt)
-	call nvim_win_set_option(l:window, 'number', v:false)
-	call nvim_win_set_option(l:window, 'relativenumber', v:false)
+	let g:EditingBuf = bufnr('%')
+	let l:opt = { 'relative': 'win', 'width': float2nr(round(
+				\ a:type == 1 ? 0.45 * &columns : 0.95 * &columns)),
+				\ 'height': float2nr(round(a:type == 1 ? 0.45 * &lines : 0.95 * &lines)),
+				\ 'col':    float2nr(round(a:type == 1 ? &columns : 0.02 * &columns)),
+				\ 'row':    float2nr(round(a:type == 1 ? 0.01 * &lines : 0.02 * &lines)),
+				\ 'anchor': 'NW',
+				\ }
+	let g:FloatWindowNum = nvim_open_win(g:FloatTermBuf, v:true, l:opt)
+	call nvim_win_set_option(g:FloatWindowNum, 'number', v:false)
+	call nvim_win_set_option(g:FloatWindowNum, 'relativenumber', v:false)
 	call nvim_buf_set_option(g:FloatTermBuf, 'buftype', 'nofile')
 	terminal
 endfunction
 
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
-nnoremap <silent> <leader>Ft :call FloatTerm()<CR>
-tnoremap <silent> <C-z> <C-\><C-n>:call FloatTerm()<CR>
+nnoremap <silent> <leader>Ft :call FloatTerm(0)<CR>
+nnoremap <silent> <leader>Fs :call FloatTerm(1)<CR>
+nnoremap <silent> <leader>FB :call FloatTerm(3)<CR>:startinsert<CR>
+tnoremap <silent> <M-b> <C-\><C-n>:call FloatTerm(2)<CR>
+tnoremap <silent> <C-q> <C-\><C-n>:call FloatTerm(0)<CR>
 nnoremap <silent> co :only<CR>
 
 call BackgroudColor(2)
