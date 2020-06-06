@@ -199,8 +199,7 @@ inoremap <silent> ?p <ESC>/<+++><CR>N:nohlsearch<CR>c5l
 inoremap .p <+++>
 
 " Notes
-nnoremap <silent> <leader>la :call BackgroudColor(0)<CR>
-nnoremap <silent> <leader>lna :call BackgroudColor(1)<CR>
+nnoremap <silent> <leader>la :call BackgroudColor(1)<CR>
 nnoremap <silent> <leader>te :exec "!touch ./".expand("<cWORD>")<CR>
 nnoremap <silent> <leader>ww :e ~/Github/StudyNotes/index.md<CR>
 
@@ -662,7 +661,7 @@ function! TestCodes(type) " By the filetype to run the code.
 endfunction
 
 function! BackgroudColor(option)
-	execute a:option != 1 && a:option != 2 && a:option != 0 ? "return" : ""
+	execute a:option != 1 && a:option != 2 ? "return" : ""
 	if empty(glob($HOME.'/.config/nvim/.backColor'))
 		call system('touch '.$HOME.'/.config/nvim/.backColor')
 		call writefile([ '1' ], $HOME.'/.config/nvim/.backColor')
@@ -674,12 +673,15 @@ function! BackgroudColor(option)
 			hi Normal ctermfg=223 ctermbg=None guifg=#ebdbb2 guibg=None
 		endif
 	else
-		execute a:option == 0 ?
+		let l:currentColor = str2nr(readfile($HOME.'/.config/nvim/.backColor')[0])
+		execute l:currentColor == 1 ?
 					\ "hi Normal ctermfg=223 ctermbg=None guifg=#ebdbb2 guibg=None"
-					\ : "hi Normal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#2C323B"
+					\ : l:currentColor == 0 ?
+					\ "hi Normal ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#2C323B" : ""
 		call writefile(
-					\ a:option == 0 ? [ '0' ] : [ '1' ],
+					\ l:currentColor == 0 ? [ '1' ] : [ '0' ],
 					\ $HOME.'/.config/nvim/.backColor')
+		unlet l:currentColor
 	endif
 endfunction
 
@@ -703,6 +705,7 @@ function! FloatTerm(type)
 				\ 'anchor': 'NW',
 				\ }
 	let g:FloatWindowNum = nvim_open_win(g:FloatTermBuf, v:true, l:opt)
+	let g:FloatTermColor = "Normal"
 	call nvim_win_set_option(g:FloatWindowNum, 'number', v:false)
 	call nvim_win_set_option(g:FloatWindowNum, 'relativenumber', v:false)
 	call nvim_buf_set_option(g:FloatTermBuf, 'buftype', 'nofile')
