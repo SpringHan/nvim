@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
-" @Date: 2020.4.1
+" @Date: 2020.6.14
 
 " Tips:
 " --- I use the 'vim-plug' to control my plugins.
@@ -298,7 +298,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'RRethy/vim-illuminate'
 
 " Todo
-" Plug 'SpringHan/NoToC.vim'
+Plug 'SpringHan/NoToC.vim'
 
 " vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
@@ -726,5 +726,5 @@ call BackgroudColor(2)
 " Debug
 " set runtimepath+=~/Github/HicusLine
 " set runtimepath+=~/Github/Terslation.vim
-set runtimepath+=~/Github/NoToC.vim
-let g:NoToCCache = $HOME.'/.cache/NoToC.vim/'
+" set runtimepath+=~/Github/NoToC.vim
+" let g:NoToCCache = $HOME.'/.cache/NoToC.vim/'
