@@ -712,14 +712,22 @@ function! FloatTerm(type)
 	terminal
 endfunction
 
+" Run codes
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
+
+" Float Terminal
 nnoremap <silent> <leader>Ft :call FloatTerm(0)<CR>
 nnoremap <silent> <leader>Fs :call FloatTerm(1)<CR>
 nnoremap <silent> <leader>FB :call FloatTerm(3)<CR>:startinsert<CR>
 tnoremap <silent> <M-b> <C-\><C-n>:call FloatTerm(2)<CR>
 tnoremap <silent> <C-q> <C-\><C-n>:call FloatTerm(0)<CR>
+
+" Clear the buffers without the current buffer
 nnoremap <silent> co :only<CR>
+
+" Open the lazygit
+nnoremap <silent> <C-g> :tabe<CR>:-tabmove<CR>:setlocal nonumber norelativenumber<CR>:term lazygit<CR>
 
 call BackgroudColor(2)
 
