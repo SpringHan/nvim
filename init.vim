@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
-" @Date: 2020.6.14
+" @Date: 2020.6.25
 
 " Tips:
 " --- I use the 'vim-plug' to control my plugins.
@@ -28,9 +28,9 @@ endif
 " -- ------ The Path
 " -- ------
 
-let g:python_host_skip_check=1
+let g:python_host_skip_check = 1
 let g:python_host_prog = '/usr/bin/python'
-let g:python3_host_skip_check=1
+let g:python3_host_skip_check = 1
 let g:python3_host_prog = '/usr/bin/python3'
 
 
@@ -164,7 +164,6 @@ nnoremap vN <C-w>H
 nnoremap vI <C-w>L
 nnoremap vr <C-w>r
 nnoremap vR <C-w>R
-nnoremap <silent> tm :vsplit<CR><C-W>l:terminal<CR><C-\><C-n>:setlocal nonumber norelativenumber<CR>A
 nnoremap <silent> cb :bd<CR>
 nnoremap <silent> cd :nohlsearch<CR>
 nnoremap sr :r<Space>
@@ -356,7 +355,7 @@ call timer_start(300, 'CocTimerStart', {'repeat': 1})
 set hidden
 set updatetime=50
 " Plugins
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-pyright', 'coc-sourcekit', 'coc-kite', 'coc-yank', ]
+let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-sourcekit', 'coc-kite', 'coc-yank' ]
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 function! s:check_back_space() abort
@@ -630,12 +629,6 @@ nnoremap <silent> <leader>go :Goyo!<CR>:call ReloadHighlight(2)<CR>
 " -- ------ Programming Settings
 " -- ------
 
-function! TermSet() " The function was written for set the split position.
-	set splitbelow
-	split
-	set nosplitbelow
-endfunction
-
 function! TestCodes(type) " By the filetype to run the code.
 	exec "w"
 	if &filetype == 'html'
@@ -712,6 +705,22 @@ function! FloatTerm(type)
 	terminal
 endfunction
 
+function! TermConvert() " Convert the FloatTerminal's window
+	let l:currentStatus = get(nvim_win_get_config(g:FloatWindowNum), 'row', 1)
+	let l:opt = { 'relative': 'win', 'width': float2nr(round(
+				\ l:currentStatus != 0.0 ? 0.45 * &columns : 0.95 * &columns)),
+				\ 'height': float2nr(round(l:currentStatus != 0.0 ?
+				\ 0.45 * &lines : 0.95 * &lines)),
+				\ 'col': float2nr(round(l:currentStatus != 0.0 ?
+				\ &columns : 0.02 * &columns)),
+				\ 'row': float2nr(round(l:currentStatus != 0.0 ?
+				\ 0.01 * &lines : 0.02 * &lines)),
+				\ 'anchor': 'NW',
+				\ }
+	call nvim_win_set_config(g:FloatWindowNum, l:opt)
+	unlet l:currentStatus l:opt
+endfunction
+
 " Run codes
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
@@ -722,6 +731,7 @@ nnoremap <silent> <leader>Fs :call FloatTerm(1)<CR>
 nnoremap <silent> <leader>FB :call FloatTerm(3)<CR>:startinsert<CR>
 tnoremap <silent> <M-b> <C-\><C-n>:call FloatTerm(2)<CR>
 tnoremap <silent> <C-q> <C-\><C-n>:call FloatTerm(0)<CR>
+tnoremap <silent> <M-a> <C-\><C-n>:call TermConvert()<CR>:startinsert<CR>
 
 " Clear the buffers without the current buffer
 nnoremap <silent> co :only<CR>
