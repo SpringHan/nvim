@@ -1,24 +1,28 @@
 # My Neovim Configuration
 
-This is my Neovim's Configuration files.
+These are my NeoVim's configuration files. (I'm a colemak user.)
 
-First,look an example:
+If you want to use my configuration, please make sure you can understand it. Otherwise you may have some problems.
 
-![TheExample](./demo.png)
+There is one of the screenshots:
 
-![Example](./demo2.png)
+![Example](./demo.png)
 
-(I'm a colemak user.)
+## Guide
+
+- [Plugins](#plugins)
+- [Before Using](#before-using)
+- [Key mappings](#key-mappings)
+- [My custom functions](#my-custom-functions)
 
 ## Plugins
 
-My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I really like this manager. (And it's master is also very good.)
+My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)** .
 
 #### My Plugins
 
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
 - [HicusLine](https://github.com/Styadev/HicusLine) - A highly customizable statusline in (neo)vim
-- [LightTodo.vim](https://github.com/SpringHan/lightTodo.vim) - A light todolist in (neo)vim written by me
 - [Terslation.vim](https://github.com/SpringHan/Terslation.vim) - Terminal Translator interface for vim
 - [Deus](https://github.com/ajmwagar/vim-deus) - A better color scheme for the late night coder(I did some changes on the original,you can [Look Here](https://github.com/SpringHan/vim-deus))
 - [vim-javascript](https://github.com/pangloss/vim-javascript) - A vim plugin provides javascript syntax
@@ -38,17 +42,27 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)**,I rea
 - [vim-surround](https://github.com/tpope/vim-surround) - A plugin which can change the symbol easily
 - [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks) - A Vim plugin for using line-based bookmarks
 - [suda.vim](https://github.com/lambdalisue/suda.vim) - A plugin can make you use sudo in neovim
+- [vim-capslock](https://github.com/SpringHan/vim-capslock) - A plugin can easily change the case.
+- [goyo.vim](https://github.com/junegunn/goyo.vim) - A plugin make you distraction-free writing in Vim.
+- [NoToC.vim](https://github.com/SpringHan/NoToC.vim) - A plugin can control the notes and todos in (Neo)Vim.
+- [NerdCommenter](https://github.com/preservim/nerdcommenter) - Vim plugin for intensely nerdy commenting powers
+- [vim-pdf](https://github.com/makerj/vim-pdf) - A plugin make your vim browse the pdf files.
 
 
-## Plugins provider
+## Before using
 
-#### The most important step
+#### Check the environment
 
-- You can input `:checkhealth` in vim to check if your neovim work well.
+1. [ ] Python and Python3 installed
+2. [ ] pynvim installed
 
-#### Set your Python3 path
+#### To check the "health"
 
-You can find the python path or the python3 path in the `init.vim`,and then input your Python3 path.
+You can run `:checkhealth` in vim to check if your NeoVim work well.
+
+#### Set your Python path
+
+You can find the python path or the python3 path in the `init.vim` , and then input your Python3 path.
 
 Like this:
 ```vim
@@ -56,75 +70,36 @@ let g:python_host_prog = '/bin/python'
 let g:python3_host_prog = '/bin/python3'
 ```
 
-#### Some other custom settings
-
-You can find __Line 87__ in the `init.vim` to set your own `leader`.
-
-
 ## Key Mappings
 
-These are my Key Mappings,of course you can change them.
+You can run `:map` to get all the keybingdings in my NeoVim.
 
-| Insert Key | origin Key |
-|------------|------------|
-| ;;         | ESC A ;    |
-| .,         | ESC A      |
-| .fl        | {{{        |
-| .fn        | }}}        |
-| ?A         | ESC la     |
-| ?O         | ESC O      |
-| ?o         | ESC o      |
-| ?I         | ESC I      |
-| ?H         | ESC i      |
-| ,x         | ESC xa     |
-| .x         | ESC lxa    |
-| ,X         | ESC xi     |
-| .X         | ESC lxi    |
+## My custom functions
 
-| Normal Key | origin Key       |
-|------------|------------------|
-| n          | h                |
-| i          | l                |
-| u          | k                |
-| e          | j                |
-| h          | i                |
-| U          | 5k               |
-| E          | 5j               |
-| N          | 5h               |
-| I          | 5l               |
-| l          | u                |
-| L          | e                |
-| k          | n                |
-| K          | N                |
-| H          | I                |
-| cl         | :bp CR           |
-| cn         | :bn CR           |
-| cw         | :w CR            |
-| cq         | :q CR            |
-| wq         | :wq CR           |
-| wa         | :qa CR           |
-| eq         | :q! CR           |
-| bf         | :buffers CR      |
-| et         | :edit            |
-| sp         | :split           |
-| vs         | :vsplit          |
-| va         | C-w +            |
-| vr         | C-w -            |
-| ve         | C-w =            |
-| vj         | C-w j            |
-| vk         | C-w k            |
-| vh         | C-w h            |
-| vl         | C-w l            |
-| tm         | :terminal CR     |
-| bd         | :bd CR           |
-| cd         | :noh CR          |
-| leader-r   | RunCodes         |
-| leader-tm  | :TableModeToggle |
+### Transparent
 
+You can use `<leader>la` to turn the backgroud into transparent or untransparent.  
+Example:
 
-## The End
+![Example](./demo2.png)
 
-Hope you can use these well.
+### Float Terminal
+
+In my settings, you can use `<leader>Ft` to show the Float Terminal.  
+Example:
+
+![Example](./demo3.png)
+
+And you can use `<leader>Fs` to show the Float Terminal on the top right.  
+Like this:
+
+![Example](./demo4.png)
+
+You can use `<M-a>` transformation between the first and the second in the Terminal.
+
+### Run codes
+
+In my settings, you can use `<leader>r` to run different programming programs.
 
 ```vim
  _   _                 _           
