@@ -42,11 +42,12 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)** .
 - [vim-surround](https://github.com/tpope/vim-surround) - A plugin which can change the symbol easily
 - [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks) - A Vim plugin for using line-based bookmarks
 - [suda.vim](https://github.com/lambdalisue/suda.vim) - A plugin can make you use sudo in neovim
-- [vim-capslock](https://github.com/SpringHan/vim-capslock) - A plugin can easily change the case.
-- [goyo.vim](https://github.com/junegunn/goyo.vim) - A plugin make you distraction-free writing in Vim.
-- [NoToC.vim](https://github.com/SpringHan/NoToC.vim) - A plugin can control the notes and todos in (Neo)Vim.
+- [vim-capslock](https://github.com/SpringHan/vim-capslock) - A plugin can easily change the case
+- [goyo.vim](https://github.com/junegunn/goyo.vim) - A plugin make you distraction-free writing in Vim
+- [NoToC.vim](https://github.com/SpringHan/NoToC.vim) - A plugin can control the notes and todos in (Neo)Vim
 - [NerdCommenter](https://github.com/preservim/nerdcommenter) - Vim plugin for intensely nerdy commenting powers
-- [vim-pdf](https://github.com/makerj/vim-pdf) - A plugin make your vim browse the pdf files.
+- [vim-pdf](https://github.com/makerj/vim-pdf) - A plugin make your vim browse the pdf files
+- [vim-hexokinase](https://github.com/RRethy/vim-hexokinase) - The fastest (Neo)Vim plugin for asynchronously displaying the colours in the file
 
 
 ## Before using

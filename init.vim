@@ -264,13 +264,13 @@ Plug 'SpringHan/vim-deus'
 
 " Autosuggestion
 Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
-Plug 'mattn/emmet-vim', { 'for': 'html' }
+Plug 'mattn/emmet-vim', { 'for': [ 'html', 'vim-plug' ] }
 
 " VimTableMode
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
 " Reader
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': 'markdown' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': [ 'markdown', 'vim-plug' ] }
 
 " Undotree
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -279,7 +279,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': 'FZF' }
 
 " Highlight
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'vim-plug' ] }
 
 " Tagbar
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
@@ -311,6 +311,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'lambdalisue/suda.vim'
 Plug 'SpringHan/vim-capslock'
 Plug 'junegunn/goyo.vim'
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase', 'for': [ 'html', 'css', 'javascript', 'vim-plug' ] }
 
 " Translation
 " Plug 'denstiny/Terslation'
@@ -623,6 +624,11 @@ let g:NERDSpaceDelims = 1
 " Goyo
 nnoremap <silent> <leader>gy :Goyo 93%x95%<CR>
 nnoremap <silent> <leader>go :Goyo!<CR>:call ReloadHighlight(2)<CR>
+
+" vim-hexokinase
+nnoremap <silent> <leader>ht :HexokinaseToggle<CR>
+let g:Hexokinase_highlighters = [ 'virtual' ]
+let g:Hexokinase_ftEnabled = [ 'css', 'html', 'javascript' ]
 
 
 " -- ------
