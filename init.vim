@@ -253,31 +253,28 @@ let g:terminal_color_14 = '#9AEDFE'
 
 call plug#begin('~/.config/nvim/plugged')
 
-" TheBegining
+" The Begining
 Plug 'mhinz/vim-startify'
 
 " StatusLine
-" Plug 'itchyny/vim-gitbranch'
 Plug 'Styadev/HicusLine'
 
 " vim-style
 Plug 'SpringHan/vim-deus'
+Plug 'RRethy/vim-illuminate'
+Plug 'terryma/vim-multiple-cursors'
 
 " Autosuggestion
 Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
 Plug 'mattn/emmet-vim', { 'for': [ 'html', 'vim-plug' ] }
 
-" VimTableMode
+" Markdown
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-
-" Reader
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install', 'for': [ 'markdown', 'vim-plug' ] }
 
-" Undotree
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-
-" Fuzzy Finder
+" Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': 'FZF' }
+Plug 'brooth/far.vim', { 'on': 'Far' }
 
 " Highlight
 Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'vim-plug' ] }
@@ -285,30 +282,18 @@ Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'vim-plug' ] }
 " Tagbar
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
-" Far
-Plug 'brooth/far.vim', { 'on': 'Far' }
-
-" Auto-pairs
-Plug 'jiangmiao/auto-pairs'
-
-" vim-easy-align
-Plug 'junegunn/vim-easy-align'
-
-" Special Words
-Plug 'RRethy/vim-illuminate'
-
 " Todo
 Plug 'SpringHan/NoToC.vim'
-
-" vim-multiple-cursors
-Plug 'terryma/vim-multiple-cursors'
 
 " Ranger
 Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'RnvimrSync' ] }
 
 " Useful plugin
+Plug 'junegunn/vim-easy-align'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'jiangmiao/auto-pairs'
 Plug 'lambdalisue/suda.vim'
 Plug 'SpringHan/vim-capslock'
 Plug 'junegunn/goyo.vim'
@@ -323,7 +308,6 @@ Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTr
 Plug 'preservim/nerdcommenter'
 
 " Other filetype
-" Plug 'rhysd/open-pdf.vim', { 'on': [ 'Pdf', 'Unite' ] }
 Plug 'makerj/vim-pdf'
 
 call plug#end()
@@ -709,10 +693,10 @@ endfunction
 
 function! FloatTerm(type) " Float Terminal
 	execute exists('g:FloatTermBuf') && a:type == 0 ? "silent bd! ".g:FloatBorder.
-				\ " ".g:FloatTermBuf. " | unlet g:FloatTermBuf g:EditingBuf".
+				\ " " . g:FloatTermBuf. " | unlet g:FloatTermBuf g:EditingBuf".
 				\ " g:FloatWindowNum g:FloatBorder g:FloatBorderWin | return" : ""
-	execute a:type == 2 ? g:EditingBuf."wincmd w | return" : a:type == 3 ?
-				\ g:FloatTermBuf."wincmd w | return" : ""
+	execute a:type == 2 ? g:EditingBuf . "wincmd w | return" : a:type == 3 ?
+				\ g:FloatTermBuf . "wincmd w | return" : ""
 	let g:FloatBorder = nvim_create_buf(v:false, v:true)
 	let g:FloatTermBuf = nvim_create_buf(v:false, v:true)
 	let g:EditingBuf = bufnr('%')
