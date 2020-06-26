@@ -164,6 +164,7 @@ nnoremap vN <C-w>H
 nnoremap vI <C-w>L
 nnoremap vr <C-w>r
 nnoremap vR <C-w>R
+nnoremap vy vy
 nnoremap <silent> cb :bd<CR>
 nnoremap <silent> cd :nohlsearch<CR>
 nnoremap sr :r<Space>
@@ -689,11 +690,13 @@ function! ReloadHighlight(type)
 	exec a:type != 0 && &filetype == 'ntc' ? "NtcHighlightReload" : ""
 endfunction
 
-function! FloatTerm(type)
-	execute exists('g:FloatTermBuf') && a:type == 0 ? "bd! ".g:FloatTermBuf.
-				\ " | unlet g:FloatTermBuf g:EditingBuf g:FloatWindowNum | return" : ""
+function! FloatTerm(type) " Float Terminal
+	execute exists('g:FloatTermBuf') && a:type == 0 ? "silent bd! ".g:FloatBorder.
+				\ " ".g:FloatTermBuf. " | unlet g:FloatTermBuf g:EditingBuf".
+				\ " g:FloatWindowNum g:FloatBorder g:FloatBorderWin | return" : ""
 	execute a:type == 2 ? g:EditingBuf."wincmd w | return" : a:type == 3 ?
 				\ g:FloatTermBuf."wincmd w | return" : ""
+	let g:FloatBorder = nvim_create_buf(v:false, v:true)
 	let g:FloatTermBuf = nvim_create_buf(v:false, v:true)
 	let g:EditingBuf = bufnr('%')
 	let l:opt = { 'relative': 'win', 'width': float2nr(round(
@@ -704,18 +707,29 @@ function! FloatTerm(type)
 				\ 'anchor': 'NW',
 				\ 'style': 'minimal'
 				\ }
+	let l:top = "┌" . repeat("─", l:opt.width - 2) . "┐"
+	let l:mid = "│" . repeat(" ", l:opt.width - 2) . "│"
+	let l:bot = "└" . repeat("─", l:opt.width - 2) . "┘"
+	let l:lines = [ l:top ] + repeat([ l:mid ], l:opt.height - 2 ) + [ l:bot ]
+	unlet l:top l:mid l:bot
+	let g:FloatBorderWin = nvim_open_win(g:FloatBorder, v:true, l:opt)
+	call nvim_win_set_option(g:FloatBorderWin, 'winhl', 'Normal:Normal')
+	call nvim_buf_set_lines(g:FloatBorder, 0, -1, v:true, l:lines)
+	let l:opt.row += 1
+	let l:opt.col = a:type == 1 ? float2nr(round(0.56 * &columns)) : l:opt.col + 1
+	let l:opt.height -= 2
+	let l:opt.width -= 2
 	let g:FloatWindowNum = nvim_open_win(g:FloatTermBuf, v:true, l:opt)
-	let g:FloatTermColor = "Normal"
 	call nvim_win_set_option(g:FloatWindowNum, 'number', v:false)
 	call nvim_win_set_option(g:FloatWindowNum, 'relativenumber', v:false)
-	" call nvim_win_set_option(g:FloatWindowNum, 'winhl', 'Normal:Normal') "
-	" This script will be use with the float window border.
+	call nvim_win_set_option(g:FloatWindowNum, 'winhl', 'Normal:Normal')
 	call nvim_buf_set_option(g:FloatTermBuf, 'buftype', 'nofile')
 	terminal
+	unlet l:lines l:opt
 endfunction
 
 function! TermConvert() " Convert the FloatTerminal's window
-	let l:currentStatus = get(nvim_win_get_config(g:FloatWindowNum), 'row', 1)
+	let l:currentStatus = get(nvim_win_get_config(g:FloatBorderWin), 'row', 1)
 	let l:opt = { 'relative': 'win', 'width': float2nr(round(
 				\ l:currentStatus != 0.0 ? 0.45 * &columns : 0.95 * &columns)),
 				\ 'height': float2nr(round(l:currentStatus != 0.0 ?
@@ -727,8 +741,20 @@ function! TermConvert() " Convert the FloatTerminal's window
 				\ 'anchor': 'NW',
 				\ 'style': 'minimal'
 				\ }
+	let l:top = "┌" . repeat("─", l:opt.width - 2) . "┐"
+	let l:mid = "│" . repeat(" ", l:opt.width - 2) . "│"
+	let l:bot = "└" . repeat("─", l:opt.width - 2) . "┘"
+	let l:lines = [ l:top ] + repeat([ l:mid ], l:opt.height - 2 ) + [ l:bot ]
+	unlet l:top l:mid l:bot
+	call nvim_buf_set_lines(g:FloatBorder, 0, -1, v:true, l:lines)
+	call nvim_win_set_config(g:FloatBorderWin, l:opt)
+	let l:opt.row += 1
+	let l:opt.col = l:currentStatus == 0.0 ? l:opt.col + 1 :
+				\ float2nr(round(0.56 * &columns))
+	let l:opt.height -= 2
+	let l:opt.width -= 2
 	call nvim_win_set_config(g:FloatWindowNum, l:opt)
-	unlet l:currentStatus l:opt
+	unlet l:currentStatus l:opt l:lines
 endfunction
 
 " Run codes
