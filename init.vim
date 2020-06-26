@@ -640,8 +640,8 @@ function! TestCodes(type) " By the filetype to run the code.
 	if &filetype == 'html'
 		exec "!google-chrome-stable ./% &"
 	elseif &filetype == 'php'
-		exec a:type == 0?"!php -S 127.0.0.1:8080 -t ./ &":"killall php"
-		exec a:type == 0?"!google-chrome-stable 127.0.0.1:8080 &":""
+		exec a:type == 0 ? "!php -S 127.0.0.1:8080 -t ./ &" : "killall php"
+		exec a:type == 0 ? "!google-chrome-stable 127.0.0.1:8080 &" : ""
 	elseif &filetype == 'sh'
 		call TermSet()
 		terminal sh ./%
@@ -652,7 +652,7 @@ function! TestCodes(type) " By the filetype to run the code.
 		call TermSet()
 		terminal gcc % -o /tmp/%<.o; /tmp/%<.o
 	elseif &filetype == 'markdown'
-		exec a:type == 0?"MarkdownPreview":"MarkdownPreviewStop"
+		exec a:type == 0 ? "MarkdownPreview" : "MarkdownPreviewStop"
 	elseif &filetype == 'go'
 		call TermSet()
 		terminal go run ./%
@@ -702,11 +702,14 @@ function! FloatTerm(type)
 				\ 'col':    float2nr(round(a:type == 1 ? &columns : 0.02 * &columns)),
 				\ 'row':    float2nr(round(a:type == 1 ? 0.01 * &lines : 0.02 * &lines)),
 				\ 'anchor': 'NW',
+				\ 'style': 'minimal'
 				\ }
 	let g:FloatWindowNum = nvim_open_win(g:FloatTermBuf, v:true, l:opt)
 	let g:FloatTermColor = "Normal"
 	call nvim_win_set_option(g:FloatWindowNum, 'number', v:false)
 	call nvim_win_set_option(g:FloatWindowNum, 'relativenumber', v:false)
+	" call nvim_win_set_option(g:FloatWindowNum, 'winhl', 'Normal:Normal') "
+	" This script will be use with the float window border.
 	call nvim_buf_set_option(g:FloatTermBuf, 'buftype', 'nofile')
 	terminal
 endfunction
@@ -722,6 +725,7 @@ function! TermConvert() " Convert the FloatTerminal's window
 				\ 'row': float2nr(round(l:currentStatus != 0.0 ?
 				\ 0.01 * &lines : 0.02 * &lines)),
 				\ 'anchor': 'NW',
+				\ 'style': 'minimal'
 				\ }
 	call nvim_win_set_config(g:FloatWindowNum, l:opt)
 	unlet l:currentStatus l:opt
