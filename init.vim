@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
-" @Date: 2020.6.25
+" @Date: 2020.6.26
 
 " Tips:
 " --- I use the 'vim-plug' to control my plugins.
@@ -697,8 +697,8 @@ function! FloatTerm(type) " Float Terminal
 				\ " g:FloatWindowNum g:FloatBorder g:FloatBorderWin | return" : ""
 	execute a:type == 2 ? g:EditingBuf . "wincmd w | return" : a:type == 3 ?
 				\ g:FloatTermBuf . "wincmd w | return" : ""
-	let g:FloatBorder = nvim_create_buf(v:false, v:true)
 	let g:FloatTermBuf = nvim_create_buf(v:false, v:true)
+	let g:FloatBorder = nvim_create_buf(v:false, v:true)
 	let g:EditingBuf = bufnr('%')
 	let l:opt = { 'relative': 'win', 'width': float2nr(round(
 				\ a:type == 1 ? 0.45 * &columns : 0.95 * &columns)),
