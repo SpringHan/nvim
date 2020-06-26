@@ -48,6 +48,7 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)** .
 - [NerdCommenter](https://github.com/preservim/nerdcommenter) - Vim plugin for intensely nerdy commenting powers
 - [vim-pdf](https://github.com/makerj/vim-pdf) - A plugin make your vim browse the pdf files
 - [vim-hexokinase](https://github.com/RRethy/vim-hexokinase) - The fastest (Neo)Vim plugin for asynchronously displaying the colours in the file
+- [vim-calendar](hhtps://github.com/itchyny/calendar.vim) - A calendar application of vim
 
 
 ## Before using

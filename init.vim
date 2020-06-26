@@ -313,6 +313,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'SpringHan/vim-capslock'
 Plug 'junegunn/goyo.vim'
 Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase', 'for': [ 'html', 'css', 'javascript', 'vim-plug' ] }
+Plug 'itchyny/calendar.vim', { 'on': 'Calendar' }
 
 " Translation
 " Plug 'denstiny/Terslation'
@@ -630,6 +631,22 @@ nnoremap <silent> <leader>go :Goyo!<CR>:call ReloadHighlight(2)<CR>
 nnoremap <silent> <leader>ht :HexokinaseToggle<CR>
 let g:Hexokinase_highlighters = [ 'virtual' ]
 let g:Hexokinase_ftEnabled = [ 'css', 'html', 'javascript' ]
+
+" vim-calendar
+nnoremap <silent> <leader>vc :Calendar<CR>
+augroup calendar-mappings
+	autocmd!
+	autocmd FileType calendar nmap <buffer> u <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> n <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> e <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <c-u> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <c-e> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <c-i> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> H <Plug>(calendar_start_insert_head)
+augroup END
 
 
 " -- ------
