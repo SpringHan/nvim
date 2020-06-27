@@ -81,7 +81,7 @@
 	"git.topRemovedSign.hlGroup": "GitGutterDelete",
 	"git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
 	"git.changedSign.text": "▒",
-	"git.addedSign.text": "‖",
+	"git.addedSign.text": "▎",
 	"git.removedSign.text": "▎",
 	"git.topRemovedSign.text": "▔",
 	"git.changeRemovedSign.text": "▓"
