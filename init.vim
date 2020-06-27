@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
-" @Date: 2020.6.26
+" @Date: 2020.6.27
 
 " Tips:
 " --- I use the 'vim-plug' to control my plugins.
