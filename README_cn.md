@@ -1,27 +1,25 @@
-# My Neovim Configuration
+# 我的 NeoVim 配置文件
 
-[**中文版**](README_cn.md)
+[**English version**](README.md)
 
-These are my NeoVim's configuration files. (I'm a colemak user.)
+此仓库存放了我的 NeoVim 配置文件 (我是一个 Colemak 用户)
 
-If you want to use my configuration, please make sure you can understand it. Otherwise you may have some problems.
-
-There is one of the screenshots:
+如果你想使用我的配置文件, 请确保你能读懂它, 否则你很有可能会遇到问题
 
 ![Example](./demo.png)
 
-## Guide
+## 攻略
 
-- [Plugins](#plugins)
-- [Before Using](#before-using)
-- [Key mappings](#key-mappings)
-- [My custom functions](#my-custom-functions)
+- [插件](#plugins)
+- [使用之前](#before-using)
+- [快捷键](#key-mappings)
+- [自定义函数](#my-custom-functions)
 
-## Plugins
+## 插件
 
-My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)** .
+我的插件管理器是 **[vim-plug](https://github.com/junegunn/vim-plug)** .
 
-#### My Plugins
+#### 我的插件
 
 - [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
 - [HicusLine](https://github.com/Styadev/HicusLine) - A highly customizable statusline in (neo)vim
@@ -53,57 +51,56 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)** .
 - [vim-calendar](hhtps://github.com/itchyny/calendar.vim) - A calendar application of vim
 
 
-## Before using
+## 使用之前
 
-#### Check the environment
+#### 检查环境
 
-1. [ ] Python and Python3 installed
-2. [ ] pynvim installed
+1. [ ] Python 和 Python3 已经安装
+2. [ ] pynvim 已经安装
 
-#### To check the "health"
+#### 检查"健康"
 
-You can run `:checkhealth` in vim to check if your NeoVim work well.
+你可以在 vim 里运行 ":checkhealth" 以检查你的 NeoVim 工作是否正常
 
-#### Set your Python path
+#### 设置 Python 路径
 
-You can find the python path or the python3 path in the `init.vim` , and then input your Python3 path.
+你可以找到 python 或 python3 的路径, 然后将它们输入到 `init.vim` 中
 
-Like this:
+像这样:
 ```vim
 let g:python_host_prog = '/bin/python'
 let g:python3_host_prog = '/bin/python3'
 ```
 
-## Key Mappings
+## 快捷键
 
-You can run `:map` to get all the keybingdings in my NeoVim.
+你可以在我的 NeoVim 中运行 ":map" 以获得我的所有键位
 
-## My custom functions
+## 自定义函数
 
-### Transparent
+### 透明背景
 
-You can use `<leader>la` to turn the backgroud into transparent or untransparent.  
-Example:
+你可以用 `<leader>la` 来将背景透明化或不透明化
 
 ![Example](./demo2.png)
 
-### Float Terminal
+### 悬浮终端
 
-In my settings, you can use `<leader>Ft` to show the Float Terminal.  
-Example:
+你可以用 `<leader>Ft` 来打开悬浮终端
 
 ![Example](./demo3.png)
 
-And you can use `<leader>Fs` to show the Float Terminal on the top right.  
-Like this:
+你还可以用 `<leader>Fs` 来在右上角展示悬浮终端
+
+像这样:
 
 ![Example](./demo4.png)
 
-You can use `<M-a>` transformation between the first and the second in the Terminal.
+你可以用 `<M-a>` 在编辑器与终端进行切换
 
-### Run codes
+### 运行代码
 
-In my settings, you can use `<leader>r` to run different programming programs.
+你可以使用 `<leader>r` 来编译并运行不同的编程程序
 
 ```vim
  _   _                 _           
