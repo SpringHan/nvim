@@ -49,6 +49,7 @@
 - [vim-pdf](https://github.com/makerj/vim-pdf) - 预览pdf文件
 - [vim-hexokinase](https://github.com/RRethy/vim-hexokinase) - 最快的(Neo)Vim插件，用于异步显示文件中的颜色
 - [vim-calendar](hhtps://github.com/itchyny/calendar.vim) - Vim的日历应用程序
+- [vim-gitgutter](https://github.com/airblade/vim-gitgutter) - 一个Vim插件，在标记列中显示git diff标记，并分阶段/预览/撤消块和部分块
 
 ## 使用之前
 

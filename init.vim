@@ -258,6 +258,7 @@ Plug 'mhinz/vim-startify'
 
 " StatusLine
 Plug 'Styadev/HicusLine'
+Plug 'airblade/vim-gitgutter'
 
 " vim-style
 Plug 'SpringHan/vim-deus'
@@ -498,26 +499,32 @@ xnoremap Y "+y
 nnoremap P "+p
 
 " HicusLine
+highlight GitStatusAdd ctermfg=142 ctermbg=239 guifg=#98C379 guibg=#44475A
+highlight GitStatusMod ctermfg=214 ctermbg=239 guifg=#FABD2F guibg=#44475A
+highlight GitStatusDel ctermfg=167 ctermbg=239 guifg=#FB4934 guibg=#44475A
 set laststatus=2
 let g:HicusLineEnabled = 1
 let g:HicusColorSetWay = 1
 let g:HicusLine = {
 			\ 'active': {
-			\     'left': [ 'modehighlight', 'space', 'filename', 'space', 'spell',
-			\               '%#infos#', 'gitinfo',  0, 'modified', 'readonly', 'space',
-			\               '%#ErrorStatus#', 'errorstatus', 'space',
-			\               '%#WarningStatus#', 'warningstatus', 'bufferline', ],
+			\     'left': [ 'modehighlight', 'space', 'filename', 'truncate', 'space',
+			\               'spell', '%#infos#', 'gitinfo', 0, 'modified', 'readonly',
+			\                'space', '%#ErrorStatus#', 'errorstatus', 'space',
+			\               '%#WarningStatus#', 'warningstatus', 'bufferline', 'truncate',
+			\               '%#GitStatusAdd#', '%{GitFileStatus(0)}', '%#GitStatusMod#'
+			\               , 'space', '%{GitFileStatus(1)}', '%#GitStatusDel#',
+			\               'space', '%{GitFileStatus(2)}', 0 ],
 			\     'right': [ 'filetype3', 'space', '%#infos#', 'space', 'fileencoding',
 			\                'space', "%{exists('*CapsLockStatusline')".
 			\                "?CapsLockStatusline():''}" , 'space', 'fileformat',
-			\                'space', 'modehighlight', 'space', 'linenumber', ':',
-			\                'bufferlinesnumber', 'space', 'windowpercentage',
-			\                'space', ],
+			\                'truncate', 'space', 'modehighlight', 'space', 'linenumber',
+			\                ':', 'bufferlinesnumber', 'space', 'windowpercentage',
+			\                'space' ],
 			\ },
 			\ 'basic_option': {
 			\     'ErrorSign': '●',
-			\     'WarningSign': '●',
-			\ },
+			\     'WarningSign': '●'
+			\ }
 \}
 let g:HicusLineMode = {
 			\ 'n':      [ 'NORMAL', 'normalmode', { 'infos': 'normalinfos', }, ],
@@ -530,7 +537,7 @@ let g:HicusLineMode = {
 			\ 's':      [ 'SELECT', 'normalmode', { 'infos': 'normalinfos',  }, ],
 			\ 'S':      [ 'L-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
 			\ "\<C-s>": [ 'B-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
-			\ 't':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ 't':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ]
 \}
 let g:HicusColor = {
 			\ 'StatusLine':         [ 'none', '#8BE9FD', '#44475A', ],
@@ -544,7 +551,7 @@ let g:HicusColor = {
 			\ 'ErrorStatus':        [ 'none', '#FF0033', '#44475A', ],
 			\ 'WarningStatus':      [ 'none', '#FFCC00', '#44475A', ],
 			\ 'HicusBuffer':        [ 'none', '#FFFFFF', '#44475A', ],
-			\ 'HicusCurrentBuffer': [ 'bold', '#FFFFFF', 'none', ],
+			\ 'HicusCurrentBuffer': [ 'bold', '#FFFFFF', 'none', ]
 \}
 
 " vim-multiple-cursors
@@ -631,6 +638,19 @@ augroup calendar-mappings
 	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_start_insert)
 	autocmd FileType calendar nmap <buffer> H <Plug>(calendar_start_insert_head)
 augroup END
+
+" vim-gitgutter
+nnoremap <silent> g- :GitGutterPrevHunk<CR>
+nnoremap <silent> g= :GitGutterNextHunk<CR>
+let g:gitgutter_signs = 0
+let g:gitgutter_map_keys = 0
+let g:gitgutter_override_sign_column_highlight = 0
+function! GitFileStatus(form)
+	execute !exists('b:gitgutter.summary') ? "return ''" : ""
+	let l:summary = b:gitgutter.summary
+	return a:form == 0 ? '+' . l:summary[0] : a:form == 1 ? '~' . l:summary[1]
+				\ : '-' . l:summary[2]
+endfunction
 
 
 " -- ------

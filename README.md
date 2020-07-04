@@ -51,6 +51,7 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)** .
 - [vim-pdf](https://github.com/makerj/vim-pdf) - A plugin make your vim browse the pdf files
 - [vim-hexokinase](https://github.com/RRethy/vim-hexokinase) - The fastest (Neo)Vim plugin for asynchronously displaying the colours in the file
 - [vim-calendar](hhtps://github.com/itchyny/calendar.vim) - A calendar application of vim
+- [vim-gitgutter](https://github.com/airblade/vim-gitgutter) - A Vim plugin which shows git diff markers in the sign column and stages/previews/undoes hunks and partial hunks.
 
 
 ## Before using
