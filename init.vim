@@ -657,6 +657,11 @@ endfunction
 " -- ------ Programming Settings
 " -- ------
 
+function! TermSet()
+	setlocal splitbelow
+	split
+endfunction
+
 function! TestCodes(type) " By the filetype to run the code.
 	exec "w"
 	if &filetype == 'html'
