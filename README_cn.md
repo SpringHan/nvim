@@ -21,35 +21,34 @@
 
 #### 我的插件
 
-- [vim-startify](https://github.com/mhinz/vim-startify) - A nice startify
-- [HicusLine](https://github.com/Styadev/HicusLine) - A highly customizable statusline in (neo)vim
-- [Terslation.vim](https://github.com/SpringHan/Terslation.vim) - Terminal Translator interface for vim
-- [Deus](https://github.com/ajmwagar/vim-deus) - A better color scheme for the late night coder(I did some changes on the original,you can [Look Here](https://github.com/SpringHan/vim-deus))
-- [vim-javascript](https://github.com/pangloss/vim-javascript) - A vim plugin provides javascript syntax
-- [Tagbar](https://github.com/majutsushi/tagbar) - A plug can show the functions in vim
-- [Far](https://github.com/brooth/far.vim) - A great plug which can do a good job on finding in vim
-- [Auto-Pairs](https://github.com/jiangmiao/auto-pairs) - A plug that can insert or delete brackets, parens, quotes in pair
-- [vim-easy-align](https://github.com/junegunn/vim-easy-align) - A plug that can center code easily
-- [coc.vim](https://github.com/neoclide/coc.vim) - A completor in vim
-- [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - A Plugin which can help you format the tables.
-- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) - A markdown previewer
-- [Undotree](https://github.com/mbbill/undotree) - A plugin which can save the editing histroy
-- [emmet-vim](https://github.com/mattn/emmet-vim) - Emmet for vim
-- [fzf](https://github.com/junegunn/fzf) - Fuzzy finder in vim
-- [vim-illuminate](https://github.com/RRethy/vim-illuminate) - A tool for illuminating the other uses of the current word under the cursor.
-- [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) - True Sublime Text multiple selection in Vim
-- [rnvimr](https://github.com/kevinhwang91/rnvimr) - Ranger in vim with float window
-- [vim-surround](https://github.com/tpope/vim-surround) - A plugin which can change the symbol easily
-- [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks) - A Vim plugin for using line-based bookmarks
-- [suda.vim](https://github.com/lambdalisue/suda.vim) - A plugin can make you use sudo in neovim
-- [vim-capslock](https://github.com/SpringHan/vim-capslock) - A plugin can easily change the case
-- [goyo.vim](https://github.com/junegunn/goyo.vim) - A plugin make you distraction-free writing in Vim
-- [NoToC.vim](https://github.com/SpringHan/NoToC.vim) - A plugin can control the notes and todos in (Neo)Vim
-- [NerdCommenter](https://github.com/preservim/nerdcommenter) - Vim plugin for intensely nerdy commenting powers
-- [vim-pdf](https://github.com/makerj/vim-pdf) - A plugin make your vim browse the pdf files
-- [vim-hexokinase](https://github.com/RRethy/vim-hexokinase) - The fastest (Neo)Vim plugin for asynchronously displaying the colours in the file
-- [vim-calendar](hhtps://github.com/itchyny/calendar.vim) - A calendar application of vim
-
+- [vim-startify](https://github.com/mhinz/vim-startify) - 一个不错的启动页面
+- [HicusLine](https://github.com/Styadev/HicusLine) - (Neo)Vim下的高度自定义状态栏
+- [Terslation.vim](https://github.com/SpringHan/Terslation.vim) - 终端翻译器的Vim界面
+- [Deus](https://github.com/ajmwagar/vim-deus) - 一个代码编辑器的更好的深色配色(我对源项目进行了些修改,你可以[看这里](https://github.com/SpringHan/vim-deus))
+- [vim-javascript](https://github.com/pangloss/vim-javascript) - 提供JavaScript高亮
+- [Tagbar](https://github.com/majutsushi/tagbar) - 显示函数和变量的插件
+- [Far](https://github.com/brooth/far.vim) - 一个很棒的插件，可以很好地在Vim中查找
+- [Auto-Pairs](https://github.com/jiangmiao/auto-pairs) - 可以成对插入或删除方括号，括号，引号的插头
+- [vim-easy-align](https://github.com/junegunn/vim-easy-align) - 让对齐变得更简单
+- [coc.vim](https://github.com/neoclide/coc.vim) - 补全框架
+- [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode) - 一个可以帮助您格式化表格的插件
+- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) - markdown预览器
+- [Undotree](https://github.com/mbbill/undotree) - 显示更改历史
+- [emmet-vim](https://github.com/mattn/emmet-vim) - Vim的Emmet
+- [fzf](https://github.com/junegunn/fzf) - 模糊文件查找器
+- [vim-illuminate](https://github.com/RRethy/vim-illuminate) - 一种用于阐明光标下当前单词的其他用途的工具
+- [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) - 多重选择Sublime Text
+- [rnvimr](https://github.com/kevinhwang91/rnvimr) - 浮动窗口中的Ranger
+- [vim-surround](https://github.com/tpope/vim-surround) - 简单更改符号
+- [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks) - 一个使用基于行的书签的Vim插件
+- [suda.vim](https://github.com/lambdalisue/suda.vim) - 插件可以使您在Neovim中使用sudo
+- [vim-capslock](https://github.com/SpringHan/vim-capslock) - 改变你的大小写
+- [goyo.vim](https://github.com/junegunn/goyo.vim) - 插件使您在Vim中写得轻松无忧
+- [NoToC.vim](https://github.com/SpringHan/NoToC.vim) - 插件可以控制(Neo)Vim中的注释和待办事项
+- [NerdCommenter](https://github.com/preservim/nerdcommenter) - 注释反注释插件
+- [vim-pdf](https://github.com/makerj/vim-pdf) - 预览pdf文件
+- [vim-hexokinase](https://github.com/RRethy/vim-hexokinase) - 最快的(Neo)Vim插件，用于异步显示文件中的颜色
+- [vim-calendar](hhtps://github.com/itchyny/calendar.vim) - Vim的日历应用程序
 
 ## 使用之前
 
