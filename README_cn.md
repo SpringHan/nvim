@@ -95,7 +95,7 @@ let g:python3_host_prog = '/bin/python3'
 
 ![Example](./demo4.png)
 
-你可以用 `<M-a>` 在编辑器与终端进行切换
+你可以用 `<M-a>` 在浮动终端和右上角小终端进行变化
 
 ### 运行代码
 
