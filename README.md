@@ -1,5 +1,7 @@
 # My Neovim Configuration
 
+[**中文版**](README_cn.md)
+
 These are my NeoVim's configuration files. (I'm a colemak user.)
 
 If you want to use my configuration, please make sure you can understand it. Otherwise you may have some problems.
