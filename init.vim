@@ -9,11 +9,6 @@
 " @Author: SpringHan (https://www.github.com/SpringHan/)
 " @Date: 2020.7.5
 
-" Tips:
-" --- I use the 'vim-plug' to control my plugins.
-" --- You can rewrite my Key Mappings.
-" --- Some Settings should be set by yourself accroding to the situations.
-
 
 " -- ------
 " -- ------ Autoload on the first time
@@ -46,6 +41,11 @@ set autochdir
 " -- ------ Basic Setting
 " -- ------
 
+syntax enable
+syntax on
+filetype indent on
+set termguicolors
+set smartindent
 set termencoding=utf-8
 set fileformats=unix
 set encoding=utf-8
@@ -87,8 +87,6 @@ set foldlevelstart=99
 set colorcolumn=80
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 let g:mapleader = "\<Space>"
-syntax enable
-syntax on
 
 
 " -- ------
@@ -148,7 +146,7 @@ nnoremap <silent> cn :bn<CR>
 nnoremap <silent> S :w<CR>
 nnoremap <silent> Q :q<CR>
 nnoremap <silent> sq :wq<CR>
-nnoremap <silent> sa :qa<CR>
+nnoremap <silent> sa :qa!<CR>
 nnoremap <silent> se :q!<CR>
 nnoremap cet :edit<Space>
 nnoremap va <C-w>+
@@ -207,7 +205,7 @@ nnoremap <silent> <leader>ww :e ~/Github/StudyNotes/index.md<CR>
 source ~/.config/nvim/often-snippets.vim
 autocmd filetype markdown source ~/.config/nvim/md-snippets.vim
 
-" Tab
+" Tab's
 nnoremap tn :tabnew<CR>
 nnoremap te :tabedit<Space>
 nnoremap ctn :tabnext<CR>
@@ -221,13 +219,9 @@ nnoremap cto :tabonly<CR>
 
 
 " -- ------
-" -- ------ Other Settings
+" -- ------ Terminal Settings
 " -- ------
 
-filetype indent on
-set smartindent
-
-" Terminal
 autocmd TermOpen term://* startinsert
 tnoremap <silent> <C-\> <C-\><C-n>
 let g:terminal_color_0  = '#000000'
@@ -248,7 +242,7 @@ let g:terminal_color_14 = '#9AEDFE'
 
 
 " -- ------
-" -- ------ Plugins Install
+" -- ------ Plugins
 " -- ------
 
 call plug#begin('~/.config/nvim/plugged')
@@ -297,7 +291,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jiangmiao/auto-pairs'
 Plug 'lambdalisue/suda.vim'
 Plug 'SpringHan/vim-capslock'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase', 'for': [ 'html', 'css', 'javascript', 'vim-plug' ] }
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar' }
 
@@ -320,7 +314,6 @@ call plug#end()
 
 
 " NeoVim Styles
-set termguicolors
 colorscheme deus
 
 " Startify
@@ -478,7 +471,7 @@ let g:tagbar_ctags_bin = '/usr/bin/ctags'
 nnoremap <leader>FA :Far %<Left><Left><Space>
 
 " Auto-Pairs
-let g:AutoPairs = {'(':')', '[':']', '{':'}', "'":"'", '"':'"', '<':'>'}
+let g:AutoPairs = { '(':')', '[':']', '{':'}', "'":"'", '"':'"', '<':'>' }
 let b:AutoPairs = g:AutoPairs
 let g:AutoPairsShortcutToggle = '<M-p>'
 let g:AutoPairsShortcutFastWrap = '<M-e>'
@@ -654,7 +647,7 @@ endfunction
 
 
 " -- ------
-" -- ------ Programming Settings
+" -- ------ Extension funcitons
 " -- ------
 
 function! TermSet()
