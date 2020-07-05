@@ -215,8 +215,8 @@ nnoremap ctp :tabprevious<CR>
 nnoremap ctf :tabfirst<CR>
 nnoremap ctl :tablast<CR>
 nnoremap cta :+tabmove<CR>
-nnoremap ctr :-tabmove<CR>
-nnoremap ctc :tabclose<CR>
+nnoremap ctx :-tabmove<CR>
+nnoremap ctb :tabclose<CR>
 nnoremap cto :tabonly<CR>
 
 
@@ -686,7 +686,7 @@ function! TestCodes(type) " By the filetype to run the code.
 	endif
 endfunction
 
-function! BackgroudColor(option)
+function! BackgroudColor(option) " Get the .backColor to set backgroud color
 	execute a:option != 1 && a:option != 2 ? "return" : ""
 	if empty(glob($HOME.'/.config/nvim/.backColor'))
 		call system('touch '.$HOME.'/.config/nvim/.backColor')
@@ -801,6 +801,7 @@ nnoremap <silent> co :only<CR>
 " Open the lazygit
 nnoremap <silent> <C-g> :tabe<CR>:-tabmove<CR>:setlocal nonumber norelativenumber<CR>:term lazygit<CR>
 
+" Set the background color
 call BackgroudColor(2)
 
 " Debug
