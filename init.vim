@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
-" @Date: 2020.6.27
+" @Date: 2020.7.5
 
 " Tips:
 " --- I use the 'vim-plug' to control my plugins.
@@ -716,7 +716,7 @@ function! ReloadHighlight(type)
 	exec a:type != 0 && &filetype == 'ntc' ? "NtcHighlightReload" : ""
 endfunction
 
-function! FloatTerm(type) " Float Terminal
+function! FloatTerm(type, ...) " Float Terminal
 	execute exists('g:FloatTermBuf') && a:type == 0 ? "silent bd! ".g:FloatBorder.
 				\ " " . g:FloatTermBuf. " | unlet g:FloatTermBuf g:EditingBuf".
 				\ " g:FloatWindowNum g:FloatBorder g:FloatBorderWin | return" : ""
@@ -750,7 +750,7 @@ function! FloatTerm(type) " Float Terminal
 	call nvim_win_set_option(g:FloatWindowNum, 'relativenumber', v:false)
 	call nvim_win_set_option(g:FloatWindowNum, 'winhl', 'Normal:Normal')
 	call nvim_buf_set_option(g:FloatTermBuf, 'buftype', 'nofile')
-	terminal
+	execute empty(a:000) ? "terminal" : "terminal " . a:0
 	unlet l:lines l:opt
 endfunction
 
