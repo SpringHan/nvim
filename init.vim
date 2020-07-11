@@ -6,12 +6,12 @@
 "					 |___/                                              
 
 
-" @Author: SpringHan (https://www.github.com/SpringHan/)
+" @Author: SpringHan (https://github.com/SpringHan/)
 " @Date: 2020.7.11
 
 
 " -- ------
-" -- ------ Autoload on the first time
+" -- ------ Install all the plugins when opening it for the first time
 " -- ------
 
 if empty(glob('~/.config/nvim/plugged/'))
@@ -223,6 +223,7 @@ nnoremap cto :tabonly<CR>
 
 autocmd TermOpen term://* startinsert
 tnoremap <silent> <C-\> <C-\><C-n>
+" Dracula's terminal theme
 let g:terminal_color_0  = '#000000'
 let g:terminal_color_1  = '#FF5555'
 let g:terminal_color_2  = '#50FA7B'
@@ -256,7 +257,6 @@ Plug 'airblade/vim-gitgutter'
 " vim-style
 Plug 'SpringHan/vim-deus'
 Plug 'RRethy/vim-illuminate'
-Plug 'terryma/vim-multiple-cursors'
 
 " Autosuggestion
 Plug 'neoclide/coc.nvim' , { 'branch': 'release' }
@@ -277,7 +277,7 @@ Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'vim-plug' ] }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
 " Todo
-Plug 'SpringHan/NoToC.vim'
+Plug 'SpringHan/NoToC.vim' " Control the notes and todos
 
 " Ranger
 Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'RnvimrSync' ] }
@@ -288,11 +288,12 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jiangmiao/auto-pairs'
-Plug 'lambdalisue/suda.vim'
+Plug 'lambdalisue/suda.vim' " Use sudo in neovim
 Plug 'SpringHan/vim-capslock'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase', 'for': [ 'html', 'css', 'javascript', 'vim-plug' ] }
 Plug 'itchyny/calendar.vim', { 'on': 'Calendar' }
+Plug 'terryma/vim-multiple-cursors' " Multi-lines edition
 
 " Translation
 " Plug 'denstiny/Terslation'
@@ -301,7 +302,7 @@ Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTr
 " Comment
 Plug 'preservim/nerdcommenter'
 
-" Other filetype
+" Others
 Plug 'makerj/vim-pdf'
 
 call plug#end()
