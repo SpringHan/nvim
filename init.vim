@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://www.github.com/SpringHan/)
-" @Date: 2020.7.5
+" @Date: 2020.7.11
 
 
 " -- ------
@@ -202,7 +202,6 @@ nnoremap <silent> <leader>te :exec "!touch ./".expand("<cWORD>")<CR>
 nnoremap <silent> <leader>ww :e ~/Github/StudyNotes/index.md<CR>
 
 " Snippets
-source ~/.config/nvim/often-snippets.vim
 autocmd filetype markdown source ~/.config/nvim/md-snippets.vim
 
 " Tab's
@@ -330,30 +329,35 @@ let g:startify_custom_header = [
 let g:coc_start_at_startup = 0
 function! CocTimerStart(timer)
 	exec "CocStart"
-	echohl MoreMsg | echo "Coc.nvim loaded." | echohl None
+	echohl MoreMsg | echo "[Spring]: Coc.nvim loaded." | echohl None
 endfunction
 call timer_start(300, 'CocTimerStart', {'repeat': 1})
 set hidden
 set updatetime=50
 " Plugins
-let g:coc_global_extensions = ['coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-sourcekit', 'coc-kite', 'coc-yank' ]
+let g:coc_global_extensions = [ 'coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-sourcekit', 'coc-kite', 'coc-yank', 'coc-snippets' ]
+" Basic
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-nnoremap <silent> <TAB> <Plug>(coc-range-select)
-xnoremap <silent> <TAB> <Plug>(coc-range-select)
-nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
-nnoremap <silent> gd <Plug>(coc-definition)
-nnoremap <silent> gy <Plug>(coc-type-definition)
-nnoremap <silent> gi <Plug>(coc-implementation)
-nnoremap <silent> gr <Plug>(coc-references)
-noremap <silent> gk :call <SID>show_documentation()<CR>
+" coc-snippets
+let g:coc_snippets_next = '<C-n>'
+let g:coc_snippets_prev = '<C-e>'
+imap <silent> <C-s> <Plug>(coc-snippets-expand)
+vmap <silent> <C-j> <Plug>(coc=snippets-select)
+" Others
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gk :call <SID>show_documentation()<CR>
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)
 		execute 'h '.expand('<cword>')
@@ -363,9 +367,9 @@ function! s:show_documentation()
 endfunction
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
-nnoremap <leader>crn <Plug>(coc-rename)
-xnoremap <leader>f  <Plug>(coc-format-selected)
-nnoremap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>crn <Plug>(coc-rename)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 augroup mygroup
 autocmd!
 autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
@@ -402,6 +406,7 @@ nnoremap <silent> tt :CocCommand explorer<CR>
 nnoremap <silent> <leader>cfg :CocConfig<CR>
 nnoremap <silent> <leader>yy :<C-u>CocList -A --normal yank<CR>
 nnoremap <silent> <leader>yc :CocCommand yank.clean<CR>
+nnoremap <silent> <leader>es :CocCommand snippets.editSnippets<CR>
 
 " VimTableMode
 nnoremap <leader>tm :TableModeToggle<CR>
