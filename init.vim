@@ -6,8 +6,8 @@
 "					 |___/                                              
 
 
-" @Author: SpringHan (https://github.com/SpringHan/)
-" @Date: 2020.7.11
+" @Author: SpringHan (https://github.com/SpringHan)
+" @Date: 2020.7.12
 
 
 " -- ------
@@ -510,9 +510,7 @@ let g:HicusLine = {
 			\               'spell', '%#infos#', 'gitinfo', 0, 'modified', 'readonly',
 			\                'space', '%#ErrorStatus#', 'errorstatus', 'space',
 			\               '%#WarningStatus#', 'warningstatus', 'bufferline', 'truncate',
-			\               '%#GitStatusAdd#', '%{GitFileStatus(0)}', '%#GitStatusMod#'
-			\               , 'space', '%{GitFileStatus(1)}', '%#GitStatusDel#',
-			\               'space', '%{GitFileStatus(2)}', 0 ],
+			\               'gitmodified' ],
 			\     'right': [ 'filetype3', 'space', '%#infos#', 'space', 'fileencoding',
 			\                'space', "%{exists('*CapsLockStatusline')".
 			\                "?CapsLockStatusline():''}" , 'space', 'fileformat',
@@ -526,17 +524,17 @@ let g:HicusLine = {
 			\ }
 \}
 let g:HicusLineMode = {
-			\ 'n':      [ 'NORMAL', 'normalmode', { 'infos': 'normalinfos', }, ],
-			\ 'i':      [ 'INSERT', 'insertmode', { 'infos': 'otherinfos',  }, ],
-			\ 'R':      [ 'REPLACE', 'replacemode', { 'infos': 'otherinfos',  }, ],
-			\ 'v':      [ 'VISUAL', 'visualmode', { 'infos': 'otherinfos',  }, ],
-			\ 'V':      [ 'L-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
-			\ "\<C-v>": [ 'B-VISU', 'visualmode', { 'infos': 'otherinfos',  }, ],
-			\ 'c':      [ 'COMMAND', 'commandmode', { 'infos': 'otherinfos',  }, ],
-			\ 's':      [ 'SELECT', 'normalmode', { 'infos': 'normalinfos',  }, ],
-			\ 'S':      [ 'L-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
-			\ "\<C-s>": [ 'B-SELE', 'normalmode', { 'infos': 'normalinfos',  }, ],
-			\ 't':      [ 'TERMINAL', 'normalmode', { 'infos': 'normalinfos',  }, ]
+			\ 'n':      [ '', 'normalmode', { 'infos': 'normalinfos', }, ],
+			\ 'i':      [ '', 'insertmode', { 'infos': 'otherinfos',  }, ],
+			\ 'R':      [ '', 'replacemode', { 'infos': 'otherinfos',  }, ],
+			\ 'v':      [ '', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\ 'V':      [ '', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\ "\<C-v>": [ '', 'visualmode', { 'infos': 'otherinfos',  }, ],
+			\ 'c':      [ '', 'commandmode', { 'infos': 'otherinfos',  }, ],
+			\ 's':      [ '', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ 'S':      [ '', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ "\<C-s>": [ '', 'normalmode', { 'infos': 'normalinfos',  }, ],
+			\ 't':      [ '', 'normalmode', { 'infos': 'normalinfos',  }, ]
 \}
 let g:HicusColor = {
 			\ 'StatusLine':         [ 'none', '#8BE9FD', '#44475A', ],
