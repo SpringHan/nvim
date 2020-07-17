@@ -796,7 +796,7 @@ tnoremap <silent> <M-a> <C-\><C-n>:call TermConvert()<CR>:startinsert<CR>
 nnoremap <silent> co :only<CR>
 
 " Open the lazygit
-nnoremap <silent> <C-g> :tabe<CR>:-tabmove<CR>:setlocal nonumber norelativenumber<CR>:term lazygit<CR>
+nnoremap <silent> <C-l> :tabe<CR>:-tabmove<CR>:setlocal nonumber norelativenumber<CR>:term lazygit<CR>
 
 " Set the background color
 call BackgroudColor(2)
