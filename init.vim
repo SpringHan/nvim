@@ -680,6 +680,9 @@ function! TestCodes(type) " By the filetype to run the code.
 	elseif &filetype == 'go'
 		call TermSet()
 		terminal go run ./%
+	elseif &filetype == 'javascript'
+		call TermSet()
+		terminal node ./%
 	endif
 endfunction
 
