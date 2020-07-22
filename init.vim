@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://github.com/SpringHan)
-" @Date: 2020.7.12
+" @Date: 2020.7.22
 
 
 " -- ------
@@ -674,7 +674,7 @@ function! TestCodes(type) " By the filetype to run the code.
 		terminal python3 ./%
 	elseif &filetype == 'c'
 		call TermSet()
-		terminal gcc % -o /tmp/%<.o; /tmp/%<.o
+		terminal gcc -std=c11 % -o /tmp/%<.o; /tmp/%<.o
 	elseif &filetype == 'markdown'
 		exec a:type == 0 ? "MarkdownPreview" : "MarkdownPreviewStop"
 	elseif &filetype == 'go'

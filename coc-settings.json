@@ -2,8 +2,8 @@
 	"languageserver": {
 		"ccls": {
 			"command": "ccls",
-			"filetypes": ["c", "cpp", "objc", "objcpp"],
-			"rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+			"filetypes": [ "c", "cpp", "objc", "objcpp" ],
+			"rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/" ],
 			"initializationOptions": {
 				"cache": {
 					"directory": "/tmp/ccls"
@@ -12,16 +12,16 @@
 		},
 		"golang": {
 			"command": "gopls",
-			"rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-			"filetypes": ["go"],
+			"rootPatterns": [ "go.mod", ".vim/", ".git/", ".hg/" ],
+			"filetypes": [ "go" ],
 			"initializationOptions": {
 				"usePlacehoders": true
 			}
 		},
 		"bash": {
 			"command": "bash-language-server",
-			"args": ["start"],
-			"filetypes": ["sh"]
+			"args": [ "start" ],
+			"filetypes": [ "sh" ]
 		}
 	},
 	"suggest.enablePreview": true,
