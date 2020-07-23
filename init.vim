@@ -808,4 +808,5 @@ call BackgroudColor(2)
 " set runtimepath+=~/Github/HicusLine
 " set runtimepath+=~/Github/Terslation.vim
 " set runtimepath+=~/Github/NoToC.vim
+" set runtimepath+=~/Github/vim-focus
 " let g:NoToCCache = $HOME.'/.cache/NoToC.vim/'

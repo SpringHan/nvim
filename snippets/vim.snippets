@@ -40,3 +40,18 @@ snippet cp "Copyright" b
 " Repository: ${5}
 " Lisence: ${6}
 endsnippet
+
+# Functions (Normal)
+snippet function "Function" b
+function! ${1}
+	${2}
+endfunction
+endsnippet
+
+# Functions (Plugin)
+snippet ft "Function" b
+" FUNCTION: ${1}${2} { ${3} } {{{
+function! ${1} abort
+	${4}
+endfunction
+endsnippet
