@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://github.com/SpringHan)
-" @Date: 2020.7.22
+" @Date: 2020.7.24
 
 
 " -- ------
@@ -287,7 +287,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
-Plug 'jiangmiao/auto-pairs'
 Plug 'lambdalisue/suda.vim' " Use sudo in neovim
 Plug 'SpringHan/vim-capslock'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
@@ -336,7 +335,11 @@ call timer_start(300, 'CocTimerStart', {'repeat': 1})
 set hidden
 set updatetime=50
 " Plugins
-let g:coc_global_extensions = [ 'coc-python', 'coc-vimlsp', 'coc-html', 'coc-css', 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore', 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint', 'coc-lists', 'coc-git', 'coc-explorer', 'coc-sourcekit', 'coc-kite', 'coc-yank', 'coc-snippets' ]
+let g:coc_global_extensions = [ 'coc-python', 'coc-vimlsp', 'coc-html', 'coc-css',
+			\ 'coc-phpls', 'coc-json', 'coc-tsserver', 'coc-lists', 'coc-gitignore',
+			\ 'coc-vimlsp', 'coc-tailwindcss', 'coc-stylelint', 'coc-tslint',
+			\ 'coc-lists', 'coc-git', 'coc-explorer', 'coc-sourcekit', 'coc-kite',
+			\ 'coc-yank', 'coc-snippets', 'coc-pairs' ]
 " Basic
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -475,20 +478,6 @@ let g:tagbar_ctags_bin = '/usr/bin/ctags'
 
 " Far.vim
 nnoremap <leader>FA :Far %<Left><Left><Space>
-
-" Auto-Pairs
-let g:AutoPairs = { '(':')', '[':']', '{':'}', "'":"'", '"':'"', '<':'>' }
-let b:AutoPairs = g:AutoPairs
-let g:AutoPairsShortcutToggle = '<M-p>'
-let g:AutoPairsShortcutFastWrap = '<M-e>'
-let g:AutoPairsShortcutJump = '<M-n>'
-let g:AutoPairsMapBS = 0
-let g:AutoPairsMapCh = 1
-let g:AutoPairsMapCR = 1
-let g:AutoPairsCenterLine = 1
-let g:AutoPairsMapSpace = 1
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " Vim-easy-align
 xmap ga <Plug>(EasyAlign)
