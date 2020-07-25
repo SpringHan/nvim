@@ -29,16 +29,17 @@ snippet bt "The-big-title" b
 " == ====
 " == ==== ${1}
 " == ====
+${2}
 endsnippet
 
 # The Copyright
 snippet cp "Copyright" b
 " ${1}
 " Author: ${2}
-" Last Change: ${3}
-" Version: ${4}
-" Repository: ${5}
-" Lisence: ${6}
+" Last Change: <+++>
+" Version: ${3}
+" Repository: ${4}
+" Lisence: ${5}
 endsnippet
 
 # Functions (Normal)
@@ -49,8 +50,8 @@ endfunction
 endsnippet
 
 # Functions (Plugin)
-snippet ft "Function" b
-" FUNCTION: ${1}${2} { ${3} } {{{
+snippet functionp "Function:Plugin" b
+" FUNCTION: ${1}${2: Arguments intro} { ${3:Function intro} } {{{
 function! ${1} abort
 	${4}
 endfunction " }}}
@@ -64,8 +65,18 @@ endfor
 endsnippet
 
 # For loop (With arguments)
-snippet fr "ForLoop" b
-for ${1} in ${2}
+snippet fora "ForLoop:Arguments" b
+for ${1:Arguments} in ${2:List}
 	${3}
 endfor
+endsnippet
+
+# Let
+snippet let "Make Var" b
+let ${1:Var} = ${2:Value}
+endsnippet
+
+# Declare a variable
+snippet dec "Declare variable" b
+let ${1:Var}
 endsnippet
