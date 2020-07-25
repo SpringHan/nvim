@@ -51,7 +51,7 @@ endsnippet
 
 # Functions (Plugin)
 snippet functionp "Function:Plugin" b
-" FUNCTION: ${1}${2: Arguments intro} { ${3:Function intro} } {{{
+" FUNCTION: {{{ ${1}${2: Arguments intro} { ${3:Function intro} }
 function! ${1} abort
 	${4}
 endfunction " }}}
@@ -79,4 +79,14 @@ endsnippet
 # Declare a variable
 snippet dec "Declare variable" b
 let ${1:var}
+endsnippet
+
+# Execute
+snippet execute "Execute" i
+execute "${1}"
+endsnippet
+
+# Command
+snippet command "Command" b
+command! -nargs=${1} ${2:command} call ${3:function}
 endsnippet

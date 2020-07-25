@@ -303,6 +303,7 @@ Plug 'preservim/nerdcommenter'
 
 " Others
 Plug 'makerj/vim-pdf'
+Plug 'SpringHan/vim-focus'
 
 call plug#end()
 
@@ -631,12 +632,11 @@ nnoremap <silent> g= :GitGutterNextHunk<CR>
 let g:gitgutter_signs = 0
 let g:gitgutter_map_keys = 0
 let g:gitgutter_override_sign_column_highlight = 0
-function! GitFileStatus(form)
-	execute !exists('b:gitgutter.summary') ? "return ''" : ""
-	let l:summary = b:gitgutter.summary
-	return a:form == 0 ? '+' . l:summary[0] : a:form == 1 ? '~' . l:summary[1]
-				\ : '-' . l:summary[2]
-endfunction
+
+" vim-focus
+vnoremap <silent> <leader>vf :FocusStart<CR>
+nnoremap <silent> <leader>vs :FocusConvert<CR>
+let g:VimFocusOpenWay = 'window'
 
 
 " -- ------
