@@ -40,7 +40,6 @@ My Plugins Manager is **[vim-plug](https://github.com/junegunn/vim-plug)** .
 - [fzf](https://github.com/junegunn/fzf) - Fuzzy finder in vim
 - [vim-illuminate](https://github.com/RRethy/vim-illuminate) - A tool for illuminating the other uses of the current word under the cursor.
 - [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) - True Sublime Text multiple selection in Vim
-- [rnvimr](https://github.com/kevinhwang91/rnvimr) - Ranger in vim with float window
 - [vim-surround](https://github.com/tpope/vim-surround) - A plugin which can change the symbol easily
 - [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks) - A Vim plugin for using line-based bookmarks
 - [suda.vim](https://github.com/lambdalisue/suda.vim) - A plugin can make you use sudo in neovim
@@ -101,6 +100,11 @@ Like this:
 ![Example](./demo4.png)
 
 You can use `<M-a>` transformation between the first and the second in the Terminal.
+
+### Float Ranger
+
+Float Ranger is based on the `Float Terminal` by I.  
+You can use `<leader>Rt` to toggle it.Also, you can use `<M-a>` to change its position and size like `Float Terminal`.
 
 ### Run codes
 

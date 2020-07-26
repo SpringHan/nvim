@@ -38,7 +38,6 @@
 - [fzf](https://github.com/junegunn/fzf) - 模糊文件查找器
 - [vim-illuminate](https://github.com/RRethy/vim-illuminate) - 一种用于阐明光标下当前单词的其他用途的工具
 - [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) - 多重选择Sublime Text
-- [rnvimr](https://github.com/kevinhwang91/rnvimr) - 浮动窗口中的Ranger
 - [vim-surround](https://github.com/tpope/vim-surround) - 简单更改符号
 - [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks) - 一个使用基于行的书签的Vim插件
 - [suda.vim](https://github.com/lambdalisue/suda.vim) - 插件可以使您在Neovim中使用sudo
@@ -97,6 +96,11 @@ let g:python3_host_prog = '/bin/python3'
 ![Example](./demo4.png)
 
 你可以用 `<M-a>` 在浮动终端和右上角小终端进行变化
+
+### 悬浮Ranger
+
+悬浮Ranger基于我所编写的`悬浮终端`。  
+你可以使用 `<leader>Rt` 来打开它。当然，你也可以像使用 `悬浮终端` 一样通过 `<M-a>` 来改变它的位置和大小。
 
 ### 运行代码
 

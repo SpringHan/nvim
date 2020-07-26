@@ -7,7 +7,7 @@
 
 
 " @Author: SpringHan (https://github.com/SpringHan)
-" @Date: 2020.7.24
+" @Date: 2020.7.26
 
 
 " -- ------
@@ -163,7 +163,7 @@ nnoremap vI <C-w>L
 nnoremap vr <C-w>r
 nnoremap vR <C-w>R
 nnoremap vy vy
-nnoremap <silent> cb :bd<CR>
+nnoremap <silent> cb :call BDeleteBuf()<CR>
 nnoremap <silent> cd :nohlsearch<CR>
 nnoremap sr :r<Space>
 nnoremap sh :!
@@ -279,9 +279,6 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 " Todo
 Plug 'SpringHan/NoToC.vim' " Control the notes and todos
 
-" Ranger
-Plug 'kevinhwang91/rnvimr', { 'do': 'make sync', 'on': [ 'RnvimrToggle', 'RnvimrSync' ] }
-
 " Useful plugin
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
@@ -296,7 +293,7 @@ Plug 'terryma/vim-multiple-cursors' " Multi-lines edition
 
 " Translation
 " Plug 'denstiny/Terslation'
-Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTrans' ] }
+Plug 'SpringHan/Terslation.vim', { 'on': [ 'TerslationToggle', 'TerslationWordTrans', 'TerslationSelectTrans' ] }
 
 " Comment
 Plug 'preservim/nerdcommenter'
@@ -558,7 +555,6 @@ let g:user_emmet_leader_key = '<C-r>'
 
 " Rnvimr
 nnoremap <silent> <leader>Rt :RnvimrToggle<CR>
-nnoremap <silent> <leader>Rs :RnvimrSync<CR>
 let g:rnvimr_layout = { 'relative': 'editor',
 			\ 'width':  float2nr(round(0.95 * &columns)),
 			\ 'height': float2nr(round(0.95 * &lines)),
@@ -591,8 +587,9 @@ hi illuminatedWord cterm=undercurl gui=undercurl
 " Terslation.vim
 let g:TerslationFloatWin = 1
 nnoremap <silent><leader>tp "tp
-nnoremap <silent><leader>ts :TerslationToggle<CR>
+nnoremap <silent><leader>ts  :TerslationToggle<CR>
 nnoremap <silent><leader>tws :TerslationWordTrans<CR>
+vnoremap <silent><leader>tws :TerslationSelectTrans<CR>
 
 " suda.vim
 nnoremap sw :w sudo://%<CR>
@@ -608,7 +605,7 @@ nnoremap <silent> <leader>go :Goyo!<CR>:call ReloadHighlight(2)<CR>
 " vim-hexokinase
 nnoremap <silent> <leader>ht :HexokinaseToggle<CR>
 let g:Hexokinase_highlighters = [ 'virtual' ]
-let g:Hexokinase_ftEnabled = [ 'css', 'html', 'javascript' ]
+let g:Hexokinase_ftEnabled    = [ 'css', 'html', 'javascript' ]
 
 " vim-calendar
 nnoremap <silent> <leader>vc :Calendar<CR>
@@ -636,7 +633,7 @@ let g:gitgutter_override_sign_column_highlight = 0
 " vim-focus
 vnoremap <silent> <leader>vf :FocusStart<CR>
 nnoremap <silent> <leader>vs :FocusConvert<CR>
-let g:VimFocusOpenWay = 'window'
+let g:VimFocusOpenWay = 'buffer'
 
 
 " -- ------
@@ -739,7 +736,7 @@ function! FloatTerm(type, ...) " Float Terminal
 	call nvim_win_set_option(g:FloatWindowNum, 'relativenumber', v:false)
 	call nvim_win_set_option(g:FloatWindowNum, 'winhl', 'Normal:Normal')
 	call nvim_buf_set_option(g:FloatTermBuf, 'buftype', 'nofile')
-	execute empty(a:000) ? "terminal" : "terminal " . a:0
+	execute empty(a:000) ? "terminal" : "terminal " . a:1
 	unlet l:lines l:opt
 endfunction
 
@@ -772,6 +769,18 @@ function! TermConvert() " Convert the FloatTerminal's window
 	unlet l:currentStatus l:opt l:lines
 endfunction
 
+function! BDeleteBuf() " BDelete the current buffer
+	if &modified == 1
+		let l:result = input('Now the buffer is modified, do you want to continue?')
+		if l:result == 'y' || l:result == ''
+			execute "bd!"
+		endif
+		unlet l:result
+	else
+		execute "bd"
+	endif
+endfunction
+
 " Run codes
 nnoremap <silent> <leader>r :call TestCodes(0)<CR>
 nnoremap <silent> <leader>sr :call TestCodes(1)<CR>
@@ -783,6 +792,9 @@ nnoremap <silent> <leader>FB :call FloatTerm(3)<CR>:startinsert<CR>
 tnoremap <silent> <M-b> <C-\><C-n>:call FloatTerm(2)<CR>
 tnoremap <silent> <C-q> <C-\><C-n>:call FloatTerm(0)<CR>
 tnoremap <silent> <M-a> <C-\><C-n>:call TermConvert()<CR>:startinsert<CR>
+
+" Float Ranger
+nnoremap <silent> <leader>Rt :call FloatTerm(0, "ranger")<CR>
 
 " Clear the buffers without the current buffer
 nnoremap <silent> co :only<CR>
