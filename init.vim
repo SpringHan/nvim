@@ -633,6 +633,7 @@ let g:gitgutter_override_sign_column_highlight = 0
 " vim-focus
 vnoremap <silent> <leader>vf :FocusStart<CR>
 nnoremap <silent> <leader>vs :FocusConvert<CR>
+nnoremap <silent> <leader>vS :FocusSave<CR>
 let g:VimFocusOpenWay = 'buffer'
 
 
