@@ -2,6 +2,8 @@
 
 [**English version**](README.md)
 
+现在此仓库已停止更新。(现在我在使用Emacs，你可以查看[我的Emacs配置](https://github.com/SpringHan/.emacs.d))
+
 此仓库存放了我的 NeoVim 配置文件 (我是一个 Colemak 用户)
 
 如果你想使用我的配置文件, 请确保你能读懂它, 否则你很有可能会遇到问题
